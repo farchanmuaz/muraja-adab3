@@ -1,0 +1,2185 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>المُرَاجَعَةُ الشَّامِلَةُ وَالتَّدْرِيبَاتُ التَّفَاعُلِيَّةُ — الأَدَبُ (المُسْتَوَى الثَّالِثُ)</title>
+<script src="https://cdn.tailwindcss.com/3.4.17"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+  body { font-family: 'Tajawal', 'Segoe UI', Tahoma, sans-serif; background-color: #f4f1ea; color: #1f2937; }
+  .font-adab { font-family: 'Amiri', 'Traditional Arabic', serif; line-height: 2.1; }
+  .option-card { transition: background-color .2s ease, border-color .2s ease, transform .2s ease; }
+  .option-card:hover { transform: translateY(-1px); }
+  .move-btn { background: #fff; color: #0f3d2e; border-color: #d6d3d1; }
+  .move-btn:hover:not(:disabled) { background: #ecfdf5; }
+  .move-btn:disabled { background: #f5f5f4; color: #d6d3d1; border-color: #e7e5e4; cursor: not-allowed; }
+  .tabular-nums { font-variant-numeric: tabular-nums; }
+  button:focus-visible, input:focus-visible, textarea:focus-visible, summary:focus-visible { outline: 3px solid #c89d54; outline-offset: 2px; }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; scroll-behavior: auto !important; } }
+  @media print {
+    .no-print { display: none !important; }
+    body { background: #ffffff !important; }
+  }
+</style>
+</head>
+<body class="min-h-screen flex flex-col justify-between">
+  <!-- ===================== HEADER ===================== -->
+  <header class="bg-[#0f3d2e] text-white shadow-lg border-b-4 border-[#c89d54] sticky top-0 z-30 no-print">
+    <div class="max-w-5xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-3">
+      <div class="flex items-center gap-3 min-w-0">
+        <div class="w-11 h-11 shrink-0 rounded-xl bg-[#c89d54]/20 border border-[#c89d54] flex items-center justify-center text-[#f3d292] font-adab text-2xl font-bold">أ</div>
+        <div class="min-w-0">
+          <h1 class="text-lg md:text-xl font-extrabold tracking-wide text-[#f9ece0]">المراجعة الشاملة في مادة الأدب (المستوى الثالث)</h1>
+          <p class="text-xs text-emerald-200">تدريبات تفاعلية للإعداد للاختبار النهائي — الوحدات (١ – ١٥)</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-2">
+        <div id="liveCounterBadge" class="hidden bg-emerald-900/80 border border-emerald-600 px-3 py-1.5 rounded-lg text-xs md:text-sm font-bold text-emerald-100">
+          الإجابات المكتملة: <span id="answeredCountText" class="text-[#f3d292]">٠</span> / <span data-total></span>
+        </div>
+        <button id="btnOpenTeacherModal" type="button" class="bg-[#c89d54] hover:bg-[#b58940] text-[#0f3d2e] font-bold text-xs md:text-sm px-3.5 py-2 rounded-lg shadow transition flex items-center gap-1.5">
+          <span aria-hidden="true">🔒</span><span>بوابة الأستاذ</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="flex-grow max-w-5xl w-full mx-auto px-4 py-6">
+
+    <!-- ===================== VIEW 1: WELCOME ===================== -->
+    <section id="viewWelcome" class="bg-white rounded-2xl shadow-xl border border-stone-200 overflow-hidden">
+      <div class="bg-gradient-to-l from-[#0f3d2e] via-[#16523e] to-[#1f6b52] p-6 md:p-8 text-white">
+        <div class="max-w-3xl">
+          <span class="inline-block bg-[#c89d54]/30 border border-[#c89d54] text-[#fce5b4] text-xs font-bold px-3 py-1 rounded-full mb-3">سلسلة تعليم اللغة العربية — كتاب الأدب (المستوى الثالث)</span>
+          <h2 class="text-2xl md:text-3xl font-extrabold mb-3 font-adab leading-relaxed">منصة التدريب والمراجعة قبل الاختبار (<span data-total></span> سؤالا شاملا)</h2>
+          <p class="text-emerald-100 text-sm md:text-base leading-relaxed">
+            أهلا بك أيها الطالب النجيب. صمم هذا الاختبار التدريبي لمساعدتك على مراجعة وحدات الكتاب الخمس عشرة (من العصر الجاهلي، وعصر صدر الإسلام، إلى العصر الأموي)، وتحصل في نهايته على <strong class="text-[#fce5b4]">وسام التفوق الأدبي</strong> ورمز تحقق ترسله لأستاذ المادة.
+          </p>
+        </div>
+      </div>
+
+      <div class="p-6 md:p-8 space-y-6">
+        <!-- Resume banner (filled by script when an unfinished attempt exists on this device) -->
+        <div id="resumeBanner" class="hidden bg-amber-50 border border-amber-300 rounded-xl p-4 flex flex-wrap items-center justify-between gap-3">
+          <p id="resumeText" class="text-sm text-amber-900 font-bold"></p>
+          <div class="flex gap-2">
+            <button id="btnResume" type="button" class="bg-[#0f3d2e] hover:bg-[#1b5e47] text-white text-xs font-bold px-4 py-2 rounded-lg">متابعة المحاولة</button>
+            <button id="btnDiscardDraft" type="button" class="bg-white hover:bg-stone-100 text-stone-700 border border-stone-300 text-xs font-bold px-4 py-2 rounded-lg">بدء محاولة جديدة</button>
+          </div>
+        </div>
+
+        <div>
+          <h3 class="text-base font-bold text-[#0f3d2e] mb-3">أقسام الأسئلة في هذه المراجعة:</h3>
+          <div id="categoryOverview" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3"></div>
+        </div>
+
+        <div class="bg-[#faf7f0] border border-[#e3d7c1] rounded-xl p-4">
+          <h3 class="text-sm font-bold text-[#0f3d2e] mb-2.5">أوسمة التفوق الأدبي بعد إتمام الاختبار:</h3>
+          <div id="medalOverview" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-2.5 text-xs"></div>
+        </div>
+
+        <form id="studentForm" class="bg-stone-50 border border-stone-200 rounded-xl p-5" novalidate>
+          <h3 class="text-base font-bold text-[#0f3d2e] mb-4">بيانات الطالب (للشهادة وتقرير الدرجة):</h3>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div>
+              <label for="inputStudentName" class="block text-xs font-bold text-stone-700 mb-1">اسم الطالب الكامل <span class="text-red-600">*</span></label>
+              <input id="inputStudentName" type="text" maxlength="80" autocomplete="name" placeholder="مثال: أحمد بن عبد الله" class="w-full px-3.5 py-2.5 rounded-lg border border-stone-300 focus:outline-none focus:ring-2 focus:ring-[#1b5e47] bg-white text-sm font-medium" />
+            </div>
+            <div>
+              <label for="inputStudentId" class="block text-xs font-bold text-stone-700 mb-1">الرقم الجامعي <span class="text-red-600">*</span></label>
+              <input id="inputStudentId" type="text" maxlength="30" inputmode="numeric" placeholder="مثال: 202601045" class="w-full px-3.5 py-2.5 rounded-lg border border-stone-300 focus:outline-none focus:ring-2 focus:ring-[#1b5e47] bg-white text-sm font-medium" />
+            </div>
+            <div>
+              <label for="inputStudentClass" class="block text-xs font-bold text-stone-700 mb-1">الفصل / المجموعة</label>
+              <input id="inputStudentClass" type="text" maxlength="40" placeholder="مثال: المستوى الثالث - أ" class="w-full px-3.5 py-2.5 rounded-lg border border-stone-300 focus:outline-none focus:ring-2 focus:ring-[#1b5e47] bg-white text-sm font-medium" />
+            </div>
+          </div>
+          <p id="welcomeErrorMsg" class="hidden text-red-600 text-xs font-bold mt-3" role="alert">اكتب اسمك ورقمك الجامعي قبل البدء.</p>
+          <div class="mt-5 flex flex-wrap items-center justify-between gap-3 pt-4 border-t border-stone-200">
+            <p class="text-xs text-stone-500">لا تظهر الإجابات الصحيحة والشرح إلا بعد اعتماد الإجابات.</p>
+            <button id="btnStartQuiz" type="submit" class="bg-[#0f3d2e] hover:bg-[#1b5e47] text-white font-extrabold px-6 py-3 rounded-xl shadow-md transition text-sm md:text-base">ابدأ المراجعة الآن ←</button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <!-- ===================== VIEW 2: QUIZ ===================== -->
+    <section id="viewQuiz" class="hidden space-y-5">
+      <div class="bg-white rounded-2xl shadow-md border border-stone-200 p-4 md:p-5 no-print">
+        <div class="flex flex-wrap items-center justify-between gap-3 mb-3">
+          <div class="min-w-0">
+            <span class="text-xs font-bold text-stone-500">الطَّالِبُ:</span>
+            <span id="quizBannerStudentName" class="text-sm font-extrabold text-[#0f3d2e] mr-1"></span>
+            <span id="quizBannerStudentId" class="text-xs text-stone-500 mr-2"></span>
+          </div>
+          <div class="flex flex-wrap items-center gap-2">
+            <button id="btnJumpUnanswered" type="button" class="text-xs bg-amber-100 hover:bg-amber-200 text-amber-900 font-bold px-3 py-1.5 rounded-lg transition">الانْتِقَالُ إِلَى سُؤَالٍ لَمْ يُجَبْ عَنْهُ</button>
+            <button type="button" data-action="finish" class="text-xs bg-[#0f3d2e] hover:bg-[#1b5e47] text-white font-bold px-3.5 py-1.5 rounded-lg shadow transition">إِنْهَاءُ الاخْتِبَارِ وَعَرْضُ النَّتِيجَةِ</button>
+          </div>
+        </div>
+        <div class="w-full bg-stone-200 h-3 rounded-full overflow-hidden" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+          <div id="quizProgressBar" class="bg-gradient-to-l from-[#0f3d2e] to-[#c89d54] h-3 transition-all duration-300" style="width:0%"></div>
+        </div>
+        <div id="categoryFilterBar" class="mt-4 flex flex-wrap gap-1.5 pt-3 border-t border-stone-100"></div>
+        <details class="mt-3">
+          <summary class="text-xs font-bold text-[#1b5e47] cursor-pointer select-none">خَرِيطَةُ أَرْقَامِ الأَسْئِلَةِ لِلتَّنَقُّلِ السَّرِيعِ</summary>
+          <div id="questionGridNav" class="mt-2.5 grid grid-cols-10 gap-1.5"></div>
+        </details>
+      </div>
+
+      <div id="questionsContainer" class="space-y-5"></div>
+
+      <div class="bg-white rounded-2xl shadow-lg border-2 border-[#0f3d2e] p-6 text-center space-y-3 no-print">
+        <h3 class="text-lg font-extrabold text-[#0f3d2e]">هَلْ أَتْمَمْتَ الإِجَابَةَ عَنْ جَمِيعِ الأَسْئِلَةِ؟</h3>
+        <p class="text-sm text-stone-600">رَاجِعْ إِجَابَاتِكَ قَبْلَ الاعْتِمَادِ النِّهَائِيِّ.</p>
+        <button id="btnFinishQuizBottom" type="button" data-action="finish" class="bg-[#0f3d2e] hover:bg-[#1b5e47] text-white font-extrabold px-8 py-3.5 rounded-xl shadow-lg transition text-base">اعْتِمَادُ الإِجَابَاتِ وَعَرْضُ الدَّرَجَةِ</button>
+      </div>
+    </section>
+
+    <!-- ===================== VIEW 3: RESULTS ===================== -->
+    <section id="viewResults" class="hidden space-y-6">
+      <div class="bg-white rounded-2xl shadow-xl border-2 border-[#c89d54] overflow-hidden">
+        <div class="bg-gradient-to-l from-[#0f3d2e] via-[#174f3c] to-[#0f3d2e] p-6 md:p-8 text-white text-center">
+          <div id="wisamIconBox" class="w-24 h-24 mx-auto mb-3 rounded-full bg-[#c89d54]/20 border-2 border-[#c89d54] flex items-center justify-center text-5xl shadow-inner"></div>
+          <div class="text-xs font-bold tracking-widest text-[#f3d292] mb-1">شَهَادَةُ إِتْمَامِ المُرَاجَعَةِ فِي مَادَّةِ الأَدَبِ (المُسْتَوَى الثَّالِثُ)</div>
+          <h2 id="wisamTitleText" class="text-2xl md:text-3xl font-extrabold text-white font-adab mb-2"></h2>
+          <p id="wisamSubtitleText" class="text-sm text-emerald-100 max-w-2xl mx-auto"></p>
+        </div>
+        <div class="p-6 md:p-8 space-y-6">
+          <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div class="bg-stone-50 border border-stone-200 p-4 rounded-xl text-center min-w-0">
+              <div class="text-xs text-stone-500 font-bold mb-1">اسْمُ الطَّالِبِ وَرَقْمُهُ</div>
+              <div id="resStudentName" class="text-base font-extrabold text-[#0f3d2e] break-words"></div>
+              <div id="resStudentMeta" class="text-xs text-stone-500 mt-0.5 break-words"></div>
+            </div>
+            <div class="bg-emerald-50 border border-emerald-200 p-4 rounded-xl text-center">
+              <div class="text-xs text-emerald-800 font-bold mb-1">النَّتِيجَةُ النِّهَائِيَّةُ</div>
+              <div id="resScoreFraction" class="text-2xl font-extrabold text-[#0f3d2e] tabular-nums"></div>
+              <div id="resScorePercent" class="text-xs font-bold text-emerald-700 mt-0.5"></div>
+            </div>
+            <div class="bg-amber-50 border border-amber-200 p-4 rounded-xl text-center">
+              <div class="text-xs text-amber-900 font-bold mb-1">التَّقْدِيرُ</div>
+              <div id="resGradeWord" class="text-lg font-extrabold text-amber-900"></div>
+              <div id="resTimestamp" class="text-xs text-stone-500 mt-0.5"></div>
+            </div>
+            <div class="bg-stone-100 border border-stone-300 p-4 rounded-xl text-center min-w-0">
+              <div class="text-xs text-stone-600 font-bold mb-1">رَمْزُ التَّحَقُّقِ لِلأُسْتَاذِ</div>
+              <div id="resVerificationCode" dir="ltr" class="text-[11px] font-mono font-bold text-[#0f3d2e] select-all bg-white py-1 px-2 rounded border border-stone-300 mt-1 break-all max-h-24 overflow-y-auto"></div>
+            </div>
+          </div>
+
+          <div>
+            <h3 class="text-sm font-bold text-[#0f3d2e] mb-2.5">تَفْصِيلُ الدَّرَجَاتِ حَسَبَ الأَقْسَامِ:</h3>
+            <div id="resCategoryBreakdown" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-2.5"></div>
+          </div>
+
+          <div class="bg-[#faf7f0] border border-[#e3d7c1] rounded-xl p-4 flex flex-wrap items-center justify-between gap-3 no-print">
+            <p class="text-xs text-stone-700 max-w-md"><strong class="text-[#0f3d2e]">إِرْسَالُ النَّتِيجَةِ لِلأُسْتَاذِ:</strong> انْسَخْ بِطَاقَةَ النَّتِيجَةِ وَأَرْسِلْهَا عَبْرَ الوَاتْسَابِ أَوِ البَرِيدِ، فَيَتَحَقَّقُ مِنْهَا الأُسْتَاذُ فِي بَوَّابَتِهِ.</p>
+            <div class="flex flex-wrap items-center gap-2">
+              <button id="btnCopyResultSummary" type="button" class="bg-[#0f3d2e] hover:bg-[#1b5e47] text-white text-xs font-bold px-4 py-2.5 rounded-lg shadow transition">نَسْخُ بِطَاقَةِ النَّتِيجَةِ</button>
+              <button id="btnDownloadReport" type="button" data-file-only class="bg-[#c89d54] hover:bg-[#b58940] text-[#0f3d2e] text-xs font-bold px-4 py-2.5 rounded-lg shadow transition">تَحْمِيلُ مِلَفِّ النَّتِيجَةِ</button>
+              <button id="btnPrintResult" type="button" data-file-only class="bg-stone-200 hover:bg-stone-300 text-stone-800 text-xs font-bold px-4 py-2.5 rounded-lg transition">طِبَاعَةُ الشَّهَادَةِ</button>
+              <button id="btnRetakeQuiz" type="button" class="bg-white hover:bg-stone-100 text-stone-700 border border-stone-300 text-xs font-bold px-4 py-2.5 rounded-lg transition">إِعَادَةُ التَّدْرِيبِ</button>
+            </div>
+          </div>
+          <p id="copyToastMsg" class="hidden bg-emerald-100 border border-emerald-400 text-emerald-900 text-xs font-bold px-4 py-2.5 rounded-lg text-center" role="status"></p>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-2xl shadow-lg border border-stone-200 p-6 md:p-8 space-y-4">
+        <div class="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-stone-200">
+          <div>
+            <h3 class="text-xl font-extrabold text-[#0f3d2e]">نَمُوذَجُ الإِجَابَةِ وَالشَّرْحُ</h3>
+            <p class="text-xs text-stone-500 mt-1">رَاجِعْ إِجَابَاتِكَ مُقَارَنَةً بِالإِجَابَةِ الصَّحِيحَةِ.</p>
+          </div>
+          <div class="flex items-center gap-2 no-print" id="reviewTabs">
+            <button type="button" data-revfilter="all" class="rev-tab text-xs font-bold px-3 py-1.5 rounded-lg">الكُلُّ</button>
+            <button type="button" data-revfilter="wrong" class="rev-tab text-xs font-bold px-3 py-1.5 rounded-lg">الأَخْطَاءُ فَقَطْ</button>
+            <button type="button" data-revfilter="correct" class="rev-tab text-xs font-bold px-3 py-1.5 rounded-lg">الصَّحِيحَةُ فَقَطْ</button>
+          </div>
+        </div>
+        <div id="answerKeyContainer" class="space-y-4"></div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===================== MODAL: CONFIRM SUBMIT ===================== -->
+  <div id="modalConfirmSubmit" class="modal fixed inset-0 bg-black/60 z-50 hidden items-center justify-center p-4 no-print" role="dialog" aria-modal="true" aria-labelledby="confirmTitle">
+    <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-stone-200 space-y-4 text-center">
+      <h3 id="confirmTitle" class="text-lg font-extrabold text-stone-800">تَأْكِيدُ إِنْهَاءِ الاخْتِبَارِ</h3>
+      <p id="modalConfirmText" class="text-sm text-stone-600 leading-relaxed"></p>
+      <div class="flex items-center justify-center gap-3 pt-2">
+        <button type="button" data-close-modal class="bg-stone-200 hover:bg-stone-300 text-stone-800 font-bold text-xs px-4 py-2.5 rounded-lg">العَوْدَةُ إِلَى الأَسْئِلَةِ</button>
+        <button id="btnProceedSubmitModal" type="button" class="bg-[#0f3d2e] hover:bg-[#1b5e47] text-white font-bold text-xs px-5 py-2.5 rounded-lg shadow">نَعَمْ، اعْتَمِدِ النَّتِيجَةَ</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== MODAL: TEACHER LOGIN ===================== -->
+  <div id="modalTeacherLogin" class="modal fixed inset-0 bg-black/60 z-50 hidden items-center justify-center p-4 no-print" role="dialog" aria-modal="true" aria-labelledby="loginTitle">
+    <form id="teacherLoginForm" class="bg-white rounded-2xl max-w-sm w-full p-6 shadow-2xl border border-stone-200 space-y-4" novalidate>
+      <div class="flex items-center justify-between">
+        <h3 id="loginTitle" class="text-lg font-extrabold text-[#0f3d2e]">دُخُولُ الأُسْتَاذِ</h3>
+        <button type="button" data-close-modal class="text-stone-400 hover:text-stone-700 text-xl font-bold px-2" aria-label="إغلاق">✕</button>
+      </div>
+      <p class="text-xs text-stone-600">هَذِهِ البَوَّابَةُ خَاصَّةٌ بِأُسْتَاذِ المَادَّةِ. اكْتُبْ كَلِمَةَ المُرُورِ.</p>
+      <div>
+        <label for="inputTeacherPass" class="block text-xs font-bold text-stone-700 mb-1">كَلِمَةُ المُرُورِ</label>
+        <input id="inputTeacherPass" type="password" autocomplete="current-password" class="w-full px-3.5 py-2.5 rounded-lg border border-stone-300 focus:outline-none focus:ring-2 focus:ring-[#1b5e47] bg-white text-sm" dir="ltr" />
+      </div>
+      <p id="loginError" class="hidden text-red-600 text-xs font-bold" role="alert"></p>
+      <button id="btnTeacherLogin" type="submit" class="w-full bg-[#0f3d2e] hover:bg-[#1b5e47] text-white font-bold text-sm px-4 py-2.5 rounded-lg">دُخُولٌ</button>
+    </form>
+  </div>
+
+  <!-- ===================== MODAL: TEACHER PORTAL ===================== -->
+  <div id="modalTeacherPortal" class="modal fixed inset-0 bg-black/60 z-50 hidden items-center justify-center p-4 no-print" role="dialog" aria-modal="true" aria-labelledby="portalTitle">
+    <div class="bg-white rounded-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto p-6 shadow-2xl border border-stone-200 space-y-5">
+      <div class="flex items-start justify-between gap-3 border-b border-stone-200 pb-3">
+        <div class="min-w-0">
+          <h3 id="portalTitle" class="text-lg font-extrabold text-[#0f3d2e]">بَوَّابَةُ أُسْتَاذِ المَادَّةِ</h3>
+          <p class="text-xs text-stone-500">التَّحَقُّقُ مِنْ رُمُوزِ الطُّلَّابِ، وَسِجِلُّ الدَّرَجَاتِ المَحْفُوظُ فِي هَذَا المُتَصَفِّحِ.</p>
+        </div>
+        <div class="flex items-center gap-1 shrink-0">
+          <button id="btnLockPortal" type="button" class="text-xs bg-stone-100 hover:bg-stone-200 text-stone-700 font-bold px-3 py-1.5 rounded-lg">قَفْلُ البَوَّابَةِ</button>
+          <button type="button" data-close-modal class="text-stone-400 hover:text-stone-700 text-xl font-bold px-2" aria-label="إغلاق">✕</button>
+        </div>
+      </div>
+
+      <div class="bg-[#faf7f0] border border-[#e3d7c1] rounded-xl p-4 space-y-3">
+        <h4 class="text-sm font-bold text-[#0f3d2e]">فَحْصُ رَمْزِ تَحَقُّقِ الطَّالِبِ</h4>
+        <p class="text-xs text-stone-600">الصَقْ هُنَا الرَّمْزَ الَّذِي أَرْسَلَهُ الطَّالِبُ. تُعَادُ الدَّرَجَةُ مِنْ إِجَابَاتِهِ المَحْفُوظَةِ فِي الرَّمْزِ، وَيُكْشَفُ أَيُّ تَعْدِيلٍ يَدَوِيٍّ عَلَيْهِ.</p>
+        <div class="flex flex-wrap gap-2">
+          <textarea id="inputVerifyCode" rows="2" dir="ltr" placeholder="ADB3.…" class="flex-grow min-w-0 px-3 py-2 rounded-lg border border-stone-300 text-xs font-mono bg-white"></textarea>
+          <button id="btnCheckVerifyCode" type="button" class="bg-[#0f3d2e] hover:bg-[#1b5e47] text-white text-xs font-bold px-4 py-2 rounded-lg self-start">فَحْصُ الرَّمْزِ</button>
+        </div>
+        <div id="verifyCodeResultBox" class="hidden p-3 rounded-lg text-xs" role="status"></div>
+      </div>
+
+      <div class="space-y-2">
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <h4 class="text-sm font-bold text-[#0f3d2e]">سِجِلُّ الدَّرَجَاتِ فِي هَذَا المُتَصَفِّحِ</h4>
+          <div class="flex flex-wrap items-center gap-2">
+            <button id="btnExportCsvLog" type="button" class="text-xs bg-emerald-100 hover:bg-emerald-200 text-emerald-900 font-bold px-3 py-1 rounded"></button>
+            <button id="btnClearLog" type="button" class="text-xs bg-red-50 hover:bg-red-100 text-red-700 font-bold px-3 py-1 rounded">مَسْحُ السِّجِلِّ</button>
+          </div>
+        </div>
+        <p class="text-[11px] text-stone-500">يَضُمُّ المُحَاوَلَاتِ الَّتِي تَمَّتْ عَلَى هَذَا الجِهَازِ، وَالرُّمُوزَ الَّتِي أَضَفْتَهَا بَعْدَ فَحْصِهَا.</p>
+        <p id="logStatus" class="hidden text-xs font-bold text-emerald-800" role="status"></p>
+        <div class="overflow-x-auto border border-stone-200 rounded-xl">
+          <table class="w-full text-right text-xs">
+            <thead class="bg-stone-100 text-stone-700 font-bold border-b border-stone-200">
+              <tr><th class="p-2.5">#</th><th class="p-2.5">اسْمُ الطَّالِبِ</th><th class="p-2.5">الرَّقْمُ الجَامِعِيُّ</th><th class="p-2.5">الفَصْلُ</th><th class="p-2.5">الدَّرَجَةُ</th><th class="p-2.5">الوِسَامُ</th><th class="p-2.5">التَّارِيخُ</th><th class="p-2.5">المَصْدَرُ</th></tr>
+            </thead>
+            <tbody id="teacherLogTableBody" class="divide-y divide-stone-100"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="bg-stone-200/80 border-t border-stone-300 py-4 text-center text-xs text-stone-600 mt-8 no-print px-4">
+    منصة المراجعة التفاعلية لمادة الأدب العربي (المستوى الثالث) — الوحدات ١ – ١٥
+  </footer>
+
+<script>
+const IS_ARTIFACT = false;
+/* =========================================================================
+   SETTINGS
+   ========================================================================= */
+// Teacher password is stored only as a salted SHA-256 hash (see README note in chat).
+// To change it: open the browser console on this page and run  hashTeacherPassword("new password")
+// then paste the printed value here.
+const TEACHER_PASS_HASH = "0afeb86fcfbc4e11fff9d35710d2f7854bec26c65a9f6dac5da2dd700816babd";
+const PASS_SALT = "adab3-portal|";
+// Signs student result codes so a hand-edited code is detected.
+const SIGN_SALT = "86171cbc4be4b42bd0ea48cc";
+
+const STORAGE_KEY_LOG = "adab3_exam_prep_records_v2";
+const STORAGE_KEY_DRAFT = "adab3_exam_prep_draft_v2";
+const SESSION_KEY_TEACHER = "adab3_teacher_unlocked";
+const LETTERS = ["أ", "ب", "ج", "د"];
+
+const CATEGORIES = {
+  tarifat: { label: "التَّعْرِيفَاتُ وَالمُصْطَلَحَاتُ", hint: "مَفَاهِيمُ الأَدَبِ وَالفُنُونِ الشِّعْرِيَّةِ وَالنَّثْرِيَّةِ." },
+  ikmal:   { label: "إِكْمَالُ النُّصُوصِ وَالشِّعْرِ", hint: "إِكْمَالُ الأَبْيَاتِ وَالخُطَبِ وَالوَصَايَا وَالرَّسَائِلِ وَالأَمْثَالِ." },
+  maani:   { label: "شَرْحُ الأَبْيَاتِ وَالمَعَانِي", hint: "بَيَانُ المَقْصُودِ مِنَ الأَبْيَاتِ وَالعِبَارَاتِ." },
+  tarikh:  { label: "تَارِيخُ الأَدَبِ وَخَصَائِصُهُ", hint: "قَائِلُو النُّصُوصِ وَخَصَائِصُ العُصُورِ." },
+  tartib:  { label: "تَرْتِيبُ الأَبْيَاتِ وَالنُّصُوصِ", hint: "تَرْتِيبُ أَبْيَاتِ القَصَائِدِ وَالعُصُورِ وَالمَرَاحِلِ." }
+};
+
+const MEDALS = [
+  { min: 90, icon: "👑", title: "وِسَامُ نَابِغَةِ الأَدَبِ العَرَبِيِّ (الذَّهَبِيُّ)", grade: "مُمْتَازٌ مَعَ مَرْتَبَةِ الشَّرَفِ", range: "مِنْ ٩٠٪ إِلَى ١٠٠٪",
+    subtitle: "أَحْسَنْتَ وَأَجَدْتَ! أَظْهَرْتَ إِتْقَاناً عَالِياً لِنُصُوصِ الأَدَبِ الجَاهِلِيِّ وَالإِسْلَامِيِّ وَالأُمَوِيِّ وَمَعَانِيهَا وَتَارِيخِهَا.", border: "border-amber-300", text: "text-amber-900" },
+  { min: 80, icon: "🥈", title: "وِسَامُ الأَدِيبِ البَارِعِ (الفِضِّيُّ)", grade: "جَيِّدٌ جِدّاً", range: "مِنْ ٨٠٪ إِلَى ٨٩٪",
+    subtitle: "مُسْتَوًى مُتَمَيِّزٌ! أَنْتَ مُسْتَعِدٌّ لِلِاخْتِبَارِ النِّهَائِيِّ مَعَ مُرَاجَعَةٍ يَسِيرَةٍ لِبَعْضِ الأَسْئِلَةِ.", border: "border-stone-300", text: "text-stone-800" },
+  { min: 70, icon: "🥉", title: "وِسَامُ الطَّالِبِ المُجْتَهِدِ (البُرُونْزِيُّ)", grade: "جَيِّدٌ", range: "مِنْ ٧٠٪ إِلَى ٧٩٪",
+    subtitle: "جُهْدٌ طَيِّبٌ! رَاجِعْ نَمُوذَجَ الإِجَابَةِ فِي الأَسْفَلِ لِتَثْبِيتِ الأَبْيَاتِ وَالتَّعْرِيفَاتِ.", border: "border-orange-300", text: "text-orange-900" },
+  { min: 0, icon: "🌱", title: "وِسَامُ المُثَابَرَةِ وَالمُرَاجَعَةِ", grade: "مَقْبُولٌ — يَحْتَاجُ إِلَى مُرَاجَعَةٍ", range: "لِإِتْمَامِ المُرَاجَعَةِ",
+    subtitle: "بِدَايَةٌ طَيِّبَةٌ! اقْرَأِ الشَّرْحَ فِي الأَسْفَلِ ثُمَّ أَعِدِ المُحَاوَلَةَ لِتَنَالَ الوِسَامَ الذَّهَبِيَّ.", border: "border-emerald-300", text: "text-emerald-900" }
+];
+
+/* =========================================================================
+   QUESTION BANK
+   ========================================================================= */
+const QUESTIONS = [
+  {
+    "id": 1,
+    "category": "tarifat",
+    "categoryLabel": "التَّعْرِيفَاتُ وَالمُصْطَلَحَاتُ",
+    "wahdah": "الوَحْدَةُ الأُولَى — مُقَدِّمَةٌ فِي الأَدَبِ",
+    "prompt": "مَا المَقْصُودُ بِـ «الأَدَبِ بِمَعْنَاهُ الخَاصِّ» كَمَا دَرَسْتَ فِي الوَحْدَةِ الأُولَى؟",
+    "type": "mcq",
+    "options": [
+      "هُوَ التَّمَتُّعُ بِالأَخْلَاقِ الكَرِيمَةِ وَالسُّلُوكِ الحَسَنِ فِي التَّعَامُلِ مَعَ النَّاسِ",
+      "هُوَ الكَلَامُ الجَمِيلُ البَلِيغُ المُؤَثِّرُ فِي النَّفْسِ شِعْراً كَانَ أَوْ نَثْراً",
+      "هُوَ مَعْرِفَةُ أَحْوَالِ الأُدَبَاءِ وَالعُصُورِ الزَّمَنِيَّةِ الَّتِي عَاشُوا فِيهَا",
+      "هُوَ الكَلَامُ الَّذِي يَخْلُو مِنَ الخَيَالِ وَالعَاطِفَةِ وَيُخَاطِبُ العَقْلَ فَقَطْ"
+    ],
+    "answer": 1,
+    "explanation": "الأَدَبُ بِمَعْنَاهُ العَامِّ هُوَ التَّمَتُّعُ بِالأَخْلَاقِ الكَرِيمَةِ، أَمَّا بِمَعْنَاهُ الخَاصِّ فَهُوَ الكَلَامُ الجَمِيلُ البَلِيغُ المُؤَثِّرُ فِي النَّفْسِ."
+  },
+  {
+    "id": 2,
+    "category": "tarifat",
+    "categoryLabel": "التَّعْرِيفَاتُ وَالمُصْطَلَحَاتُ",
+    "wahdah": "الوَحْدَةُ الأُولَى — أَنْوَاعُ الأَدَبِ",
+    "prompt": "مَا التَّعْرِيفُ الصَّحِيحُ لِـ «النَّثْرِ» فِي الاصْطِلَاحِ الأَدَبِيِّ؟",
+    "type": "mcq",
+    "options": [
+      "هُوَ الكَلَامُ المَوْزُونُ المُقَفَّى الَّذِي يُعَبِّرُ عَنِ العَاطِفَةِ",
+      "هُوَ الكَلَامُ البَلِيغُ الَّذِي لَا يَتَقَيَّدُ بِوَزْنٍ وَلَا قَافِيَةٍ",
+      "هُوَ القَصَائِدُ الطِّوَالُ الَّتِي قِيلَتْ فِي العَصْرِ الجَاهِلِيِّ",
+      "هُوَ ذِكْرُ مَحَاسِنِ المَيِّتِ وَالتَّحَسُّرُ عَلَيْهِ بَعْدَ وَفَاتِهِ"
+    ],
+    "answer": 1,
+    "explanation": "الشِّعْرُ كَلَامٌ لَهُ وَزْنٌ وَقَافِيَةٌ، أَمَّا النَّثْرُ فَهُوَ كَلَامٌ بَلِيغٌ لَيْسَ لَهُ وَزْنٌ وَلَا قَافِيَةٌ كَالخُطَبِ وَالوَصَايَا وَالرَّسَائِلِ."
+  },
+  {
+    "id": 3,
+    "category": "tarifat",
+    "categoryLabel": "التَّعْرِيفَاتُ وَالمُصْطَلَحَاتُ",
+    "wahdah": "الوَحْدَةُ الأُولَى — تَارِيخُ الأَدَبِ",
+    "prompt": "مَا المَقْصُودُ بِـ «تَارِيخِ الأَدَبِ» كَمَا دَرَسْتَ فِي الوَحْدَةِ الأُولَى؟",
+    "type": "mcq",
+    "options": [
+      "العِلْمُ الَّذِي يَبْحَثُ فِي قَوَاعِدِ الإِعْرَابِ وَأَبْنِيَةِ الكَلِمَاتِ وَصِيَغِهَا",
+      "مَا نَعْرِفُ بِهِ حَالَ الأَدَبِ وَالأُدَبَاءِ، وَزَمَنَهُمْ وَمَكَانَهُمْ",
+      "دَوَاوِينُ تَجْمَعُ قَصَائِدَ الشُّعَرَاءِ الجَاهِلِيِّينَ دُونَ غَيْرِهِمْ",
+      "الكَلَامُ البَلِيغُ الَّذِي يُلْقَى أَمَامَ الجُمْهُورِ لِإِقْنَاعِهِمْ"
+    ],
+    "answer": 1,
+    "explanation": "تَارِيخُ الأَدَبِ: مَا نَعْرِفُ بِهِ حَالَ الأَدَبِ، وَأَسْمَاءَ الأُدَبَاءِ وَحَيَاتَهُمْ وَأَدَبَهُمْ، وَالزَّمَنَ وَالمَكَانَ اللَّذَيْنِ عَاشُوا فِيهِمَا."
+  },
+  {
+    "id": 4,
+    "category": "tarikh",
+    "categoryLabel": "تَارِيخُ الأَدَبِ وَخَصَائِصُهُ",
+    "wahdah": "الوَحْدَةُ الأُولَى — العُصُورُ الأَدَبِيَّةُ",
+    "prompt": "فِي أَيِّ سَنَةٍ هِجْرِيَّةٍ بَدَأَ «العَصْرُ العَبَّاسِيُّ»، وَبِمَاذَا انْتَهَتِ الخِلَافَةُ العَبَّاسِيَّةُ سَنَةَ ٦٥٦هـ؟",
+    "type": "mcq",
+    "options": [
+      "بَدَأَ سَنَةَ ٤١هـ وَانْتَهَى بِفَتْحِ الأَنْدَلُسِ",
+      "بَدَأَ سَنَةَ ١٣٢هـ وَانْتَهَى بِغَزْوِ المَغُولِ لِبَغْدَادَ سَنَةَ ٦٥٦هـ",
+      "بَدَأَ سَنَةَ ١هـ وَانْتَهَى بِمَقْتَلِ الخَلِيفَةِ عُثْمَانَ بْنِ عَفَّانَ سَنَةَ ٣٥هـ",
+      "بَدَأَ سَنَةَ ٦٥٦هـ وَانْتَهَى سَنَةَ ١٢١٣هـ فِي العَصْرِ الحَدِيثِ"
+    ],
+    "answer": 1,
+    "explanation": "يَمْتَدُّ العَصْرُ العَبَّاسِيُّ مِنْ سَنَةِ ١٣٢هـ إِلَى سَنَةِ ٦٥٦هـ حِينَ سَقَطَتْ بَغْدَادُ بِغَزْوِ المَغُولِ."
+  },
+  {
+    "id": 5,
+    "category": "tartib",
+    "categoryLabel": "تَرْتِيبُ الأَبْيَاتِ وَالنُّصُوصِ",
+    "wahdah": "الوَحْدَةُ الأُولَى — العُصُورُ الأَدَبِيَّةُ (التَّدْرِيبُ الخَامِسُ ص ٢٢)",
+    "prompt": "رَتِّبِ العُصُورَ الأَدَبِيَّةَ التَّالِيَةَ تَرْتِيباً زَمَنِيّاً صَحِيحاً مِنَ الأَقْدَمِ إِلَى الأَحْدَثِ (اسْتَخْدِمِ الأَسْهُمَ ⬆️ ⬇️ لِتَحْرِيكِ العُنْصُرِ):",
+    "type": "order",
+    "correctOrder": [
+      "العَصْرُ الجَاهِلِيُّ (قَبْلَ البَعْثَةِ بِنَحْوِ ١٥٠ سَنَةً)",
+      "عَصْرُ صَدْرِ الإِسْلَامِ (١هـ – ٤٠هـ)",
+      "العَصْرُ الأُمَوِيُّ (٤١هـ – ١٣٢هـ)",
+      "العَصْرُ العَبَّاسِيُّ (١٣٢هـ – ٦٥٦هـ)",
+      "العَصْرُ الوَسِيطُ وَيَلِيهِ العَصْرُ الحَدِيثُ (٦٥٦هـ – الآنَ)"
+    ],
+    "explanation": "تَبْدَأُ العُصُورُ الأَدَبِيَّةُ بِالعَصْرِ الجَاهِلِيِّ، ثُمَّ عَصْرِ صَدْرِ الإِسْلَامِ، ثُمَّ العَصْرِ الأُمَوِيِّ، ثُمَّ العَصْرِ العَبَّاسِيِّ، ثُمَّ العَصْرِ الوَسِيطِ، وَتَنْتَهِي بِالعَصْرِ الحَدِيثِ."
+  },
+  {
+    "id": 6,
+    "category": "tarifat",
+    "categoryLabel": "التَّعْرِيفَاتُ وَالمُصْطَلَحَاتُ",
+    "wahdah": "الوَحْدَةُ الثَّانِيَةُ — خُطْبَةُ هَانِئِ بْنِ قَبِيصَةَ",
+    "prompt": "مَا مَعْنَى كَلِمَتَيِ «المَنِيَّةِ» وَ«الدَّنِيَّةِ» فِي قَوْلِ هَانِئِ بْنِ قَبِيصَةَ: «المَنِيَّةُ وَلَا الدَّنِيَّةُ»؟",
+    "type": "mcq",
+    "options": [
+      "المَنِيَّةُ: الأُمْنِيَةُ، وَالدَّنِيَّةُ: الحَيَاةُ الدُّنْيَا",
+      "المَنِيَّةُ: المَوْتُ، وَالدَّنِيَّةُ: الذُّلُّ وَالعَارُ",
+      "المَنِيَّةُ: الغَنِيمَةُ، وَالدَّنِيَّةُ: الهَزِيمَةُ",
+      "المَنِيَّةُ: القُوَّةُ، وَالدَّنِيَّةُ: الفَقْرُ وَالحَاجَةُ"
+    ],
+    "answer": 1,
+    "explanation": "المَنِيَّةُ: المَوْتُ، وَالدَّنِيَّةُ: الذُّلُّ وَالمَهَانَةُ؛ أَيْ: نَخْتَارُ المَوْتَ وَلَا نَرْضَى بِالذُّلِّ."
+  },
+  {
+    "id": 7,
+    "category": "ikmal",
+    "categoryLabel": "إِكْمَالُ النُّصُوصِ النَّاقِصَةِ",
+    "wahdah": "الوَحْدَةُ الثَّانِيَةُ — خُطْبَةُ هَانِئِ بْنِ قَبِيصَةَ",
+    "prompt": "أَكْمِلِ العِبَارَةَ النَّاقِصَةَ مِنْ خُطْبَةِ هَانِئِ بْنِ قَبِيصَةَ يَوْمَ ذِي قَارٍ: «يَا مَعْشَرَ بَكْرٍ، هَالِكٌ مَعْذُورٌ خَيْرٌ مِنْ نَاجٍ فَرُورٍ، إِنَّ الحَذَرَ لَا يُنْجِي مِنَ القَدَرِ، وَإِنَّ الصَّبْرَ مِنْ أَسْبَابِ الظَّفَرِ، المَنِيَّةُ وَلَا الدَّنِيَّةُ، اسْتِقْبَالُ المَوْتِ خَيْرٌ مِنِ اسْتِدْبَارِهِ، وَالطَّعْنُ فِي ثُغَرِ النُّحُورِ أَكْرَمُ مِنْهُ فِي ............»:",
+    "type": "mcq",
+    "options": [
+      "المَيَادِينِ وَالقُصُورِ",
+      "الأَعْجَازِ وَالظُّهُورِ",
+      "الصُّدُورِ وَالعُيُونِ",
+      "الرُّؤُوسِ وَالأَعْنَاقِ"
+    ],
+    "answer": 1,
+    "explanation": "نَصُّ الخُطْبَةِ: «وَالطَّعْنُ فِي ثُغَرِ النُّحُورِ، أَكْرَمُ مِنْهُ فِي الأَعْجَازِ وَالظُّهُورِ، يَا آلَ بَكْرٍ: قَاتِلُوا فَمَا لِلْمَنَايَا مِنْ بُدٍّ»."
+  },
+  {
+    "id": 8,
+    "category": "maani",
+    "categoryLabel": "شَرْحُ الأَبْيَاتِ وَالمَعَانِي",
+    "wahdah": "الوَحْدَةُ الثَّانِيَةُ — خُطْبَةُ هَانِئِ بْنِ قَبِيصَةَ",
+    "prompt": "مَا العِبَارَةُ الَّتِي وَرَدَتْ فِي خُطْبَةِ هَانِئِ بْنِ قَبِيصَةَ وَتُوَافِقُ فِي مَعْنَاهَا الشَّطْرَ الثَّانِيَ مِنْ قَوْلِ الشَّاعِرِ:\n«وَإِذَا لَمْ يَكُنْ مِنَ المَوْتِ بُدٌّ *** فَمِنَ العَارِ أَنْ تَمُوتَ جَبَانَا»؟",
+    "type": "mcq",
+    "options": [
+      "«إِنَّ الحَذَرَ لَا يُنْجِي مِنَ القَدَرِ»",
+      "«وَإِنَّ الصَّبْرَ مِنْ أَسْبَابِ الظَّفَرِ»",
+      "«اسْتِقْبَالُ المَوْتِ خَيْرٌ مِنِ اسْتِدْبَارِهِ»",
+      "«قَاتِلُوا فَمَا لِلْمَنَايَا مِنْ بُدٍّ»"
+    ],
+    "answer": 2,
+    "explanation": "قَوْلُ هَانِئٍ: «اسْتِقْبَالُ المَوْتِ خَيْرٌ مِنِ اسْتِدْبَارِهِ» يُوَافِقُ «فَمِنَ العَارِ أَنْ تَمُوتَ جَبَانَا»؛ فَالمَوْتُ مُقْبِلاً عَلَى العَدُوِّ أَكْرَمُ مِنَ المَوْتِ فَارّاً مِنْهُ. أَمَّا «قَاتِلُوا فَمَا لِلْمَنَايَا مِنْ بُدٍّ» فَيُوَافِقُ الشَّطْرَ الأَوَّلَ."
+  },
+  {
+    "id": 9,
+    "category": "tartib",
+    "categoryLabel": "تَرْتِيبُ الأَبْيَاتِ وَالنُّصُوصِ",
+    "wahdah": "الوَحْدَةُ الثَّانِيَةُ — خُطْبَةُ هَانِئِ بْنِ قَبِيصَةَ",
+    "prompt": "رَتِّبْ جُمَلَ خُطْبَةِ هَانِئِ بْنِ قَبِيصَةَ الشَّيْبَانِيِّ حَسَبَ تَسَلْسُلِهَا فِي النَّصِّ:",
+    "type": "order",
+    "correctOrder": [
+      "يَا مَعْشَرَ بَكْرٍ، هَالِكٌ مَعْذُورٌ خَيْرٌ مِنْ نَاجٍ فَرُورٍ",
+      "إِنَّ الحَذَرَ لَا يُنْجِي مِنَ القَدَرِ، وَإِنَّ الصَّبْرَ مِنْ أَسْبَابِ الظَّفَرِ",
+      "المَنِيَّةُ وَلَا الدَّنِيَّةُ، اسْتِقْبَالُ المَوْتِ خَيْرٌ مِنِ اسْتِدْبَارِهِ",
+      "وَالطَّعْنُ فِي ثُغَرِ النُّحُورِ أَكْرَمُ مِنْهُ فِي الأَعْجَازِ وَالظُّهُورِ، يَا آلَ بَكْرٍ: قَاتِلُوا فَمَا لِلْمَنَايَا مِنْ بُدٍّ"
+    ],
+    "explanation": "يَبْدَأُ هَانِئٌ بِتَفْضِيلِ المَوْتِ بِعُذْرٍ عَلَى النَّجَاةِ بِالفِرَارِ، ثُمَّ يُقَرِّرُ أَنَّ الحَذَرَ لَا يَدْفَعُ القَدَرَ، ثُمَّ يُفَضِّلُ المَوْتَ عَلَى الذُّلِّ، وَيَخْتِمُ بِالأَمْرِ بِالقِتَالِ."
+  },
+  {
+    "id": 10,
+    "category": "tarifat",
+    "categoryLabel": "التَّعْرِيفَاتُ وَالمُصْطَلَحَاتُ",
+    "wahdah": "الوَحْدَةُ الثَّالِثَةُ — وَصِيَّةُ ذِي الإِصْبَعِ العَدْوَانِيِّ",
+    "prompt": "مَا المُصْطَلَحُ البَلَاغِيُّ الَّذِي يُطْلَقُ عَلَى «اتِّفَاقِ الجُمَلِ النَّثْرِيَّةِ فِي الحَرْفِ الأَخِيرِ مِنْهَا» كَمَا فِي قَوْلِهِ (يُحِبُّوكَ - يَرْفَعُوكَ - يُطِيعُوكَ)؟",
+    "type": "mcq",
+    "options": [
+      "المُعَلَّقَاتُ",
+      "السَّجْعُ",
+      "النَّقَائِضُ",
+      "التَّوْقِيعَاتُ"
+    ],
+    "answer": 1,
+    "explanation": "اتِّفَاقُ الفَوَاصِلِ أَوِ الجُمَلِ النَّثْرِيَّةِ فِي الحَرْفِ الأَخِيرِ يُسَمَّى «السَّجْعَ»، وَهُوَ مِنْ أَبْرَزِ خَصَائِصِ الخُطَبِ وَالوَصَايَا الجَاهِلِيَّةِ."
+  },
+  {
+    "id": 11,
+    "category": "ikmal",
+    "categoryLabel": "إِكْمَالُ النُّصُوصِ النَّاقِصَةِ",
+    "wahdah": "الوَحْدَةُ الثَّالِثَةُ — وَصِيَّةُ ذِي الإِصْبَعِ العَدْوَانِيِّ",
+    "prompt": "أَكْمِلْ قَوْلَ ذِي الإِصْبَعِ العَدْوَانِيِّ فِي وَصِيَّتِهِ لِابْنِهِ أُسَيْدٍ: «أَلِنْ جَانِبَكَ لِقَوْمِكَ يُحِبُّوكَ، وَتَوَاضَعْ لَهُمْ يَرْفَعُوكَ، وَابْسُطْ لَهُمْ وَجْهَكَ يُطِيعُوكَ، وَلَا ............ عَلَيْهِمْ بِشَيْءٍ يُسَوِّدُوكَ»:",
+    "type": "mcq",
+    "options": [
+      "تَسْتَأْثِرْ",
+      "تَتَكَبَّرْ",
+      "تَبْخَلْ",
+      "تَغْضَبْ"
+    ],
+    "answer": 0,
+    "explanation": "قَالَ ذُو الإِصْبَعِ: «وَلَا تَسْتَأْثِرْ عَلَيْهِمْ بِشَيْءٍ يُسَوِّدُوكَ»، وَالاسْتِئْثَارُ هُوَ اخْتِصَاصُ النَّفْسِ بِالشَّيْءِ دُونَ الآخَرِينَ."
+  },
+  {
+    "id": 12,
+    "category": "ikmal",
+    "categoryLabel": "إِكْمَالُ النُّصُوصِ النَّاقِصَةِ",
+    "wahdah": "الوَحْدَةُ الثَّالِثَةُ — وَصِيَّةُ ذِي الإِصْبَعِ العَدْوَانِيِّ",
+    "prompt": "أَكْمِلْ خِتَامَ وَصِيَّةِ ذِي الإِصْبَعِ العَدْوَانِيِّ: «وَاسْمَحْ بِمَالِكَ، وَأَعْزِزْ جَارَكَ، وَأَعِنْ مَنِ اسْتَعَانَ بِكَ، وَأَكْرِمْ ضَيْفَكَ، وَصُنْ وَجْهَكَ عَنْ ............ أَحَدٍ شَيْئاً، فَبِذَلِكَ يَتِمُّ سُؤْدَدُكَ»:",
+    "type": "mcq",
+    "options": [
+      "مُعَادَاةِ",
+      "مَسْأَلَةِ",
+      "مُشَاوَرَةِ",
+      "مُجَادَلَةِ"
+    ],
+    "answer": 1,
+    "explanation": "النَّصُّ الأَصْلِيُّ: «وَصُنْ وَجْهَكَ عَنْ مَسْأَلَةِ أَحَدٍ شَيْئاً، فَبِذَلِكَ يَتِمُّ سُؤْدَدُكَ»، وَالمَسْأَلَةُ هُنَا طَلَبُ العَطَاءِ مِنَ الغَيْرِ."
+  },
+  {
+    "id": 13,
+    "category": "ikmal",
+    "categoryLabel": "إِكْمَالُ النُّصُوصِ النَّاقِصَةِ",
+    "wahdah": "الوَحْدَةُ الثَّالِثَةُ — وَصِيَّةُ ذِي الإِصْبَعِ العَدْوَانِيِّ",
+    "prompt": "أَكْمِلْ قَوْلَ ذِي الإِصْبَعِ العَدْوَانِيِّ فِي وَصِيَّتِهِ لِابْنِهِ أُسَيْدٍ: «وَأَكْرِمْ صِغَارَهُمْ كَمَا تُكْرِمُ كِبَارَهُمْ يُكْرِمْكَ كِبَارُهُمْ، وَيَكْبُرْ عَلَى ............ صِغَارُهُمْ»:",
+    "type": "mcq",
+    "options": [
+      "مَوَدَّتِكَ",
+      "خِدْمَتِكَ",
+      "هَيْبَتِكَ",
+      "مَشُورَتِكَ"
+    ],
+    "answer": 0,
+    "explanation": "النَّصُّ: «وَيَكْبُرْ عَلَى مَوَدَّتِكَ صِغَارُهُمْ»؛ أَيْ: يَنْشَأُ الصِّغَارُ عَلَى حُبِّكَ."
+  },
+  {
+    "id": 14,
+    "category": "maani",
+    "categoryLabel": "شَرْحُ الأَبْيَاتِ وَالمَعَانِي",
+    "wahdah": "الوَحْدَةُ الثَّالِثَةُ — وَصِيَّةُ ذِي الإِصْبَعِ العَدْوَانِيِّ",
+    "prompt": "أَيُّ عِبَارَةٍ مِنْ وَصِيَّةِ ذِي الإِصْبَعِ العَدْوَانِيِّ تَتَوَافَقُ مَعَ قَوْلِ الرَّسُولِ ﷺ: «مَنْ كَانَ يُؤْمِنُ بِاللَّهِ وَاليَوْمِ الآخِرِ فَلْيُكْرِمْ جَارَهُ، وَمَنْ كَانَ يُؤْمِنُ بِاللَّهِ وَاليَوْمِ الآخِرِ فَلْيُكْرِمْ ضَيْفَهُ»؟",
+    "type": "mcq",
+    "options": [
+      "«أَلِنْ جَانِبَكَ لِقَوْمِكَ يُحِبُّوكَ، وَتَوَاضَعْ لَهُمْ يَرْفَعُوكَ»",
+      "«وَأَعْزِزْ جَارَكَ، وَأَعِنْ مَنِ اسْتَعَانَ بِكَ، وَأَكْرِمْ ضَيْفَكَ»",
+      "«وَابْسُطْ لَهُمْ وَجْهَكَ يُطِيعُوكَ، وَلَا تَسْتَأْثِرْ عَلَيْهِمْ بِشَيْءٍ»",
+      "«وَصُنْ وَجْهَكَ عَنْ مَسْأَلَةِ أَحَدٍ شَيْئاً، فَبِذَلِكَ يَتِمُّ سُؤْدَدُكَ»"
+    ],
+    "answer": 1,
+    "explanation": "«وَأَعْزِزْ جَارَكَ… وَأَكْرِمْ ضَيْفَكَ» تُوَافِقُ الأَمْرَ النَّبَوِيَّ بِإِكْرَامِ الجَارِ وَالضَّيْفِ."
+  },
+  {
+    "id": 15,
+    "category": "tartib",
+    "categoryLabel": "تَرْتِيبُ الأَبْيَاتِ وَالنُّصُوصِ",
+    "wahdah": "الوَحْدَةُ الثَّالِثَةُ — وَصِيَّةُ ذِي الإِصْبَعِ العَدْوَانِيِّ",
+    "prompt": "رَتِّبْ عِبَارَاتِ وَصِيَّةِ ذِي الإِصْبَعِ العَدْوَانِيِّ لِابْنِهِ أُسَيْدٍ حَسَبَ وُرُودِهَا فِي النَّصِّ:",
+    "type": "order",
+    "correctOrder": [
+      "أَلِنْ جَانِبَكَ لِقَوْمِكَ يُحِبُّوكَ، وَتَوَاضَعْ لَهُمْ يَرْفَعُوكَ",
+      "وَابْسُطْ لَهُمْ وَجْهَكَ يُطِيعُوكَ، وَلَا تَسْتَأْثِرْ عَلَيْهِمْ بِشَيْءٍ يُسَوِّدُوكَ",
+      "وَأَكْرِمْ صِغَارَهُمْ كَمَا تُكْرِمُ كِبَارَهُمْ يُكْرِمْكَ كِبَارُهُمْ، وَيَكْبُرْ عَلَى مَوَدَّتِكَ صِغَارُهُمْ",
+      "وَاسْمَحْ بِمَالِكَ، وَأَعْزِزْ جَارَكَ، وَأَعِنْ مَنِ اسْتَعَانَ بِكَ، وَأَكْرِمْ ضَيْفَكَ، وَصُنْ وَجْهَكَ عَنْ مَسْأَلَةِ أَحَدٍ شَيْئاً، فَبِذَلِكَ يَتِمُّ سُؤْدَدُكَ"
+    ],
+    "explanation": "تَبْدَأُ الوَصِيَّةُ بِلِينِ الجَانِبِ وَالتَّوَاضُعِ، ثُمَّ بَسْطِ الوَجْهِ وَتَرْكِ الِاسْتِئْثَارِ، ثُمَّ إِكْرَامِ الصِّغَارِ وَالكِبَارِ، وَتُخْتَمُ بِالكَرَمِ وَإِعْزَازِ الجَارِ وَإِكْرَامِ الضَّيْفِ وَصَوْنِ الوَجْهِ."
+  },
+  {
+    "id": 16,
+    "category": "ikmal",
+    "categoryLabel": "إِكْمَالُ النُّصُوصِ النَّاقِصَةِ",
+    "wahdah": "الوَحْدَةُ الرَّابِعَةُ — الحِكَمُ وَالأَمْثَالُ",
+    "prompt": "أَكْمِلِ الحِكْمَةَ العَرَبِيَّةَ المَشْهُورَةَ الَّتِي تُحَذِّرُ مِنَ الحِرْصِ الزَّائِدِ عَلَى المَالِ وَالجَاهِ: «مَصَارِعُ الرِّجَالِ تَحْتَ ............»:",
+    "type": "mcq",
+    "options": [
+      "ظِلَالِ السُّيُوفِ",
+      "بُرُوقِ الطَّمَعِ",
+      "أَلْسِنَةِ الشُّعَرَاءِ",
+      "أَسِنَّةِ الرِّمَاحِ"
+    ],
+    "answer": 1,
+    "explanation": "الحِكْمَةُ هِيَ: «مَصَارِعُ الرِّجَالِ تَحْتَ بُرُوقِ الطَّمَعِ»، وَتُقَالُ لِلتَّحْذِيرِ مِنَ الطَّمَعِ حَتَّى لَا يَهْلِكَ الإِنْسَانُ بِسَبَبِهِ."
+  },
+  {
+    "id": 17,
+    "category": "ikmal",
+    "categoryLabel": "إِكْمَالُ النُّصُوصِ النَّاقِصَةِ",
+    "wahdah": "الوَحْدَةُ الرَّابِعَةُ — الحِكَمُ وَالأَمْثَالُ",
+    "prompt": "أَكْمِلِ البَيْتَ الَّذِي ذَهَبَ مَثَلاً عِنْدَ العَرَبِ: «تُسَائِلُ عَنْ حُصَيْنٍ كُلَّ رَكْبٍ *** وَعِنْدَ ............ الخَبَرُ اليَقِينُ»:",
+    "type": "mcq",
+    "options": [
+      "قُرَيْشٍ",
+      "جُهَيْنَةَ",
+      "ثَقِيفٍ",
+      "تَمِيمٍ"
+    ],
+    "answer": 1,
+    "explanation": "البَيْتُ لِلْأَخْنَسِ الجُهَنِيِّ: «وَعِنْدَ جُهَيْنَةَ الخَبَرُ اليَقِينُ»، وَيُضْرَبُ لِمَنْ يَعْرِفُ حَقِيقَةَ الأَمْرِ."
+  },
+  {
+    "id": 18,
+    "category": "maani",
+    "categoryLabel": "شَرْحُ الأَبْيَاتِ وَالمَعَانِي",
+    "wahdah": "الوَحْدَةُ الرَّابِعَةُ — الحِكَمُ وَالأَمْثَالُ",
+    "prompt": "لِمَنْ يُضْرَبُ المَثَلُ العَرَبِيُّ المَشْهُورُ: «الصَّيْفَ ضَيَّعْتِ اللَّبَنَ»؟",
+    "type": "mcq",
+    "options": [
+      "لِمَنْ يَلُومُ غَيْرَهُ عَلَى أَمْرٍ قَدِ انْتَهَى وَفَاتَ أَوَانُهُ",
+      "لِمَنْ يُفَرِّطُ فِي الشَّيْءِ ثُمَّ يَطْلُبُهُ بَعْدَ فَوَاتِ وَقْتِهِ",
+      "لِمَنْ يَعْرِفُ حَقِيقَةَ أَمْرٍ يَجْهَلُهُ النَّاسُ جَمِيعاً",
+      "لِمَنْ يَلْجَأُ إِلَى القَسْوَةِ قَبْلَ تَجْرِبَةِ الحُلُولِ السَّهْلَةِ"
+    ],
+    "answer": 1,
+    "explanation": "يُضْرَبُ مَثَلُ «الصَّيْفَ ضَيَّعْتِ اللَّبَنَ» لِمَنْ فَرَّطَ فِي الشَّيْءِ حِينَ كَانَ فِي يَدِهِ ثُمَّ عَادَ يَطْلُبُهُ بَعْدَ فَوَاتِ وَقْتِهِ، أَمَّا «سَبَقَ السَّيْفُ العَذْلَ» فَيُضْرَبُ لِلَّوْمِ بَعْدَ فَوَاتِ الأَوَانِ."
+  },
+  {
+    "id": 19,
+    "category": "maani",
+    "categoryLabel": "شَرْحُ الأَبْيَاتِ وَالمَعَانِي",
+    "wahdah": "الوَحْدَةُ الرَّابِعَةُ — الحِكَمُ وَالأَمْثَالُ",
+    "prompt": "مَا المَقْصُودُ بِالحِكْمَةِ العَرَبِيَّةِ: «آخِرُ الدَّوَاءِ الكَيُّ»؟",
+    "type": "mcq",
+    "options": [
+      "أَنَّ الكَيَّ بِالنَّارِ أَوَّلُ عِلَاجٍ يَجِبُ اسْتِعْمَالُهُ عِنْدَ المَرَضِ",
+      "أَنْ يَبْدَأَ بِالحَلِّ السَّهْلِ، وَلَا يَلْجَأَ إِلَى الشِّدَّةِ إِلَّا أَخِيراً",
+      "أَنْ يَتْرُكَ المَرِيضُ التَّدَاوِيَ كُلَّهُ، وَيَصْبِرَ عَلَى أَلَمِهِ حَتَّى يُشْفَى",
+      "أَنَّ هِجَاءَ الشُّعَرَاءِ أَشَدُّ إِيلَاماً عَلَى النَّفْسِ مِنَ الكَيِّ بِالنَّارِ"
+    ],
+    "answer": 1,
+    "explanation": "يُجَرِّبُ الإِنْسَانُ الحُلُولَ السَّهْلَةَ اللَّيِّنَةَ أَوَّلاً، وَلَا يَلْجَأُ إِلَى الشِّدَّةِ إِلَّا فِي آخِرِ الأَمْرِ، كَمَا كَانَ الكَيُّ آخِرَ مَا يُعَالَجُ بِهِ."
+  },
+  {
+    "id": 20,
+    "category": "tarifat",
+    "categoryLabel": "التَّعْرِيفَاتُ وَالمُصْطَلَحَاتُ",
+    "wahdah": "الوَحْدَةُ الخَامِسَةُ — مِنْ مُعَلَّقَةِ زُهَيْرِ بْنِ أَبِي سُلْمَى",
+    "prompt": "لِمَاذَا سُمِّيَتْ قَصَائِدُ الشَّاعِرِ الجَاهِلِيِّ زُهَيْرِ بْنِ أَبِي سُلْمَى بِـ «الحَوْلِيَّاتِ»؟",
+    "type": "mcq",
+    "options": [
+      "لِأَنَّهَا تَتَحَدَّثُ عَنْ حُرُوبٍ دَامَتْ أَرْبَعِينَ حَوْلاً بَيْنَ القَبَائِلِ",
+      "لِأَنَّهُ كَانَ يُهَذِّبُ القَصِيدَةَ حَوْلاً كَامِلاً قَبْلَ أَنْ يُذِيعَهَا",
+      "لِأَنَّهَا كُتِبَتْ بِمَاءِ الذَّهَبِ وَعُلِّقَتْ عَلَى الكَعْبَةِ حَوْلاً",
+      "لِأَنَّهُ قَالَهَا بَعْدَ أَنْ بَلَغَ ثَمَانِينَ حَوْلاً مِنْ عُمُرِهِ"
+    ],
+    "answer": 1,
+    "explanation": "الحَوْلُ هُوَ السَّنَةُ؛ وَقَدْ سُمِّيَتْ قَصَائِدُ زُهَيْرٍ بِالحَوْلِيَّاتِ لِأَنَّهُ كَانَ يُؤَلِّفُ القَصِيدَةَ وَيُهَذِّبُهَا وَيُرَاجِعُهَا فِي سَنَةٍ كَامِلَةٍ قَبْلَ إِذَاعَتِهَا."
+  },
+  {
+    "id": 21,
+    "category": "ikmal",
+    "categoryLabel": "إِكْمَالُ النُّصُوصِ النَّاقِصَةِ",
+    "wahdah": "الوَحْدَةُ الخَامِسَةُ — مِنْ مُعَلَّقَةِ زُهَيْرِ بْنِ أَبِي سُلْمَى",
+    "prompt": "أَكْمِلِ الشَّطْرَ الثَّانِيَ مِنْ بَيْتِ زُهَيْرِ بْنِ أَبِي سُلْمَى:\n«وَأَعْلَمُ مَا فِي اليَوْمِ وَالأَمْسِ قَبْلَهُ *** ..............................»:",
+    "type": "mcq",
+    "options": [
+      "وَلَكِنَّنِي عَنْ عِلْمِ مَا فِي غَدٍ عَمِ",
+      "وَلَوْ نَالَ أَسْبَابَ السَّمَاءِ بِسُلَّمِ",
+      "يَعُدْ حَمْدُهُ ذَمّاً عَلَيْهِ وَيَنْدَمِ",
+      "وَلَوْ خَالَهَا تَخْفَى عَلَى النَّاسِ تُعْلَمِ"
+    ],
+    "answer": 0,
+    "explanation": "البَيْتُ الثَّانِي مِنْ أَبْيَاتِ زُهَيْرٍ هُوَ: «وَأَعْلَمُ مَا فِي اليَوْمِ وَالأَمْسِ قَبْلَهُ *** وَلَكِنَّنِي عَنْ عِلْمِ مَا فِي غَدٍ عَمِ»."
+  },
+  {
+    "id": 22,
+    "category": "ikmal",
+    "categoryLabel": "إِكْمَالُ النُّصُوصِ النَّاقِصَةِ",
+    "wahdah": "الوَحْدَةُ الخَامِسَةُ — مِنْ مُعَلَّقَةِ زُهَيْرِ بْنِ أَبِي سُلْمَى",
+    "prompt": "أَكْمِلِ الكَلِمَةَ النَّاقِصَةَ فِي البَيْتِ السَّابِعِ مِنْ مَقْطُوعَةِ زُهَيْرِ بْنِ أَبِي سُلْمَى:\n«لِسَانُ الفَتَى نِصْفٌ وَنِصْفٌ ............ *** فَلَمْ يَبْقَ إِلَّا صُورَةُ اللَّحْمِ وَالدَّمِ»:",
+    "type": "mcq",
+    "options": [
+      "عَقْلُهُ",
+      "فُؤَادُهُ",
+      "عِلْمُهُ",
+      "حِلْمُهُ"
+    ],
+    "answer": 1,
+    "explanation": "البَيْتُ هُوَ: «لِسَانُ الفَتَى نِصْفٌ وَنِصْفٌ فُؤَادُهُ *** فَلَمْ يَبْقَ إِلَّا صُورَةُ اللَّحْمِ وَالدَّمِ»، وَالفُؤَادُ هُوَ القَلْبُ."
+  },
+  {
+    "id": 23,
+    "category": "maani",
+    "categoryLabel": "شَرْحُ الأَبْيَاتِ وَالمَعَانِي",
+    "wahdah": "الوَحْدَةُ الخَامِسَةُ — مِنْ مُعَلَّقَةِ زُهَيْرِ بْنِ أَبِي سُلْمَى",
+    "prompt": "أَيُّ بَيْتٍ مِنْ أَبْيَاتِ زُهَيْرِ بْنِ أَبِي سُلْمَى يَتَوَافَقُ مَعْنَاهُ مَعَ قَوْلِ اللَّهِ تَعَالَى: ﴿أَيْنَمَا تَكُونُوا يُدْرِكْكُمُ الْمَوْتُ وَلَوْ كُنْتُمْ فِي بُرُوجٍ مُشَيَّدَةٍ﴾؟",
+    "type": "mcq",
+    "options": [
+      "سَئِمْتُ تَكَالِيفَ الحَيَاةِ وَمَنْ يَعِشْ *** ثَمَانِينَ حَوْلاً لَا أَبَا لَكَ يَسْأَمِ",
+      "وَمَنْ هَابَ أَسْبَابَ المَنَايَا يَنَلْنَهُ *** وَلَوْ نَالَ أَسْبَابَ السَّمَاءِ بِسُلَّمِ",
+      "وَمَنْ يَجْعَلِ المَعْرُوفَ فِي غَيْرِ أَهْلِهِ *** يَعُدْ حَمْدُهُ ذَمّاً عَلَيْهِ وَيَنْدَمِ",
+      "وَمَهْمَا تَكُنْ عِنْدَ امْرِئٍ مِنْ خَلِيقَةٍ *** وَلَوْ خَالَهَا تَخْفَى عَلَى النَّاسِ تُعْلَمِ"
+    ],
+    "answer": 1,
+    "explanation": "قَوْلُ زُهَيْرٍ: «وَمَنْ هَابَ أَسْبَابَ المَنَايَا يَنَلْنَهُ *** وَلَوْ نَالَ أَسْبَابَ السَّمَاءِ بِسُلَّمِ» يُؤَكِّدُ أَنَّ الخَوْفَ مِنَ المَوْتِ لَا يُنْجِي صَاحِبَهُ مَهْمَا فَرَّ."
+  },
+  {
+    "id": 24,
+    "category": "maani",
+    "categoryLabel": "شَرْحُ الأَبْيَاتِ وَالمَعَانِي",
+    "wahdah": "الوَحْدَةُ الخَامِسَةُ — مِنْ مُعَلَّقَةِ زُهَيْرِ بْنِ أَبِي سُلْمَى",
+    "prompt": "مَا الصُّورَةُ البَلَاغِيَّةُ الَّتِي صَوَّرَهَا زُهَيْرٌ فِي قَوْلِهِ: «لِأَنَّ لِسَانَ المَرْءِ مِفْتَاحُ قَلْبِهِ *** إِذَا هُوَ أَبْدَى مَا يَقُولُ مِنَ الفَمِ»؟",
+    "type": "mcq",
+    "options": [
+      "شَبَّهَ اللِّسَانَ بِالسَّيْفِ القَاطِعِ، وَالقَلْبَ بِالدِّرْعِ الحَصِينِ",
+      "شَبَّهَ اللِّسَانَ بِالمِفْتَاحِ، وَصَوَّرَ القَلْبَ بِبَابٍ مُغْلَقٍ",
+      "شَبَّهَ الكَلَامَ بِالمَاءِ العَذْبِ يَرْوِي القُلُوبَ العَطْشَى",
+      "شَبَّهَ القَلْبَ بِالمِرْآةِ الصَّافِيَةِ تَعْكِسُ صُورَةَ الوَجْهِ"
+    ],
+    "answer": 1,
+    "explanation": "كَمَا وَرَدَ فِي شَرْحِ الكِتَابِ (ص ٥٨): شَبَّهَ زُهَيْرٌ اللِّسَانَ بِالمِفْتَاحِ، وَصَوَّرَ القَلْبَ بِبَابٍ مُغْلَقٍ، فَحِينَ يَتَكَلَّمُ الإِنْسَانُ يَعْرِفُ النَّاسُ مَا فِي قَلْبِهِ."
+  },
+  {
+    "id": 25,
+    "category": "maani",
+    "categoryLabel": "شَرْحُ الأَبْيَاتِ وَالمَعَانِي",
+    "wahdah": "الوَحْدَةُ الخَامِسَةُ — مِنْ مُعَلَّقَةِ زُهَيْرِ بْنِ أَبِي سُلْمَى",
+    "prompt": "مَا الفِكْرَةُ الَّتِي يُقَرِّرُهَا زُهَيْرُ بْنُ أَبِي سُلْمَى فِي قَوْلِهِ: «وَمَنْ يَجْعَلِ المَعْرُوفَ فِي غَيْرِ أَهْلِهِ *** يَعُدْ حَمْدُهُ ذَمّاً عَلَيْهِ وَيَنْدَمِ»؟",
+    "type": "mcq",
+    "options": [
+      "الدَّعْوَةُ إِلَى البُخْلِ، وَمَنْعِ المَالِ عَنْ جَمِيعِ النَّاسِ",
+      "أَنَّ الإِحْسَانَ إِلَى مَنْ لَا يَسْتَحِقُّهُ يَجْلِبُ الذَّمَّ وَالنَّدَمَ",
+      "أَنَّ صَنَائِعَ المَعْرُوفِ تَقِي صَاحِبَهَا مَصَارِعَ السُّوءِ دَائِماً",
+      "أَنَّ الشَّاعِرَ نَدِمَ عَلَى مَدْحِ المُلُوكِ وَالأُمَرَاءِ فِي شَبَابِهِ"
+    ],
+    "answer": 1,
+    "explanation": "مَنْ أَحْسَنَ إِلَى مَنْ لَا يَسْتَحِقُّ الإِحْسَانَ وَلَا يُقَدِّرُهُ لَمْ يَجِدْ مِنْهُ إِلَّا الإِسَاءَةَ وَالذَّمَّ، فَيَنْدَمُ عَلَى صَنِيعِهِ."
+  },
+  {
+    "id": 26,
+    "category": "tartib",
+    "categoryLabel": "تَرْتِيبُ الأَبْيَاتِ وَالنُّصُوصِ",
+    "wahdah": "الوَحْدَةُ الخَامِسَةُ — مِنْ مُعَلَّقَةِ زُهَيْرِ بْنِ أَبِي سُلْمَى (ص ٥٤)",
+    "prompt": "رَتِّبِ الأَبْيَاتَ الأَرْبَعَةَ الأُولَى مِنْ مَقْطُوعَةِ زُهَيْرِ بْنِ أَبِي سُلْمَى حَسَبَ تَسَلْسُلِهَا الصَّحِيحِ فِي القَصِيدَةِ:",
+    "type": "order",
+    "correctOrder": [
+      "سَئِمْتُ تَكَالِيفَ الحَيَاةِ وَمَنْ يَعِشْ *** ثَمَانِينَ حَوْلاً - لَا أَبَا لَكَ - يَسْأَمِ",
+      "وَأَعْلَمُ مَا فِي اليَوْمِ وَالأَمْسِ قَبْلَهُ *** وَلَكِنَّنِي عَنْ عِلْمِ مَا فِي غَدٍ عَمِ",
+      "وَمَنْ هَابَ أَسْبَابَ المَنَايَا يَنَلْنَهُ *** وَلَوْ نَالَ أَسْبَابَ السَّمَاءِ بِسُلَّمِ",
+      "وَمَنْ يَجْعَلِ المَعْرُوفَ فِي غَيْرِ أَهْلِهِ *** يَعُدْ حَمْدُهُ ذَمّاً عَلَيْهِ وَيَنْدَمِ"
+    ],
+    "explanation": "يَبْدَأُ زُهَيْرٌ بِالسَّأَمِ مِنْ تَكَالِيفِ الحَيَاةِ، ثُمَّ الإِقْرَارِ بِعَدَمِ عِلْمِ الغَيْبِ فِي الغَدِ، ثُمَّ حَتْمِيَّةِ المَوْتِ، ثُمَّ وَضْعِ المَعْرُوفِ فِي أَهْلِهِ."
+  },
+  {
+    "id": 27,
+    "category": "tartib",
+    "categoryLabel": "تَرْتِيبُ الأَبْيَاتِ وَالنُّصُوصِ",
+    "wahdah": "الوَحْدَةُ الخَامِسَةُ — مِنْ مُعَلَّقَةِ زُهَيْرِ بْنِ أَبِي سُلْمَى (ص ٥٤)",
+    "prompt": "رَتِّبِ الأَبْيَاتَ الثَّلَاثَةَ الأَخِيرَةَ (٥ – ٧) مِنْ حِكَمِ زُهَيْرِ بْنِ أَبِي سُلْمَى حَسَبَ تَرْتِيبِهَا وَتَرَابُطِ مَعَانِيهَا فِي النَّصِّ:",
+    "type": "order",
+    "correctOrder": [
+      "وَمَهْمَا تَكُنْ عِنْدَ امْرِئٍ مِنْ خَلِيقَةٍ *** وَلَوْ خَالَهَا تَخْفَى عَلَى النَّاسِ تُعْلَمِ",
+      "لِأَنَّ لِسَانَ المَرْءِ مِفْتَاحُ قَلْبِهِ *** إِذَا هُوَ أَبْدَى مَا يَقُولُ مِنَ الفَمِ",
+      "لِسَانُ الفَتَى نِصْفٌ وَنِصْفٌ فُؤَادُهُ *** فَلَمْ يَبْقَ إِلَّا صُورَةُ اللَّحْمِ وَالدَّمِ"
+    ],
+    "explanation": "يُقَرِّرُ زُهَيْرٌ أَنَّ الخُلُقَ لَا يَخْفَى، ثُمَّ يُعَلِّلُ ذَلِكَ بِأَنَّ اللِّسَانَ مِفْتَاحُ القَلْبِ، ثُمَّ يَخْتِمُ بِأَنَّ قِيمَةَ الفَتَى فِي لِسَانِهِ وَفُؤَادِهِ."
+  },
+  {
+    "id": 28,
+    "category": "tarifat",
+    "categoryLabel": "التَّعْرِيفَاتُ وَالمُصْطَلَحَاتُ",
+    "wahdah": "الوَحْدَةُ السَّادِسَةُ — الأَدَبُ فِي العَصْرِ الجَاهِلِيِّ",
+    "prompt": "مَا الفَنُّ النَّثْرِيُّ الَّذِي يُعَرَّفُ بِأَنَّهُ: «النَّصِيحَةُ الَّتِي يُوَجِّهُهَا الإِنْسَانُ إِلَى آخَرَ عَزِيزٍ عَلَيْهِ كَوَلَدِهِ أَوْ أَخِيهِ عِنْدَ الشُّعُورِ بِالمَوْتِ أَوِ الفِرَاقِ»؟",
+    "type": "mcq",
+    "options": [
+      "الخُطْبَةُ",
+      "الوَصِيَّةُ",
+      "المَثَلُ",
+      "التَّوْقِيعُ"
+    ],
+    "answer": 1,
+    "explanation": "الوَصِيَّةُ هِيَ النَّصِيحَةُ المُوَجَّهَةُ إِلَى قَرِيبٍ أَوْ صَدِيقٍ لِاتِّبَاعِ أَمْرٍ حَسَنٍ أَوِ اجْتِنَابِ أَمْرٍ سَيِّئٍ غَالِباً عِنْدَ الإِحْسَاسِ بِدُنُوِّ الأَجَلِ أَوِ السَّفَرِ."
+  },
+  {
+    "id": 29,
+    "category": "tarifat",
+    "categoryLabel": "التَّعْرِيفَاتُ وَالمُصْطَلَحَاتُ",
+    "wahdah": "الوَحْدَةُ السَّادِسَةُ — أَغْرَاضُ الشِّعْرِ الجَاهِلِيِّ",
+    "prompt": "مَا الغَرَضُ الشِّعْرِيُّ الَّذِي يُعَرَّفُ بِأَنَّهُ: «ذِكْرُ مَحَاسِنِ المَيِّتِ، وَالتَّحَسُّرُ عَلَيْهِ، وَالدُّعَاءُ لَهُ»؟",
+    "type": "mcq",
+    "options": [
+      "الهِجَاءُ",
+      "الرِّثَاءُ",
+      "الحَمَاسَةُ",
+      "الاعْتِذَارُ"
+    ],
+    "answer": 1,
+    "explanation": "الرِّثَاءُ هُوَ البُكَاءُ عَلَى المَيِّتِ وَتَعْدَادُ مَحَاسِنِهِ وَمَآثِرِهِ، أَمَّا الهِجَاءُ فَهُوَ ذِكْرُ المَسَاوِئِ، وَالحَمَاسَةُ ذِكْرُ البُطُولَاتِ."
+  },
+  {
+    "id": 30,
+    "category": "tarifat",
+    "categoryLabel": "التَّعْرِيفَاتُ وَالمُصْطَلَحَاتُ",
+    "wahdah": "الوَحْدَةُ السَّادِسَةُ — أَغْرَاضُ الشِّعْرِ الجَاهِلِيِّ",
+    "prompt": "مَا الغَرَضُ الشِّعْرِيُّ الَّذِي يَذْكُرُ فِيهِ الشَّاعِرُ شَجَاعَتَهُ وَبُطُولَاتِ قَوْمِهِ فِي الحُرُوبِ، وَلِأَبِي تَمَّامٍ مُخْتَارَاتٌ مَشْهُورَةٌ سُمِّيَتْ بِاسْمِهِ؟",
+    "type": "mcq",
+    "options": [
+      "شِعْرُ الاعْتِذَارِ",
+      "شِعْرُ الحَمَاسَةِ",
+      "شِعْرُ الغَزَلِ",
+      "شِعْرُ الوَصْفِ"
+    ],
+    "answer": 1,
+    "explanation": "الحَمَاسَةُ: ذِكْرُ البُطُولَاتِ وَالشَّجَاعَةِ فِي الحُرُوبِ، وَمِنْ أَشْهَرِ المُخْتَارَاتِ فِيهِ «دِيوَانُ الحَمَاسَةِ» لِأَبِي تَمَّامٍ."
+  },
+  {
+    "id": 31,
+    "category": "tarikh",
+    "categoryLabel": "تَارِيخُ الأَدَبِ وَخَصَائِصُهُ",
+    "wahdah": "الوَحْدَةُ السَّادِسَةُ — الأَدَبُ فِي العَصْرِ الجَاهِلِيِّ",
+    "prompt": "مَا الفَرْقُ الجَوْهَرِيُّ بَيْنَ «الحِكْمَةِ» وَ«المَثَلِ» كَمَا دَرَسْتَ فِي خُلَاصَةِ الأَدَبِ الجَاهِلِيِّ؟",
+    "type": "mcq",
+    "options": [
+      "الحِكْمَةُ تَرْتَبِطُ دَائِماً بِقِصَّةٍ، أَمَّا المَثَلُ فَلَا قِصَّةَ لَهُ أَصْلاً",
+      "الحِكْمَةُ لَا تَرْتَبِطُ بِقِصَّةٍ، أَمَّا المَثَلُ فَلَهُ قِصَّةٌ يُضْرَبُ فِي مِثْلِهَا",
+      "المَثَلُ يَكُونُ شِعْراً مَوْزُوناً، أَمَّا الحِكْمَةُ فَتَكُونُ نَثْراً فَقَطْ",
+      "لَا فَرْقَ بَيْنَهُمَا؛ فَكِلَاهُمَا قَوْلٌ مُوجَزٌ يُقَالُ فِي كُلِّ مُنَاسَبَةٍ"
+    ],
+    "answer": 1,
+    "explanation": "الحِكْمَةُ قَوْلٌ بَلِيغٌ يُرْشِدُ إِلَى سُلُوكٍ حَمِيدٍ وَلَا يَرْتَبِطُ بِقِصَّةٍ، أَمَّا المَثَلُ فَمُرْتَبِطٌ بِقِصَّةٍ أَوْ حَادِثَةٍ أَصْلِيَّةٍ وَيَشْتَرِطُ الشُّهْرَةَ وَالانْتِشَارَ."
+  },
+  {
+    "id": 32,
+    "category": "tarikh",
+    "categoryLabel": "تَارِيخُ الأَدَبِ وَخَصَائِصُهُ",
+    "wahdah": "الوَحْدَةُ السَّادِسَةُ — المُعَلَّقَاتُ",
+    "prompt": "كَمْ عَدَدُ قَصَائِدِ «المُعَلَّقَاتِ» عَلَى أَرْجَحِ الآرَاءِ الَّتِي ذَكَرَهَا الكِتَابُ، وَمَنْ هُوَ صَاحِبُ المُعَلَّقَةِ الَّذِي مَدَحَ هَرِمَ بْنَ سِنَانٍ وَالحَارِثَ بْنَ عَوْفٍ لِإِصْلَاحِهِمَا بَيْنَ عَبْسٍ وَذُبْيَانَ؟",
+    "type": "mcq",
+    "options": [
+      "عَدَدُهَا عَشْرٌ، وَالشَّاعِرُ هُوَ امْرُؤُ القَيْسِ بْنُ حُجْرٍ الكِنْدِيُّ",
+      "عَدَدُهَا سَبْعٌ، وَالشَّاعِرُ هُوَ زُهَيْرُ بْنُ أَبِي سُلْمَى المُزَنِيُّ",
+      "عَدَدُهَا سَبْعٌ، وَالشَّاعِرُ هُوَ عَنْتَرَةُ بْنُ شَدَّادٍ العَبْسِيُّ",
+      "عَدَدُهَا خَمْسٌ، وَالشَّاعِرُ هُوَ طَرَفَةُ بْنُ العَبْدِ البَكْرِيُّ"
+    ],
+    "answer": 1,
+    "explanation": "أَرْجَحُ الآرَاءِ أَنَّ عَدَدَ المُعَلَّقَاتِ سَبْعٌ (ص ٧٢)، وَقَدْ نَظَمَ زُهَيْرُ بْنُ أَبِي سُلْمَى مُعَلَّقَتَهُ فِي مَدْحِ هَرِمِ بْنِ سِنَانٍ وَالحَارِثِ بْنِ عَوْفٍ."
+  },
+  {
+    "id": 33,
+    "category": "tarikh",
+    "categoryLabel": "تَارِيخُ الأَدَبِ وَخَصَائِصُهُ",
+    "wahdah": "الوَحْدَةُ السَّادِسَةُ — شُعَرَاءُ الجَاهِلِيَّةِ",
+    "prompt": "بِمَ اشْتَهَرَ الشَّاعِرُ الجَاهِلِيُّ «النَّابِغَةُ الذُّبْيَانِيُّ» (زِيَادُ بْنُ مُعَاوِيَةَ) كَمَا دَرَسْتَ فِي تَدْرِيبَاتِ الوَحْدَةِ السَّادِسَةِ؟",
+    "type": "mcq",
+    "options": [
+      "أَجَادَ الِاعْتِذَارَ، وَاشْتَهَرَتِ اعْتِذَارِيَّاتُهُ لِلنُّعْمَانِ",
+      "أَجَادَ النَّقَائِضَ، وَاشْتَهَرَتْ مُهَاجَاتُهُ لِلْفَرَزْدَقِ",
+      "أَجَادَ شِعْرَ الفُتُوحِ، وَاشْتَهَرَتْ قَصَائِدُهُ فِي القَادِسِيَّةِ",
+      "أَجَادَ الرِّثَاءَ، وَاشْتَهَرَتْ مَرَاثِيهِ فِي أَخِيهِ صَخْرٍ"
+    ],
+    "answer": 0,
+    "explanation": "اشْتَهَرَ النَّابِغَةُ الذُّبْيَانِيُّ بِالِاعْتِذَارِ، وَأَشْهَرُ ذَلِكَ اعْتِذَارِيَّاتُهُ لِلنُّعْمَانِ بْنِ المُنْذِرِ."
+  },
+  {
+    "id": 34,
+    "category": "tartib",
+    "categoryLabel": "تَرْتِيبُ الأَبْيَاتِ وَالنُّصُوصِ",
+    "wahdah": "الوَحْدَةُ السَّادِسَةُ — مَنْهَجُ القَصِيدَةِ الجَاهِلِيَّةِ (ص ٧٢)",
+    "prompt": "رَتِّبِ المَرَاحِلَ الَّتِي اتَّبَعَهَا الشَّاعِرُ الجَاهِلِيُّ فِي بِنَاءِ قَصِيدَتِهِ كَمَا وَرَدَ فِي الدَّرْسِ الثَّامِنِ:",
+    "type": "order",
+    "correctOrder": [
+      "البَدْءُ بِالغَزَلِ أَوِ الوُقُوفِ عَلَى الأَطْلَالِ وَدِيَارِ المَحْبُوبَةِ",
+      "الانْتِقَالُ إِلَى الوَصْفِ (وَصْفِ النَّاقَةِ أَوِ الجَوَادِ أَوِ الصَّحْرَاءِ فِي رِحْلَتِهِ)",
+      "الدُّخُولُ فِي الغَرَضِ الأَسَاسِيِّ مِنَ القَصِيدَةِ (مَدْحاً أَوْ فَخْراً أَوْ نَحْوَ ذَلِكَ)",
+      "خَتْمُ القَصِيدَةِ أَحْيَاناً بِشَيْءٍ مِنَ الحِكْمَةِ"
+    ],
+    "explanation": "الطَّرِيقَةُ الَّتِي اتَّبَعَهَا الشُّعَرَاءُ الجَاهِلِيُّونَ فِي قَصَائِدِهِمْ: البَدْءُ بِالغَزَلِ وَالأَطْلَالِ، ثُمَّ وَصْفُ الرَّاحِلَةِ وَالصَّحْرَاءِ، ثُمَّ الغَرَضُ الرَّئِيسُ، وَرُبَّمَا خُتِمَتْ بِالحِكْمَةِ."
+  },
+  {
+    "id": 35,
+    "category": "ikmal",
+    "categoryLabel": "إِكْمَالُ النُّصُوصِ النَّاقِصَةِ",
+    "wahdah": "الوَحْدَةُ السَّابِعَةُ — الحَدِيثُ الشَّرِيفُ (حَقُّ المُسْلِمِ)",
+    "prompt": "أَكْمِلْ قَوْلَ النَّبِيِّ ﷺ: «حَقُّ المُسْلِمِ عَلَى المُسْلِمِ سِتٌّ: إِذَا لَقِيتَهُ فَسَلِّمْ عَلَيْهِ، وَإِذَا دَعَاكَ فَأَجِبْهُ، وَإِذَا اسْتَنْصَحَكَ فَانْصَحْ لَهُ، وَإِذَا عَطَسَ فَحَمِدَ اللَّهَ ............»:",
+    "type": "mcq",
+    "options": [
+      "فَشَمِّتْهُ",
+      "فَأَكْرِمْهُ",
+      "فَعُدْهُ",
+      "فَاتَّبِعْهُ"
+    ],
+    "answer": 0,
+    "explanation": "«وَإِذَا عَطَسَ فَحَمِدَ اللَّهَ فَشَمِّتْهُ»، أَيْ: قُلْ لَهُ: يَرْحَمُكَ اللَّهُ. أَمَّا «فَعُدْهُ» فَلِلْمَرِيضِ، وَ«فَاتَّبِعْهُ» لِلْمَيِّتِ."
+  },
+  {
+    "id": 36,
+    "category": "maani",
+    "categoryLabel": "شَرْحُ الأَبْيَاتِ وَالمَعَانِي",
+    "wahdah": "الوَحْدَةُ السَّابِعَةُ — الحَدِيثُ الشَّرِيفُ (حَقُّ المُسْلِمِ)",
+    "prompt": "لِمَاذَا عَبَّرَ النَّبِيُّ ﷺ فِي حَدِيثِ حَقِّ المُسْلِمِ بِقَوْلِهِ: «وَإِذَا مَرِضَ فَعُدْهُ» بَدَلاً مِنْ «فَزُرْهُ»؟",
+    "type": "mcq",
+    "options": [
+      "لِأَنَّ الزِّيَارَةَ لَا تَكُونُ إِلَّا لِلأَقَارِبِ وَالأَرْحَامِ",
+      "لِأَنَّ (فَعُدْهُ) تَدُلُّ عَلَى تَكْرَارِ الزِّيَارَةِ مَرَّةً بَعْدَ مَرَّةٍ",
+      "لِأَنَّ كَلِمَةَ (فَعُدْهُ) أَقْصَرُ فِي النُّطْقِ مِنْ (فَزُرْهُ)",
+      "لِأَنَّ العِيَادَةَ تَكُونُ نَهَاراً، وَالزِّيَارَةَ تَكُونُ لَيْلاً"
+    ],
+    "answer": 1,
+    "explanation": "جَاءَ فِي شَرْحِ المُفْرَدَاتِ (ص ٨٦ و ٨٨): فَضَّلَ النَّبِيُّ ﷺ (فَعُدْهُ) عَلَى (فَزُرْهُ) لِيُفِيدَ تَكْرَارَ الزِّيَارَةِ لِلْمَرِيضِ مَرَّةً بَعْدَ مَرَّةٍ."
+  },
+  {
+    "id": 37,
+    "category": "maani",
+    "categoryLabel": "شَرْحُ الأَبْيَاتِ وَالمَعَانِي",
+    "wahdah": "الوَحْدَةُ السَّابِعَةُ — أَثَرُ القُرْآنِ الكَرِيمِ",
+    "prompt": "عَلَامَ يَدُلُّ رَبْطُ الصَّبْرِ بِاللَّهِ سُبْحَانَهُ فِي قَوْلِهِ تَعَالَى: ﴿وَاصْبِرْ وَمَا صَبْرُكَ إِلَّا بِاللَّهِ﴾؟",
+    "type": "mcq",
+    "options": [
+      "أَنَّ الصَّبْرَ لَا يَكُونُ إِلَّا فِي مَيْدَانِ القِتَالِ وَحْدَهُ",
+      "أَنَّ اللَّهَ يُعِينُ النَّفْسَ عَلَى الصَّبْرِ حِينَ تَلْجَأُ إِلَيْهِ",
+      "أَنَّ الدَّاعِيَةَ لَا يَحْتَاجُ إِلَى مُحَاوَرَةِ المُخَالِفِينَ",
+      "أَنَّ الصَّبْرَ أَمْرٌ سَهْلٌ لَا يَحْتَاجُ إِلَى مَعُونَةٍ"
+    ],
+    "answer": 1,
+    "explanation": "تَطْمَئِنُّ النَّفْسُ حِينَ تَرْتَبِطُ بِاللَّهِ وَتَلْجَأُ إِلَيْهِ، فَيُعِينُهَا عَلَى تَحَمُّلِ الأَذَى."
+  },
+  {
+    "id": 38,
+    "category": "tarikh",
+    "categoryLabel": "تَارِيخُ الأَدَبِ وَخَصَائِصُهُ",
+    "wahdah": "الوَحْدَةُ السَّابِعَةُ — أَثَرُ القُرْآنِ وَالحَدِيثِ",
+    "prompt": "أَيُّ العُلُومِ التَّالِيَةِ يُعَدُّ مِنَ «العُلُومِ الدِّينِيَّةِ» الَّتِي نَشَأَتْ فِي ظِلِّ القُرْآنِ الكَرِيمِ وَالحَدِيثِ الشَّرِيفِ (كَمَا وَرَدَ فِي ص ٩٠)؟",
+    "type": "mcq",
+    "options": [
+      "عِلْمُ العَرُوضِ وَالقَوَافِي وَتَارِيخُ الأَنْسَابِ",
+      "التَّفْسِيرُ، وَعُلُومُ الحَدِيثِ، وَالفِقْهُ، وَأُصُولُهُ",
+      "عِلْمُ الفَلَكِ، وَالطِّبُّ، وَالهَنْدَسَةُ، وَالحِسَابُ",
+      "فَنُّ النَّقَائِضِ وَالتَّوْقِيعَاتِ وَالرَّسَائِلِ الإِخْوَانِيَّةِ"
+    ],
+    "answer": 1,
+    "explanation": "نَشَأَتْ فِي ظِلِّ القُرْآنِ وَالحَدِيثِ عُلُومٌ دِينِيَّةٌ كَالتَّفْسِيرِ وَعُلُومِ الحَدِيثِ وَالفِقْهِ وَأُصُولِهِ، وَعُلُومٌ عَرَبِيَّةٌ كَالنَّحْوِ وَالصَّرْفِ وَالبَلَاغَةِ."
+  },
+  {
+    "id": 39,
+    "category": "tarikh",
+    "categoryLabel": "تَارِيخُ الأَدَبِ وَخَصَائِصُهُ",
+    "wahdah": "الوَحْدَةُ السَّابِعَةُ — الحَدِيثُ الشَّرِيفُ (حَقُّ المُسْلِمِ)",
+    "prompt": "عَلَامَ يَدُلُّ تَرْتِيبُ الحُقُوقِ السِّتَّةِ فِي حَدِيثِ النَّبِيِّ ﷺ: «حَقُّ المُسْلِمِ عَلَى المُسْلِمِ سِتٌّ»؟",
+    "type": "mcq",
+    "options": [
+      "أَنَّ الحَقَّ الأَوَّلَ وَحْدَهُ وَاجِبٌ عَلَى المُسْلِمِ، وَبَقِيَّةَ الحُقُوقِ سُنَّةٌ",
+      "أَنَّهَا رُتِّبَتْ عَلَى أَطْوَارِ الإِنْسَانِ: الصِّحَّةِ فَالمَرَضِ فَالمَوْتِ",
+      "أَنَّهَا رُتِّبَتْ عَلَى الحُرُوفِ الهِجَائِيَّةِ لِأَفْعَالِ الأَمْرِ فِيهَا",
+      "أَنَّهَا رُتِّبَتْ تَرْتِيباً مَعْكُوساً: المَوْتِ، ثُمَّ المَرَضِ، ثُمَّ الصِّحَّةِ"
+    ],
+    "answer": 1,
+    "explanation": "جَاءَتِ الحُقُوقُ مُتَّفِقَةً مَعَ الأَطْوَارِ الَّتِي يَمُرُّ بِهَا الإِنْسَانُ: حُقُوقٌ فِي حَالِ الصِّحَّةِ (السَّلَامُ، وَإِجَابَةُ الدَّعْوَةِ، وَالنَّصِيحَةُ، وَتَشْمِيتُ العَاطِسِ)، ثُمَّ عِيَادَتُهُ إِذَا مَرِضَ، ثُمَّ اتِّبَاعُ جِنَازَتِهِ إِذَا مَاتَ."
+  },
+  {
+    "id": 40,
+    "category": "ikmal",
+    "categoryLabel": "إِكْمَالُ النُّصُوصِ النَّاقِصَةِ",
+    "wahdah": "الوَحْدَةُ الثَّامِنَةُ — خُطْبَةُ أَبِي بَكْرٍ الصِّدِّيقِ",
+    "prompt": "أَكْمِلْ قَوْلَ أَبِي بَكْرٍ الصِّدِّيقِ رَضِيَ اللَّهُ عَنْهُ فِي خُطْبَتِهِ بَعْدَ البَيْعَةِ: «أَيُّهَا النَّاسُ، إِنِّي قَدْ وُلِّيتُ عَلَيْكُمْ وَلَسْتُ بِخَيْرِكُمْ، فَإِنْ رَأَيْتُمُونِي عَلَى حَقٍّ فَأَعِينُونِي، وَإِنْ رَأَيْتُمُونِي عَلَى بَاطِلٍ ............»:",
+    "type": "mcq",
+    "options": [
+      "فَاتْرُكُونِي",
+      "فَسَدِّدُونِي",
+      "فَاعْزِلُونِي",
+      "فَاحْذَرُونِي"
+    ],
+    "answer": 1,
+    "explanation": "قَالَ أَبُو بَكْرٍ رَضِيَ اللَّهُ عَنْهُ: «وَإِنْ رَأَيْتُمُونِي عَلَى بَاطِلٍ فَسَدِّدُونِي»، وَمَعْنَى سَدِّدُونِي: أَرْشِدُونِي وَوَجِّهُونِي إِلَى الصَّوَابِ."
+  },
+  {
+    "id": 41,
+    "category": "ikmal",
+    "categoryLabel": "إِكْمَالُ النُّصُوصِ النَّاقِصَةِ",
+    "wahdah": "الوَحْدَةُ الثَّامِنَةُ — خُطْبَةُ أَبِي بَكْرٍ الصِّدِّيقِ",
+    "prompt": "أَكْمِلْ قَوْلَ أَبِي بَكْرٍ الصِّدِّيقِ رَضِيَ اللَّهُ عَنْهُ فِي خُطْبَتِهِ: «أَطِيعُونِي مَا أَطَعْتُ اللَّهَ فِيكُمْ، فَإِذَا عَصَيْتُهُ فَلَا ............ لِي عَلَيْكُمْ»:",
+    "type": "mcq",
+    "options": [
+      "حَاجَةَ",
+      "طَاعَةَ",
+      "بَيْعَةَ",
+      "حُجَّةَ"
+    ],
+    "answer": 1,
+    "explanation": "«فَإِذَا عَصَيْتُهُ فَلَا طَاعَةَ لِي عَلَيْكُمْ»؛ فَطَاعَةُ الحَاكِمِ مُقَيَّدَةٌ بِطَاعَتِهِ لِلَّهِ."
+  },
+  {
+    "id": 42,
+    "category": "tarikh",
+    "categoryLabel": "تَارِيخُ الأَدَبِ وَخَصَائِصُهُ",
+    "wahdah": "الوَحْدَةُ الثَّامِنَةُ — خُطْبَةُ أَبِي بَكْرٍ الصِّدِّيقِ",
+    "prompt": "مَنْ هُوَ «القَوِيُّ» وَمَنْ هُوَ «الضَّعِيفُ» فِي مِيزَانِ الخَلِيفَةِ أَبِي بَكْرٍ الصِّدِّيقِ رَضِيَ اللَّهُ عَنْهُ كَمَا أَعْلَنَ فِي خُطْبَتِهِ؟",
+    "type": "mcq",
+    "options": [
+      "القَوِيُّ صَاحِبُ المَالِ وَالعَشِيرَةِ، وَالضَّعِيفُ الفَقِيرُ الَّذِي لَا قَبِيلَةَ لَهُ",
+      "الضَّعِيفُ قَوِيٌّ عِنْدَهُ حَتَّى يَأْخُذَ لَهُ حَقَّهُ، وَالقَوِيُّ ضَعِيفٌ حَتَّى يَأْخُذَ الحَقَّ مِنْهُ",
+      "القَوِيُّ القَائِدُ العَسْكَرِيُّ، وَالضَّعِيفُ التَّاجِرُ وَالمُزَارِعُ البَسِيطُ",
+      "القَوِيُّ المُهَاجِرُ السَّابِقُ، وَالضَّعِيفُ مَنْ أَسْلَمَ بَعْدَ فَتْحِ مَكَّةَ"
+    ],
+    "answer": 1,
+    "explanation": "مِقْيَاسُ القُوَّةِ وَالضَّعْفِ عِنْدَ أَبِي بَكْرٍ هُوَ الحَقُّ؛ فَصَاحِبُ الحَقِّ قَوِيٌّ حَتَّى يَأْخُذَ لَهُ حَقَّهُ، وَصَاحِبُ البَاطِلِ ضَعِيفٌ حَتَّى يَأْخُذَ الحَقَّ مِنْهُ."
+  },
+  {
+    "id": 43,
+    "category": "tartib",
+    "categoryLabel": "تَرْتِيبُ الأَبْيَاتِ وَالنُّصُوصِ",
+    "wahdah": "الوَحْدَةُ الثَّامِنَةُ — خُطْبَةُ أَبِي بَكْرٍ الصِّدِّيقِ",
+    "prompt": "رَتِّبْ فِقَرَاتِ خُطْبَةِ أَبِي بَكْرٍ الصِّدِّيقِ رَضِيَ اللَّهُ عَنْهُ عِنْدَمَا وَلِيَ الخِلَافَةَ:",
+    "type": "order",
+    "correctOrder": [
+      "أَيُّهَا النَّاسُ، إِنِّي قَدْ وُلِّيتُ عَلَيْكُمْ وَلَسْتُ بِخَيْرِكُمْ",
+      "فَإِنْ رَأَيْتُمُونِي عَلَى حَقٍّ فَأَعِينُونِي، وَإِنْ رَأَيْتُمُونِي عَلَى بَاطِلٍ فَسَدِّدُونِي",
+      "أَلَا إِنَّ أَقْوَاكُمْ عِنْدِي الضَّعِيفُ حَتَّى آخُذَ الحَقَّ لَهُ، وَأَضْعَفَكُمْ عِنْدِي القَوِيُّ حَتَّى آخُذَ الحَقَّ مِنْهُ",
+      "أَطِيعُونِي مَا أَطَعْتُ اللَّهَ فِيكُمْ، فَإِذَا عَصَيْتُهُ فَلَا طَاعَةَ لِي عَلَيْكُمْ"
+    ],
+    "explanation": "تَبْدَأُ الخُطْبَةُ بِالتَّوَاضُعِ، ثُمَّ طَلَبِ العَوْنِ وَالتَّقْوِيمِ، ثُمَّ مِيزَانِ الحَقِّ بَيْنَ الضَّعِيفِ وَالقَوِيِّ، وَتُخْتَمُ بِتَقْيِيدِ الطَّاعَةِ بِطَاعَةِ اللَّهِ. (وَكَذَلِكَ تَرْتِيبُهَا فِي تَارِيخِ الطَّبَرِيِّ ٣/٢١٠ وَسِيرَةِ ابْنِ هِشَامٍ.)"
+  },
+  {
+    "id": 44,
+    "category": "ikmal",
+    "categoryLabel": "إِكْمَالُ النُّصُوصِ النَّاقِصَةِ",
+    "wahdah": "الوَحْدَةُ التَّاسِعَةُ — رِسَالَةُ النَّبِيِّ ﷺ إِلَى خَالِدِ بْنِ الوَلِيدِ",
+    "prompt": "أَكْمِلِ العِبَارَةَ النَّبَوِيَّةَ فِي رِسَالَةِ الرَّسُولِ ﷺ إِلَى خَالِدِ بْنِ الوَلِيدِ بَعْدَ إِسْلَامِ بَنِي الحَارِثِ بْنِ كَعْبٍ: «وَأَنْ قَدْ هَدَاهُمُ اللَّهُ بِهُدَاهُ، ............، وَأَقْبِلْ وَلْيُقْبِلْ مَعَكَ وَفْدُهُمْ»:",
+    "type": "mcq",
+    "options": [
+      "فَعَلِّمْهُمْ وَأَكْرِمْهُمْ",
+      "فَبَشِّرْهُمْ وَأَنْذِرْهُمْ",
+      "فَعَاهِدْهُمْ وَانْصُرْهُمْ",
+      "فَاحْكُمْ فِيهِمْ وَأَرْشِدْهُمْ"
+    ],
+    "answer": 1,
+    "explanation": "النَّصُّ النَّبَوِيُّ: «فَبَشِّرْهُمْ وَأَنْذِرْهُمْ، وَأَقْبِلْ وَلْيُقْبِلْ مَعَكَ وَفْدُهُمْ»، وَفِيهِ جَمْعٌ بَلِيغٌ بَيْنَ المُتَضَادَّيْنِ (التَّبْشِيرِ وَالإِنْذَارِ)."
+  },
+  {
+    "id": 45,
+    "category": "tarikh",
+    "categoryLabel": "تَارِيخُ الأَدَبِ وَخَصَائِصُهُ",
+    "wahdah": "الوَحْدَةُ التَّاسِعَةُ — رِسَالَةُ النَّبِيِّ ﷺ إِلَى خَالِدِ بْنِ الوَلِيدِ",
+    "prompt": "بِمَاذَا فَصَلَ النَّبِيُّ ﷺ بَيْنَ «المُقَدِّمَةِ» وَ«الغَرَضِ» فِي رِسَالَتِهِ إِلَى خَالِدِ بْنِ الوَلِيدِ، وَمَا اسْمُ القَبِيلَةِ الَّتِي أَسْلَمَتْ فِيهَا؟",
+    "type": "mcq",
+    "options": [
+      "فَصَلَ بِعِبَارَةِ «أَمَّا بَعْدُ»، وَالقَبِيلَةُ هِيَ بَنُو الحَارِثِ بْنِ كَعْبٍ",
+      "فَصَلَ بِعِبَارَةِ «وَاعْلَمُوا»، وَالقَبِيلَةُ هِيَ قَبِيلَةُ بَكْرِ بْنِ وَائِلٍ",
+      "فَصَلَ بِالبَسْمَلَةِ، وَالقَبِيلَةُ هِيَ قَبِيلَةُ جُهَيْنَةَ",
+      "فَصَلَ بِالتَّحِيَّةِ، وَالقَبِيلَةُ هِيَ قَبِيلَةُ تَمِيمٍ"
+    ],
+    "answer": 0,
+    "explanation": "مِنْ خَصَائِصِ الرِّسَالَةِ النَّبَوِيَّةِ الفَصْلُ بَيْنَ المُقَدِّمَةِ وَالغَرَضِ بِعِبَارَةِ «أَمَّا بَعْدُ»، وَكَانَتِ الرِّسَالَةُ بِشَأْنِ إِسْلَامِ قَبِيلَةِ بَنِي الحَارِثِ بْنِ كَعْبٍ."
+  },
+  {
+    "id": 46,
+    "category": "tartib",
+    "categoryLabel": "تَرْتِيبُ الأَبْيَاتِ وَالنُّصُوصِ",
+    "wahdah": "الوَحْدَةُ التَّاسِعَةُ — رِسَالَةُ النَّبِيِّ ﷺ إِلَى خَالِدِ بْنِ الوَلِيدِ",
+    "prompt": "رَتِّبْ أَجْزَاءَ رِسَالَةِ النَّبِيِّ ﷺ إِلَى خَالِدِ بْنِ الوَلِيدِ كَمَا وَرَدَتْ فِي النَّصِّ:",
+    "type": "order",
+    "correctOrder": [
+      "«بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ: مِنْ مُحَمَّدٍ النَّبِيِّ رَسُولِ اللَّهِ إِلَى خَالِدِ بْنِ الوَلِيدِ، سَلَامٌ عَلَيْكَ، فَإِنِّي أَحْمَدُ إِلَيْكَ اللَّهَ الَّذِي لَا إِلَهَ إِلَّا هُوَ»",
+      "«أَمَّا بَعْدُ: فَإِنَّ كِتَابَكَ جَاءَنِي مَعَ رَسُولِكَ تُخْبِرُ أَنَّ بَنِي الحَارِثِ بْنِ كَعْبٍ قَدْ أَسْلَمُوا قَبْلَ أَنْ تُقَاتِلَهُمْ»",
+      "«فَبَشِّرْهُمْ وَأَنْذِرْهُمْ، وَأَقْبِلْ وَلْيُقْبِلْ مَعَكَ وَفْدُهُمْ»",
+      "«وَالسَّلَامُ عَلَيْكَ وَرَحْمَةُ اللَّهِ وَبَرَكَاتُهُ»"
+    ],
+    "explanation": "تَبْدَأُ الرِّسَالَةُ بِالبَسْمَلَةِ وَالمُقَدِّمَةِ، ثُمَّ «أَمَّا بَعْدُ» وَبِدَايَةِ الغَرَضِ، ثُمَّ التَّوْجِيهِ النَّبَوِيِّ، وَتُخْتَمُ بِالسَّلَامِ."
+  },
+  {
+    "id": 47,
+    "category": "tarifat",
+    "categoryLabel": "التَّعْرِيفَاتُ وَالمُصْطَلَحَاتُ",
+    "wahdah": "الوَحْدَةُ العَاشِرَةُ — مِنْ شِعْرِ حَسَّانِ بْنِ ثَابِتٍ",
+    "prompt": "وُصِفَ حَسَّانُ بْنُ ثَابِتٍ رَضِيَ اللَّهُ عَنْهُ بِأَنَّهُ «شَاعِرٌ مُخَضْرَمٌ»؛ فَمَا مَعْنَى «المُخَضْرَمِ» فِي تَارِيخِ الأَدَبِ؟",
+    "type": "mcq",
+    "options": [
+      "الشَّاعِرُ الَّذِي قَالَ الشِّعْرَ بِأَكْثَرَ مِنْ لَهْجَةٍ عَرَبِيَّةٍ",
+      "الشَّاعِرُ الَّذِي عَاشَ فِي عَصْرَيْنِ: الجَاهِلِيَّةِ وَالإِسْلَامِ",
+      "الشَّاعِرُ الَّذِي تَفَرَّغَ لِشِعْرِ الفُتُوحَاتِ وَالمَعَارِكِ فَقَطْ",
+      "الشَّاعِرُ الَّذِي عُمِّرَ أَكْثَرَ مِنْ مِئَةِ عَامٍ فِي الجَاهِلِيَّةِ"
+    ],
+    "answer": 1,
+    "explanation": "الشَّاعِرُ المُخَضْرَمُ هُوَ الَّذِي أَدْرَكَ الجَاهِلِيَّةَ وَالإِسْلَامَ وَقَالَ الشِّعْرَ فِيهِمَا مِثْلَ حَسَّانِ بْنِ ثَابِتٍ وَكَعْبِ بْنِ زُهَيْرٍ وَلبِيدِ بْنِ رَبِيعَةَ."
+  },
+  {
+    "id": 48,
+    "category": "ikmal",
+    "categoryLabel": "إِكْمَالُ النُّصُوصِ النَّاقِصَةِ",
+    "wahdah": "الوَحْدَةُ العَاشِرَةُ — مِنْ شِعْرِ حَسَّانِ بْنِ ثَابِتٍ",
+    "prompt": "أَكْمِلْ مَطْلَعَ قَصِيدَةِ حَسَّانِ بْنِ ثَابِتٍ رَضِيَ اللَّهُ عَنْهُ قَبْلَ فَتْحِ مَكَّةَ:\n«عَدِمْنَا خَيْلَنَا إِنْ لَمْ تَرَوْهَا *** تُثِيرُ ............ مَوْعِدُهَا كَدَاءُ»:",
+    "type": "mcq",
+    "options": [
+      "الرُّعْبَ",
+      "النَّقْعَ",
+      "الحَرْبَ",
+      "الصَّخْرَ"
+    ],
+    "answer": 1,
+    "explanation": "البَيْتُ هُوَ: «عَدِمْنَا خَيْلَنَا إِنْ لَمْ تَرَوْهَا *** تُثِيرُ النَّقْعَ مَوْعِدُهَا كَدَاءُ»، وَالنَّقْعُ هُوَ الغُبَارُ الثَّائِرُ فِي المَعْرَكَةِ."
+  },
+  {
+    "id": 49,
+    "category": "ikmal",
+    "categoryLabel": "إِكْمَالُ النُّصُوصِ النَّاقِصَةِ",
+    "wahdah": "الوَحْدَةُ العَاشِرَةُ — مِنْ شِعْرِ حَسَّانِ بْنِ ثَابِتٍ",
+    "prompt": "أَكْمِلْ بَيْتَ حَسَّانِ بْنِ ثَابِتٍ رَضِيَ اللَّهُ عَنْهُ: «وَجِبْرِيلٌ رَسُولُ اللَّهِ فِينَا *** وَرُوحُ القُدْسِ لَيْسَ لَهُ ............»:",
+    "type": "mcq",
+    "options": [
+      "بَلَاءُ",
+      "كِفَاءُ",
+      "لِقَاءُ",
+      "غِطَاءُ"
+    ],
+    "answer": 1,
+    "explanation": "البَيْتُ: «وَرُوحُ القُدْسِ لَيْسَ لَهُ كِفَاءُ»؛ أَيْ: لَيْسَ لَهُ مَثِيلٌ يُكَافِئُهُ."
+  },
+  {
+    "id": 50,
+    "category": "maani",
+    "categoryLabel": "شَرْحُ الأَبْيَاتِ وَالمَعَانِي",
+    "wahdah": "الوَحْدَةُ العَاشِرَةُ — مِنْ شِعْرِ حَسَّانِ بْنِ ثَابِتٍ",
+    "prompt": "مَا المَعْنَى الصَّحِيحُ لِقَوْلِ حَسَّانِ بْنِ ثَابِتٍ رَضِيَ اللَّهُ عَنْهُ فِي وَصْفِ الأَنْصَارِ:\n«وَقَالَ اللَّهُ: قَدْ سَيَّرْتُ جُنْداً *** هُمُ الأَنْصَارُ عُرْضَتُهَا اللِّقَاءُ»؟",
+    "type": "mcq",
+    "options": [
+      "أَنَّ الأَنْصَارَ يَتَجَنَّبُونَ القِتَالَ وَيَمِيلُونَ إِلَى المُسَالَمَةِ دَائِماً",
+      "أَنَّ الأَنْصَارَ شُجْعَانٌ غَايَتُهُمْ لِقَاءُ الأَعْدَاءِ دُونَ خَوْفٍ",
+      "أَنَّ الأَنْصَارَ يَسْتَقْبِلُونَ الضُّيُوفَ وَالوُفُودَ فِي المَدِينَةِ",
+      "أَنَّ الأَنْصَارَ قَلِيلُو العَدَدِ لَكِنَّهُمْ كَثِيرُو المَالِ وَالسِّلَاحِ"
+    ],
+    "answer": 1,
+    "explanation": "«عُرْضَتُهَا اللِّقَاءُ» أَيْ تُعَرِّضُ نَفْسَهَا لِلْحَرْبِ وَلِقَاءِ الأَعْدَاءِ وَلَا تَخَافُ، وَهُوَ مَدْحٌ لِقَوْمِهِ الأَنْصَارِ بِالشَّجَاعَةِ وَالإِقْدَامِ."
+  },
+  {
+    "id": 51,
+    "category": "maani",
+    "categoryLabel": "شَرْحُ الأَبْيَاتِ وَالمَعَانِي",
+    "wahdah": "الوَحْدَةُ العَاشِرَةُ — مِنْ شِعْرِ حَسَّانِ بْنِ ثَابِتٍ",
+    "prompt": "مَا المُرَادُ بِعِبَارَةِ «وَانْكَشَفَ الغِطَاءُ» فِي قَوْلِ حَسَّانِ بْنِ ثَابِتٍ:\n«فَإِمَّا تُعْرِضُوا عَنَّا اعْتَمَرْنَا *** وَكَانَ الفَتْحُ وَانْكَشَفَ الغِطَاءُ»؟",
+    "type": "mcq",
+    "options": [
+      "زَالَ الغَمَامُ وَالسَّحَابُ عَنْ سَمَاءِ مَكَّةَ المُكَرَّمَةِ",
+      "زَالَ الشِّرْكُ الَّذِي كَانَ يُغَطِّي مَكَّةَ بِفَتْحِهَا",
+      "كُشِفَتْ خُطَطُ قُرَيْشٍ قَبْلَ وُصُولِ جَيْشِ المُسْلِمِينَ",
+      "رُفِعَتْ أَسْتَارُ الكَعْبَةِ عِنْدَ دُخُولِ المُعْتَمِرِينَ"
+    ],
+    "answer": 1,
+    "explanation": "فِي شَرْحِ المُفْرَدَاتِ (ص ١١٥): «انْكَشَفَ الغِطَاءُ»: زَالَ الَّذِي كَانَ يُغَطِّي مَكَّةَ، وَأَرَادَ بِهِ الشِّرْكَ."
+  },
+  {
+    "id": 52,
+    "category": "tartib",
+    "categoryLabel": "تَرْتِيبُ الأَبْيَاتِ وَالنُّصُوصِ",
+    "wahdah": "الوَحْدَةُ العَاشِرَةُ — قَصِيدَةُ حَسَّانِ بْنِ ثَابِتٍ (ص ١١٤)",
+    "prompt": "رَتِّبِ الأَبْيَاتَ الأَرْبَعَةَ الأُولَى مِنْ قَصِيدَةِ حَسَّانِ بْنِ ثَابِتٍ رَضِيَ اللَّهُ عَنْهُ قَبْلَ فَتْحِ مَكَّةَ حَسَبَ وُرُودِهَا فِي النَّصِّ:",
+    "type": "order",
+    "correctOrder": [
+      "عَدِمْنَا خَيْلَنَا إِنْ لَمْ تَرَوْهَا *** تُثِيرُ النَّقْعَ مَوْعِدُهَا كَدَاءُ",
+      "فَإِمَّا تُعْرِضُوا عَنَّا اعْتَمَرْنَا *** وَكَانَ الفَتْحُ وَانْكَشَفَ الغِطَاءُ",
+      "وَإِلَّا فَاصْبِرُوا لِجِلَادِ يَوْمٍ *** يُعِينُ اللَّهُ فِيهِ مَنْ يَشَاءُ",
+      "وَجِبْرِيلٌ رَسُولُ اللَّهِ فِينَا *** وَرُوحُ القُدْسِ لَيْسَ لَهُ كِفَاءُ"
+    ],
+    "explanation": "يَبْدَأُ حَسَّانُ بِوَصْفِ الخَيْلِ المُتَّجِهَةِ إِلَى كَدَاءٍ، ثُمَّ يُخَيِّرُ قُرَيْشاً بَيْنَ التَّخلِيَةِ لِلْعُمْرَةِ أَوِ الصَّبْرِ لِلْجِلَادِ، ثُمَّ يَذْكُرُ تَأْيِيدَ اللَّهِ لَهُمْ بِجِبْرِيلَ عَلَيْهِ السَّلَامُ."
+  },
+  {
+    "id": 53,
+    "category": "tartib",
+    "categoryLabel": "تَرْتِيبُ الأَبْيَاتِ وَالنُّصُوصِ",
+    "wahdah": "الوَحْدَةُ العَاشِرَةُ — قَصِيدَةُ حَسَّانِ بْنِ ثَابِتٍ (ص ١١٤)",
+    "prompt": "رَتِّبِ الأَبْيَاتَ الثَّلَاثَةَ الأَخِيرَةَ (٥ – ٧) مِنْ قَصِيدَةِ حَسَّانِ بْنِ ثَابِتٍ رَضِيَ اللَّهُ عَنْهُ:",
+    "type": "order",
+    "correctOrder": [
+      "وَقَالَ اللَّهُ: قَدْ أَرْسَلْتُ عَبْداً *** يَقُولُ الحَقَّ إِنْ نَفَعَ البَلَاءُ",
+      "شَهِدْتُ بِهِ فَقُومُوا صَدِّقُوهُ *** فَقُلْتُمْ: لَا نَقُومُ وَلَا نَشَاءُ",
+      "وَقَالَ اللَّهُ: قَدْ سَيَّرْتُ جُنْداً *** هُمُ الأَنْصَارُ عُرْضَتُهَا اللِّقَاءُ"
+    ],
+    "explanation": "تَسَلْسُلُ الأَبْيَاتِ: إِرْسَالُ اللَّهِ لِرَسُولِهِ ﷺ يَقُولُ الحَقَّ، ثُمَّ دَعْوَةُ قُرَيْشٍ لِتَصْدِيقِهِ وَرَفْضُهُمْ، ثُمَّ تَسْيِيرُ اللَّهِ جُنْدَ الأَنْصَارِ لِنُصْرَتِهِ."
+  },
+  {
+    "id": 54,
+    "category": "tarikh",
+    "categoryLabel": "تَارِيخُ الأَدَبِ وَخَصَائِصُهُ",
+    "wahdah": "الوَحْدَةُ الحَادِيَةَ عَشْرَةَ — الأَدَبُ فِي عَصْرِ صَدْرِ الإِسْلَامِ",
+    "prompt": "مَا المَوْقِفَانِ اللَّذَانِ وَقَفَهُمَا الإِسْلَامُ مِنَ الشِّعْرِ فِي عَصْرِ صَدْرِ الإِسْلَامِ؟",
+    "type": "mcq",
+    "options": [
+      "مَنَعَ شِعْرَ المَدْحِ مُطْلَقاً، وَأَبَاحَ شِعْرَ الهِجَاءِ بَيْنَ القَبَائِلِ",
+      "شَجَّعَ الشِّعْرَ الَّذِي يَدْعُو إِلَى الحَقِّ، وَنَهَى عَنِ الشِّعْرِ الَّذِي يُهَاجِمُهُ",
+      "حَرَّمَ الشِّعْرَ كُلَّهُ فِي مَكَّةَ، وَأَبَاحَهُ فِي المَدِينَةِ المُنَوَّرَةِ",
+      "قَصَرَ قَوْلَ الشِّعْرِ عَلَى الخُلَفَاءِ وَقَادَةِ الجُيُوشِ دُونَ غَيْرِهِمْ"
+    ],
+    "answer": 1,
+    "explanation": "وَقَفَ الإِسْلَامُ مَوْقِفَ الإِعْجَابِ وَالتَّأْيِيدِ لِلشِّعْرِ الهَادِفِ الصَّادِقِ كَشِعْرِ حَسَّانَ، وَمَوْقِفَ المُعَارَضَةِ وَالمَنْعِ لِلشِّعْرِ الَّذِي يَنْشُرُ الفَسَادَ وَيُهَاجِمُ الإِسْلَامَ."
+  },
+  {
+    "id": 55,
+    "category": "tarikh",
+    "categoryLabel": "تَارِيخُ الأَدَبِ وَخَصَائِصُهُ",
+    "wahdah": "الوَحْدَةُ الحَادِيَةَ عَشْرَةَ — شُعَرَاءُ الدَّعْوَةِ",
+    "prompt": "مَنْ هُمْ أَشْهَرُ شُعَرَاءِ الدَّعْوَةِ الإِسْلَامِيَّةِ الَّذِينَ دَافَعُوا عَنِ الإِسْلَامِ بِأَلْسِنَتِهِمْ فِي عَصْرِ صَدْرِ الإِسْلَامِ؟",
+    "type": "mcq",
+    "options": [
+      "امْرُؤُ القَيْسِ، وَطَرَفَةُ بْنُ العَبْدِ، وَعَمْرُو بْنُ كُلْثُومٍ",
+      "حَسَّانُ بْنُ ثَابِتٍ، وَكَعْبُ بْنُ مَالِكٍ، وَعَبْدُ اللَّهِ بْنُ رَوَاحَةَ",
+      "جَرِيرٌ، وَالفَرَزْدَقُ، وَالأَخْطَلُ التَّغْلِبِيُّ",
+      "جَمِيلُ بُثَيْنَةَ، وَكُثَيِّرُ عَزَّةَ، وَعُمَرُ بْنُ أَبِي رَبِيعَةَ"
+    ],
+    "answer": 1,
+    "explanation": "أَشْهَرُ شُعَرَاءِ الدَّعْوَةِ: حَسَّانُ بْنُ ثَابِتٍ، وَكَعْبُ بْنُ مَالِكٍ، وَعَبْدُ اللَّهِ بْنُ رَوَاحَةَ رَضِيَ اللَّهُ عَنْهُمْ. وَالخِيَارَاتُ الأُخْرَى شُعَرَاءُ جَاهِلِيُّونَ أَوْ أُمَوِيُّونَ."
+  },
+  {
+    "id": 56,
+    "category": "tarikh",
+    "categoryLabel": "تَارِيخُ الأَدَبِ وَخَصَائِصُهُ",
+    "wahdah": "الوَحْدَةُ الحَادِيَةَ عَشْرَةَ — الكِتَابَةُ فِي صَدْرِ الإِسْلَامِ",
+    "prompt": "أَيُّ الخَصَائِصِ التَّالِيَةِ مِنْ خَصَائِصِ «الكِتَابَةِ (الرَّسَائِلِ)» فِي عَصْرِ صَدْرِ الإِسْلَامِ؟",
+    "type": "mcq",
+    "options": [
+      "مَيْلُهَا إِلَى الإِطَالَةِ الشَّدِيدَةِ، وَالإِكْثَارُ مِنَ السَّجْعِ المُتَكَلَّفِ",
+      "بَدْؤُهَا بِاسْمِ اللَّهِ، وَمَيْلُهَا إِلَى الإِيجَازِ وَالبُعْدِ عَنِ التَّكَلُّفِ",
+      "كِتَابَتُهَا بِالفَارِسِيَّةِ وَاليُونَانِيَّةِ فِي دَوَاوِينِ الدَّوْلَةِ",
+      "اقْتِصَارُهَا عَلَى التَّهْنِئَةِ وَالتَّعْزِيَةِ دُونَ شُؤُونِ الدَّوْلَةِ"
+    ],
+    "answer": 1,
+    "explanation": "مِنْ خَصَائِصِ رَسَائِلِ صَدْرِ الإِسْلَامِ: البَدْءُ بِاسْمِ اللَّهِ وَحَمْدِهِ، وَخُلُوُّهَا مِنْ عِبَارَاتِ التَّفْخِيمِ، وَمَيْلُهَا إِلَى الإِيجَازِ وَالبُعْدُ عَنِ التَّكَلُّفِ."
+  },
+  {
+    "id": 57,
+    "category": "tarifat",
+    "categoryLabel": "التَّعْرِيفَاتُ وَالمُصْطَلَحَاتُ",
+    "wahdah": "الوَحْدَةُ الثَّانِيَةَ عَشْرَةَ — خُطْبَةُ زِيَادِ بْنِ أَبِيهِ",
+    "prompt": "لِمَاذَا سُمِّيَتْ خُطْبَةُ زِيَادِ بْنِ أَبِيهِ المَشْهُورَةُ فِي البَصْرَةِ بِـ «الخُطْبَةِ البَتْرَاءِ»؟",
+    "type": "mcq",
+    "options": [
+      "لِأَنَّهَا كَانَتْ قَصِيرَةً جِدّاً لَا تَتَجَاوَزُ ثَلَاثَ جُمَلٍ",
+      "لِأَنَّهُ لَمْ يَبْدَأْهَا بِحَمْدِ اللَّهِ وَالثَّنَاءِ عَلَيْهِ",
+      "لِأَنَّ أَهْلَ البَصْرَةِ قَاطَعُوهُ قَبْلَ أَنْ يُتِمَّهَا",
+      "لِأَنَّهَا خَلَتْ مِنْ حَرْفِ الرَّاءِ فِي جَمِيعِ كَلِمَاتِهَا"
+    ],
+    "answer": 1,
+    "explanation": "سُمِّيَتِ البَتْرَاءَ إِمَّا لِأَنَّ زِيَاداً بَتَرَ مُقَدِّمَتَهَا فَلَمْ يَبْدَأْهَا بِالحَمْدِ وَالبَسْمَلَةِ، وَإِمَّا تَشْبِيهاً لَهَا بِالسَّيْفِ البَاتِرِ القَاطِعِ لِشِدَّتِهَا وَهَيْبَتِهَا."
+  },
+  {
+    "id": 58,
+    "category": "tarifat",
+    "categoryLabel": "التَّعْرِيفَاتُ وَالمُصْطَلَحَاتُ",
+    "wahdah": "الوَحْدَةُ الثَّانِيَةَ عَشْرَةَ — خُطْبَةُ زِيَادِ بْنِ أَبِيهِ",
+    "prompt": "مَا مَعْنَى كَلِمَتَيْ «سَاسَةٍ» وَ«ذَادَةٍ» فِي قَوْلِ زِيَادِ بْنِ أَبِيهِ: «إِنَّا أَصْبَحْنَا لَكُمْ سَاسَةً، وَعَنْكُمْ ذَادَةً»؟",
+    "type": "mcq",
+    "options": [
+      "سَاسَةٌ: وُلَاةٌ يُؤَدِّبُونَكُمْ، وَذَادَةٌ: مُدَافِعُونَ عَنْكُمْ",
+      "سَاسَةٌ: سَادَةٌ أَغْنِيَاءُ، وَذَادَةٌ: زُهَّادٌ فِي الدُّنْيَا",
+      "سَاسَةٌ: قُضَاةُ المَحَاكِمِ، وَذَادَةٌ: جُبَاةُ الزَّكَاةِ",
+      "سَاسَةٌ: شُعَرَاءُ مَادِحُونَ، وَذَادَةٌ: كُتَّابُ الدَّوَاوِينِ"
+    ],
+    "answer": 0,
+    "explanation": "سَاسَةٌ: جَمْعُ سَائِسٍ، وَهُوَ الوَالِي المُؤَدِّبُ، وَذَادَةٌ: جَمْعُ ذَائِدٍ، وَهُوَ المُدَافِعُ عَنِ البِلَادِ وَأَهْلِهَا."
+  },
+  {
+    "id": 59,
+    "category": "ikmal",
+    "categoryLabel": "إِكْمَالُ النُّصُوصِ النَّاقِصَةِ",
+    "wahdah": "الوَحْدَةُ الثَّانِيَةَ عَشْرَةَ — خُطْبَةُ زِيَادِ بْنِ أَبِيهِ",
+    "prompt": "أَكْمِلْ قَوْلَ زِيَادِ بْنِ أَبِيهِ فِي خُطْبَتِهِ البَتْرَاءِ: «وَاعْلَمُوا أَنِّي مَهْمَا قَصَّرْتُ فَلَنْ أُقَصِّرَ فِي ثَلَاثٍ: لَسْتُ مُحْتَجِباً عَنْ طَالِبِ حَاجَةٍ وَلَوْ أَتَانِي طَارِقاً بِلَيْلٍ، وَلَا حَابِساً عَطَاءً وَلَا رِزْقاً عَنْ إِبَّانِهِ، وَلَا ............ لَكُمْ بَعْثاً»:",
+    "type": "mcq",
+    "options": [
+      "مُجَمِّراً",
+      "مَانِعاً",
+      "مُؤَخِّراً",
+      "تَارِكاً"
+    ],
+    "answer": 0,
+    "explanation": "قَالَ زِيَادٌ: «وَلَا مُجَمِّراً لَكُمْ بَعْثاً»، وَتَجْمِيرُ البَعْثِ مَعْنَاهُ حَبْسُ الجُنُودِ فِي أَرْضِ العَدُوِّ مُدَّةً طَوِيلَةً بَعِيداً عَنْ أَهْلِهِمْ."
+  },
+  {
+    "id": 60,
+    "category": "maani",
+    "categoryLabel": "شَرْحُ الأَبْيَاتِ وَالمَعَانِي",
+    "wahdah": "الوَحْدَةُ الثَّانِيَةَ عَشْرَةَ — خُطْبَةُ زِيَادِ بْنِ أَبِيهِ",
+    "prompt": "بِمَ شَبَّهَ زِيَادُ بْنُ أَبِيهِ خُلَفَاءَ بَنِي أُمَيَّةَ فِي قَوْلِهِ لِأَهْلِ البَصْرَةِ: «فَإِنَّهُمْ سَاسَتُكُمُ المُؤَدِّبُونَ، وَكَهْفُكُمُ الَّذِي إِلَيْهِ تَأْوُونَ»؟",
+    "type": "mcq",
+    "options": [
+      "شَبَّهَهُمْ بِالغَيْثِ المُنْهَمِرِ الَّذِي يُحْيِي الأَرْضَ بَعْدَ مَوْتِهَا",
+      "شَبَّهَهُمْ بِالكَهْفِ، أَيِ المَلْجَأِ الحَصِينِ الَّذِي يُلْجَأُ إِلَيْهِ",
+      "شَبَّهَهُمْ بِالنُّجُومِ الَّتِي يَهْتَدِي بِهَا المُسَافِرُونَ فِي الصَّحْرَاءِ",
+      "شَبَّهَهُمْ بِالأَطِبَّاءِ الَّذِينَ يُعَالِجُونَ المَرْضَى بِالدَّوَاءِ"
+    ],
+    "answer": 1,
+    "explanation": "الكَهْفُ هُوَ الغَارُ فِي الجَبَلِ، وَقَدْ شَبَّهَ زِيَادٌ خُلَفَاءَ بَنِي أُمَيَّةَ بِهِ وَأَرَادَ أَنَّهُمُ المَلْجَأُ وَالحِصْنُ الَّذِي يَأْوِي إِلَيْهِ الرَّعِيَّةُ."
+  },
+  {
+    "id": 61,
+    "category": "tarifat",
+    "categoryLabel": "التَّعْرِيفَاتُ وَالمُصْطَلَحَاتُ",
+    "wahdah": "الوَحْدَةُ الثَّالِثَةَ عَشْرَةَ — رِسَالَةُ عَبْدِ الحَمِيدِ الكَاتِبِ",
+    "prompt": "مَا المَقْصُودُ بِعِلْمِ «الفَرَائِضِ» الَّذِي أَوْصَى عَبْدُ الحَمِيدِ الكَاتِبُ الكُتَّابَ بِتَعَلُّمِهِ مَعَ كِتَابِ اللَّهِ عَزَّ وَجَلَّ؟",
+    "type": "mcq",
+    "options": [
+      "عِلْمُ أَوْزَانِ الشِّعْرِ وَقَوَافِيهِ وَعُيُوبِهَا",
+      "عِلْمُ المَوَارِيثِ وَتَوْزِيعِ التَّرِكَةِ عَلَى الوَرَثَةِ",
+      "عِلْمُ أَخْبَارِ المُلُوكِ وَالأُمَمِ السَّابِقَةِ",
+      "عِلْمُ الحِسَابِ وَالهَنْدَسَةِ وَحَرَكَةِ الأَفْلَاكِ"
+    ],
+    "answer": 1,
+    "explanation": "الفَرَائِضُ: عِلْمُ المَوَارِيثِ، يُعْنَى بِتَوْزِيعِ مَا يَتْرُكُهُ المَيِّتُ مِنْ أَمْوَالٍ عَلَى الوَرَثَةِ."
+  },
+  {
+    "id": 62,
+    "category": "ikmal",
+    "categoryLabel": "إِكْمَالُ النُّصُوصِ النَّاقِصَةِ",
+    "wahdah": "الوَحْدَةُ الثَّالِثَةَ عَشْرَةَ — رِسَالَةُ عَبْدِ الحَمِيدِ الكَاتِبِ",
+    "prompt": "أَكْمِلْ نَصِيحَةَ عَبْدِ الحَمِيدِ الكَاتِبِ لِلْكُتَّابِ: «فَتَنَافَسُوا يَا مَعْشَرَ الكُتَّابِ فِي صُنُوفِ الآدَابِ، وَتَفَقَّهُوا فِي الدِّينِ، وَابْدَءُوا بِعِلْمِ كِتَابِ اللَّهِ عَزَّ وَجَلَّ وَالفَرَائِضِ، ثُمَّ العَرَبِيَّةِ؛ فَإِنَّهَا ............ أَلْسِنَتِكُمْ، ثُمَّ أَجِيدُوا الخَطَّ؛ فَإِنَّهُ حِلْيَةُ كِتَابَتِكُمْ»:",
+    "type": "mcq",
+    "options": [
+      "ثِقَافُ",
+      "جَمَالُ",
+      "تَمَامُ",
+      "بَيَانُ"
+    ],
+    "answer": 0,
+    "explanation": "قَالَ عَبْدُ الحَمِيدِ الكَاتِبُ: «ثُمَّ العَرَبِيَّةِ؛ فَإِنَّهَا ثِقَافُ أَلْسِنَتِكُمْ»، وَثِقَافُ الأَلْسِنَةِ مَا يُقَوِّمُهَا وَيَحْفَظُهَا مِنَ الخَطَأِ وَاللَّحْنِ."
+  },
+  {
+    "id": 63,
+    "category": "maani",
+    "categoryLabel": "شَرْحُ الأَبْيَاتِ وَالمَعَانِي",
+    "wahdah": "الوَحْدَةُ الثَّالِثَةَ عَشْرَةَ — رِسَالَةُ عَبْدِ الحَمِيدِ الكَاتِبِ",
+    "prompt": "بِمَ أَوْصَى عَبْدُ الحَمِيدِ الكَاتِبُ الكُتَّابَ حِينَ قَالَ: «وَتَحَابُّوا فِي اللَّهِ عَزَّ وَجَلَّ فِي صِنَاعَتِكُمْ، وَتَوَاصَوْا عَلَيْهَا بِالَّذِي هُوَ أَلْيَقُ لِأَهْلِ الفَضْلِ وَالعَدْلِ وَالنُّبْلِ مِنْ سَلَفِكُمْ»؟",
+    "type": "mcq",
+    "options": [
+      "بِالتَّنَافُسِ عَلَى جَمْعِ الأَمْوَالِ وَالمَنَاصِبِ فِي الدَّوَاوِينِ",
+      "بِالمَحَبَّةِ فِي اللَّهِ، وَالتَّوَاصِي بِمَا يَلِيقُ بِأَهْلِ الفَضْلِ",
+      "بِكِتْمَانِ أَسْرَارِ اللُّغَةِ العَرَبِيَّةِ عَنْ غَيْرِ الكُتَّابِ",
+      "بِتَرْكِ رِوَايَةِ الأَشْعَارِ، وَالِاكْتِفَاءِ بِكِتَابَةِ الرَّسَائِلِ"
+    ],
+    "answer": 1,
+    "explanation": "أَوْصَاهُمْ بِالمَحَبَّةِ فِي اللَّهِ، وَأَنْ يُوصِيَ بَعْضُهُمْ بَعْضاً بِمَا يَلِيقُ بِأَهْلِ الفَضْلِ مِنْ سَلَفِهِمْ، فَلَا يُجْرُونَ أَقْلَامَهُمْ بِمَا يُسِيءُ إِلَيْهِمْ."
+  },
+  {
+    "id": 64,
+    "category": "tarikh",
+    "categoryLabel": "تَارِيخُ الأَدَبِ وَخَصَائِصُهُ",
+    "wahdah": "الوَحْدَةُ الثَّالِثَةَ عَشْرَةَ — رِسَالَةُ عَبْدِ الحَمِيدِ الكَاتِبِ",
+    "prompt": "عَلَامَ يَدُلُّ قَوْلُ بَعْضِ النُّقَّادِ وَالكُتَّابِ: «بُدِئَتِ الكِتَابَةُ بِعَبْدِ الحَمِيدِ، وَخُتِمَتْ بِابْنِ العَمِيدِ»؟",
+    "type": "mcq",
+    "options": [
+      "عَلَى أَنَّهُ أَوَّلُ مَنْ تَعَلَّمَ القِرَاءَةَ وَالكِتَابَةَ مِنَ العَرَبِ",
+      "عَلَى رِيَادَتِهِ؛ فَهُوَ أَوَّلُ مَنْ أَطَالَ الرَّسَائِلَ وَوَضَعَ لَهَا نِظَاماً",
+      "عَلَى أَنَّ الكِتَابَةَ تَوَقَّفَتْ تَمَاماً بَعْدَ وَفَاتِهِ سَنَةَ ١٣٢هـ",
+      "عَلَى أَنَّهُ لَمْ يَكْتُبْ سِوَى رِسَالَةٍ وَاحِدَةٍ طَوَالَ حَيَاتِهِ"
+    ],
+    "answer": 1,
+    "explanation": "يُعَدُّ عَبْدُ الحَمِيدِ الكَاتِبُ رَائِدَ الكِتَابَةِ الفَنِّيَّةِ فِي العَصْرِ الأُمَوِيِّ؛ لِأَنَّهُ أَوَّلُ مَنْ أَطَالَ الرَّسَائِلَ وَوَضَعَ لَهَا نِظَاماً خَاصّاً كَالبَدْءِ وَالخِتَامِ."
+  },
+  {
+    "id": 65,
+    "category": "ikmal",
+    "categoryLabel": "إِكْمَالُ النُّصُوصِ النَّاقِصَةِ",
+    "wahdah": "الوَحْدَةُ الرَّابِعَةَ عَشْرَةَ — مِنْ شِعْرِ جَرِيرٍ",
+    "prompt": "أَكْمِلْ بَيْتَ جَرِيرٍ فِي مَدْحِ الخَلِيفَةِ عُمَرَ بْنِ عَبْدِ العَزِيزِ وَاسْتِعْطَافِهِ:\n«إِنَّا لَنَرْجُو إِذَا مَا ............ أَخْلَفَنَا *** مِنَ الخَلِيفَةِ مَا نَرْجُو مِنَ المَطَرِ»:",
+    "type": "mcq",
+    "options": [
+      "الوَعْدُ",
+      "الغَيْثُ",
+      "الزَّرْعُ",
+      "البَحْرُ"
+    ],
+    "answer": 1,
+    "explanation": "البَيْتُ السَّابِعُ مِنْ قَصِيدَةِ جَرِيرٍ: «إِنَّا لَنَرْجُو إِذَا مَا الغَيْثُ أَخْلَفَنَا *** مِنَ الخَلِيفَةِ مَا نَرْجُو مِنَ المَطَرِ»."
+  },
+  {
+    "id": 66,
+    "category": "ikmal",
+    "categoryLabel": "إِكْمَالُ النُّصُوصِ النَّاقِصَةِ",
+    "wahdah": "الوَحْدَةُ الرَّابِعَةَ عَشْرَةَ — مِنْ شِعْرِ جَرِيرٍ",
+    "prompt": "أَكْمِلْ بَيْتَ جَرِيرٍ فِي مَدْحِ عُمَرَ بْنِ عَبْدِ العَزِيزِ: «أَنْتَ المُبَارَكُ وَالمَهْدِيُّ سِيرَتُهُ *** تَعْصِي ............ وَتَقُومُ اللَّيْلَ بِالسُّوَرِ»:",
+    "type": "mcq",
+    "options": [
+      "العِدَا",
+      "الهَوَى",
+      "الوَرَى",
+      "الغِنَى"
+    ],
+    "answer": 1,
+    "explanation": "«تَعْصِي الهَوَى»؛ أَيْ: لَا يَتَّبِعُ هَوَاهُ، بَلْ يُطِيعُ رَبَّهُ وَيُحْيِي لَيْلَهُ بِالقُرْآنِ."
+  },
+  {
+    "id": 67,
+    "category": "maani",
+    "categoryLabel": "شَرْحُ الأَبْيَاتِ وَالمَعَانِي",
+    "wahdah": "الوَحْدَةُ الرَّابِعَةَ عَشْرَةَ — مِنْ شِعْرِ جَرِيرٍ",
+    "prompt": "بِمَ شَبَّهَ الشَّاعِرُ جَرِيرٌ الأَيْتَامَ وَالضُّعَفَاءَ فِي اليَمَامَةِ فِي قَوْلِهِ:\n«مِمَّنْ يَعُدُّكَ تَكْفِي فَقْدَ وَالِدِهِ *** كَالفَرْخِ فِي العُشِّ لَمْ يَنْهَضْ وَلَمْ يَطِرِ»؟",
+    "type": "mcq",
+    "options": [
+      "شَبَّهَهُمْ بِالغَرِيقِ الَّذِي يَسْتَغِيثُ فِي أَمْوَاجِ البَحْرِ الهَائِجِ",
+      "شَبَّهَهُمْ بِفَرْخِ الطَّائِرِ العَاجِزِ عَنِ النُّهُوضِ وَالطَّيَرَانِ",
+      "شَبَّهَهُمْ بِالمُسَافِرِ التَّائِهِ فِي الصَّحْرَاءِ بِلَا زَادٍ وَلَا مَاءٍ",
+      "شَبَّهَهُمْ بِالزَّرْعِ اليَابِسِ الَّذِي يَنْتَظِرُ نُزُولَ المَطَرِ"
+    ],
+    "answer": 1,
+    "explanation": "شَبَّهَ جَرِيرٌ الأَيْتَامَ فِي ضَعْفِهِمْ وَعَجْزِهِمْ عَنْ كَسْبِ رِزْقِهِمْ بِفَرْخِ الطَّائِرِ الصَّغِيرِ فِي العُشِّ الَّذِي لَا يَسْتَطِيعُ القِيَامَ وَلَا الطَّيَرَانَ."
+  },
+  {
+    "id": 68,
+    "category": "maani",
+    "categoryLabel": "شَرْحُ الأَبْيَاتِ وَالمَعَانِي",
+    "wahdah": "الوَحْدَةُ الرَّابِعَةَ عَشْرَةَ — مِنْ شِعْرِ جَرِيرٍ",
+    "prompt": "لِمَاذَا اسْتَخْدَمَ جَرِيرٌ أُسْلُوبَ الاسْتِفْهَامِ فِي خِتَامِ قَصِيدَتِهِ: «هَذِي الأَرَامِلُ قَدْ قَضَّيْتَ حَاجَتَهَا *** فَمَنْ لِحَاجَةِ هَذَا الأَرْمَلِ الذَّكَرِ؟»؟",
+    "type": "mcq",
+    "options": [
+      "لِإِظْهَارِ الفَخْرِ وَالحَمَاسَةِ أَمَامَ الخَلِيفَةِ وَحَاشِيَتِهِ",
+      "لِلِاسْتِعْطَافِ وَإِثَارَةِ الرَّحْمَةِ فِي نَفْسِ الخَلِيفَةِ",
+      "لِإِنْكَارِ عَطَاءِ الخَلِيفَةِ وَالتَّقْلِيلِ مِنْ شَأْنِهِ",
+      "لِاخْتِبَارِ عِلْمِ الخَلِيفَةِ بِأَحْوَالِ أَهْلِ اليَمَامَةِ"
+    ],
+    "answer": 1,
+    "explanation": "اسْتَخْدَمَ جَرِيرٌ أُسْلُوبَ الاسْتِفْهَامِ البَلَاغِيِّ لِلاسْتِعْطَافِ وَاسْتِدْرَارِ كَرَمِ الخَلِيفَةِ عُمَرَ بْنِ عَبْدِ العَزِيزِ بِأُسْلُوبٍ رَقِيقٍ لَطِيفٍ."
+  },
+  {
+    "id": 69,
+    "category": "tartib",
+    "categoryLabel": "تَرْتِيبُ الأَبْيَاتِ وَالنُّصُوصِ",
+    "wahdah": "الوَحْدَةُ الرَّابِعَةَ عَشْرَةَ — قَصِيدَةُ جَرِيرٍ فِي مَدْحِ عُمَرَ بْنِ عَبْدِ العَزِيزِ (ص ١٦٢–١٦٣)",
+    "prompt": "رَتِّبِ الأَبْيَاتَ الأَرْبَعَةَ الأُولَى مِنْ قَصِيدَةِ جَرِيرٍ أَمَامَ الخَلِيفَةِ عُمَرَ بْنِ عَبْدِ العَزِيزِ:",
+    "type": "order",
+    "correctOrder": [
+      "كَمْ بِاليَمَامَةِ مِنْ شَعْثَاءَ أَرْمَلَةٍ *** وَمِنْ يَتِيمٍ ضَعِيفِ الصَّوْتِ وَالبَصَرِ",
+      "مِمَّنْ يَعُدُّكَ تَكْفِي فَقْدَ وَالِدِهِ *** كَالفَرْخِ فِي العُشِّ لَمْ يَنْهَضْ وَلَمْ يَطِرِ",
+      "خَلِيفَةَ اللَّهِ مَاذَا تَأْمُرُونَ بِنَا *** لَسْنَا إِلَيْكُمْ وَلَا فِي دَارِ مُنْتَظَرِ",
+      "أَنْتَ المُبَارَكُ وَالمَهْدِيُّ سِيرَتُهُ *** تَعْصِي الهَوَى وَتَقُومُ اللَّيْلَ بِالسُّوَرِ"
+    ],
+    "explanation": "يَبْدَأُ جَرِيرٌ بِوَصْفِ حَالِ الأَرَامِلِ وَالأَيْتَامِ فِي اليَمَامَةِ، ثُمَّ تَشْبِيهِ اليَتِيمِ بِالفَرْخِ فِي العُشِّ، ثُمَّ مُنَادَاةِ الخَلِيفَةِ، ثُمَّ مَدْحِهِ بِتَقْوَى اللَّهِ وَقِيَامِ اللَّيْلِ."
+  },
+  {
+    "id": 70,
+    "category": "tartib",
+    "categoryLabel": "تَرْتِيبُ الأَبْيَاتِ وَالنُّصُوصِ",
+    "wahdah": "الوَحْدَةُ الرَّابِعَةَ عَشْرَةَ — قَصِيدَةُ جَرِيرٍ (ص ١٦٣)",
+    "prompt": "رَتِّبِ الأَبْيَاتَ الأَرْبَعَةَ الأَخِيرَةَ (٥ – ٨) مِنْ قَصِيدَةِ جَرِيرٍ فِي مَدْحِ الخَلِيفَةِ عُمَرَ بْنِ عَبْدِ العَزِيزِ:",
+    "type": "order",
+    "correctOrder": [
+      "أَصْبَحْتَ لِلْمِنْبَرِ المَعْمُورِ مَجْلِسُهُ *** زَيْناً وَزَيْنَ قِبَابِ المُلْكِ وَالحُجَرِ",
+      "فَلَنْ تَزَالَ لِهَذَا الدِّينِ مَا عَمِرُوا *** مِنْكُمْ عِمَارَةُ مُلْكٍ وَاضِحِ الغُرَرِ",
+      "إِنَّا لَنَرْجُو إِذَا مَا الغَيْثُ أَخْلَفَنَا *** مِنَ الخَلِيفَةِ مَا نَرْجُو مِنَ المَطَرِ",
+      "هَذِي الأَرَامِلُ قَدْ قَضَّيْتَ حَاجَتَهَا *** فَمَنْ لِحَاجَةِ هَذَا الأَرْمَلِ الذَّكَرِ؟"
+    ],
+    "explanation": "يَصِفُ جَرِيرٌ تَزْيِينَ الخَلِيفَةِ لِلْمِنْبَرِ وَقِبَابِ المُلْكِ، ثُمَّ يَدْعُو لِبَقَاءِ مُلْكِهِمْ حَامِياً لِلدِّينِ، ثُمَّ يَرْجُو عَطَاءَهُ كَالغَيْثِ، وَيَخْتِمُ بِاسْتِعْطَافِهِ لِنَفْسِهِ."
+  },
+  {
+    "id": 71,
+    "category": "tarifat",
+    "categoryLabel": "التَّعْرِيفَاتُ وَالمُصْطَلَحَاتُ",
+    "wahdah": "الوَحْدَةُ الخَامِسَةَ عَشْرَةَ — الكِتَابَةُ فِي العَصْرِ الأُمَوِيِّ",
+    "prompt": "مَا المَقْصُودُ بِـ «التَّوْقِيعَاتِ» الَّتِي ظَهَرَتْ فِي فَنِّ الكِتَابَةِ فِي العَصْرِ الأُمَوِيِّ؟",
+    "type": "mcq",
+    "options": [
+      "رَسَائِلُ طَوِيلَةٌ يَبْعَثُهَا الكُتَّابُ إِلَى أَصْدِقَائِهِمْ فِي التَّهْنِئَةِ وَالتَّعْزِيَةِ",
+      "كَلَامٌ مُوجَزٌ يَكْتُبُهُ الخَلِيفَةُ أَوِ الوَالِي فِي أَسْفَلِ الطَّلَبِ المُقَدَّمِ إِلَيْهِ",
+      "خَتْمُ الرَّسَائِلِ الدِّيوَانِيَّةِ بِخَاتَمِ الخِلَافَةِ قَبْلَ إِرْسَالِهَا إِلَى الوُلَاةِ",
+      "المُعَاهَدَاتُ الَّتِي تُكْتَبُ بَيْنَ الدَّوْلَةِ الأُمَوِيَّةِ وَالدُّوَلِ المُجَاوِرَةِ"
+    ],
+    "answer": 1,
+    "explanation": "التَّوْقِيعَاتُ هِيَ عِبَارَاتٌ مُوجَزَةٌ بَلِيغَةٌ يَكْتُبُهَا الخَلِيفَةُ أَوِ الأَمِيرُ أَسْفَلَ الشَّكْوَى أَوِ الطَّلَبِ، كَقَوْلِ عُمَرَ بْنِ عَبْدِ العَزِيزِ: «الحَقُّ حَبَسَهُ»."
+  },
+  {
+    "id": 72,
+    "category": "tarifat",
+    "categoryLabel": "التَّعْرِيفَاتُ وَالمُصْطَلَحَاتُ",
+    "wahdah": "الوَحْدَةُ الخَامِسَةَ عَشْرَةَ — الشِّعْرُ فِي العَصْرِ الأُمَوِيِّ",
+    "prompt": "مَا المَقْصُودُ بِـ «شِعْرِ النَّقَائِضِ» الَّذِي اشْتَهَرَ بِهِ جَرِيرٌ وَالفَرَزْدَقُ وَالأَخْطَلُ فِي العَصْرِ الأُمَوِيِّ؟",
+    "type": "mcq",
+    "options": [
+      "قَصَائِدُ فِي الفَخْرِ وَالهِجَاءِ يَرُدُّ فِيهَا شَاعِرٌ عَلَى آخَرَ فَيَنْقُضُ قَوْلَهُ",
+      "قَصَائِدُ يَمْدَحُ فِيهَا الشَّاعِرُ الخَلِيفَةَ فِي أَوَّلِهَا ثُمَّ يَعْتَذِرُ إِلَيْهِ فِي آخِرِهَا",
+      "أَرَاجِيزُ قَصِيرَةٌ يُنْشِدُهَا الجُنُودُ فِي مَيْدَانِ القِتَالِ لِيُحَمِّسُوا أَنْفُسَهُمْ",
+      "أَشْعَارٌ تُقَارِنُ بَيْنَ طَبِيعَةِ البَادِيَةِ وَطَبِيعَةِ الحَضَرِ وَالمُدُنِ"
+    ],
+    "answer": 0,
+    "explanation": "شِعْرُ النَّقَائِضِ يَعْتَمِدُ عَلَى المُحَاوَرَةِ الشِّعْرِيَّةِ فِي الفَخْرِ وَالهِجَاءِ، حَيْثُ يَنْقُضُ الشَّاعِرُ الثَّانِي مَعَانِيَ الأَوَّلِ ملتزماً بِوَزْنِ قَصِيدَتِهِ وَقَافِيَتِهَا."
+  },
+  {
+    "id": 73,
+    "category": "tarikh",
+    "categoryLabel": "تَارِيخُ الأَدَبِ وَخَصَائِصُهُ",
+    "wahdah": "الوَحْدَةُ الخَامِسَةَ عَشْرَةَ — الأَدَبُ فِي العَصْرِ الأُمَوِيِّ",
+    "prompt": "ظَهَرَ فِي العَصْرِ الأُمَوِيِّ نَوْعَانِ مِنْ شِعْرِ «الغَزَلِ»؛ فَمَا هُمَا وَمَنْ أَشْهَرُ شُعَرَائِهِمَا؟",
+    "type": "mcq",
+    "options": [
+      "غَزَلٌ عُذْرِيٌّ كَغَزَلِ جَمِيلٍ، وَغَزَلٌ مَكْشُوفٌ كَغَزَلِ عُمَرَ بْنِ أَبِي رَبِيعَةَ",
+      "غَزَلٌ سِيَاسِيٌّ فِي مَدْحِ الخُلَفَاءِ، وَغَزَلٌ حَمَاسِيٌّ فِي مَيَادِينِ القِتَالِ",
+      "غَزَلُ النَّقَائِضِ كَغَزَلِ جَرِيرٍ، وَغَزَلُ التَّوْقِيعَاتِ كَغَزَلِ عَبْدِ الحَمِيدِ",
+      "غَزَلُ المُعَلَّقَاتِ كَغَزَلِ امْرِئِ القَيْسِ، وَغَزَلُ الحَوْلِيَّاتِ كَغَزَلِ زُهَيْرٍ"
+    ],
+    "answer": 0,
+    "explanation": "انْقَسَمَ الغَزَلُ فِي العَصْرِ الأُمَوِيِّ إِلَى: غَزَلٍ عُذْرِيٍّ عَفِيفٍ عِنْدَ شُعَرَاءِ البَادِيَةِ (كَجَمِيلٍ وَكُثَيِّرٍ وَقَيْسٍ)، وَغَزَلٍ مَكْشُوفٍ عِنْدَ شُعَرَاءِ الحَضَرِ (كَعُمَرَ بْنِ أَبِي رَبِيعَةَ وَالعَرْجِيِّ)."
+  },
+  {
+    "id": 74,
+    "category": "tarikh",
+    "categoryLabel": "تَارِيخُ الأَدَبِ وَخَصَائِصُهُ",
+    "wahdah": "الوَحْدَةُ الخَامِسَةَ عَشْرَةَ — الشِّعْرُ فِي العَصْرِ الأُمَوِيِّ",
+    "prompt": "مَا الفَرْقُ بَيْنَ الأَلْفَاظِ الَّتِي اسْتَخْدَمَهَا «شُعَرَاءُ البَادِيَةِ» وَالأَلْفَاظِ الَّتِي اسْتَخْدَمَهَا «شُعَرَاءُ الحَضَرِ» فِي العَصْرِ الأُمَوِيِّ؟",
+    "type": "mcq",
+    "options": [
+      "أَلْفَاظُ البَادِيَةِ جَزْلَةٌ صَعْبَةٌ، وَأَلْفَاظُ الحَضَرِ سَهْلَةٌ لَيِّنَةٌ",
+      "أَلْفَاظُ الحَضَرِ غَرِيبَةٌ مُعَقَّدَةٌ، وَأَلْفَاظُ البَادِيَةِ رَكِيكَةٌ ضَعِيفَةٌ",
+      "أَلْفَاظُ البَادِيَةِ فَارِسِيَّةٌ دَخِيلَةٌ، وَأَلْفَاظُ الحَضَرِ عَرَبِيَّةٌ خَالِصَةٌ",
+      "لَا فَرْقَ بَيْنَهُمَا؛ فَأَلْفَاظُ الفَرِيقَيْنِ جَزْلَةٌ صَعْبَةٌ"
+    ],
+    "answer": 0,
+    "explanation": "كَمَا وَرَدَ فِي ص ١٨٣: شُعَرَاءُ البَادِيَةِ ظَلَّتْ أَلْفَاظُهُمْ جَزْلَةً صَعْبَةً، أَمَّا شُعَرَاءُ الحَضَرِ فَتَأَثَّرُوا بِحَيَاةِ المُدُنِ فَسَهُلَتْ أَلْفَاظُهُمْ وَلَانَتْ أَسَالِيبُهُمْ."
+  },
+  {
+    "id": 75,
+    "category": "tarikh",
+    "categoryLabel": "تَارِيخُ الأَدَبِ وَخَصَائِصُهُ",
+    "wahdah": "الوَحْدَةُ الخَامِسَةَ عَشْرَةَ — الكِتَابَةُ فِي العَصْرِ الأُمَوِيِّ",
+    "prompt": "مَا الفَرْقُ بَيْنَ «الرَّسَائِلِ الدِّيوَانِيَّةِ» وَ«الرَّسَائِلِ الإِخْوَانِيَّةِ» فِي العَصْرِ الأُمَوِيِّ؟",
+    "type": "mcq",
+    "options": [
+      "الدِّيوَانِيَّةُ تُكْتَبُ شِعْراً، وَالإِخْوَانِيَّةُ تُكْتَبُ نَثْراً مُرْسَلاً",
+      "الدِّيوَانِيَّةُ مِنَ الدَّوْلَةِ إِلَى الوُلَاةِ، وَالإِخْوَانِيَّةُ بَيْنَ الكُتَّابِ",
+      "الدِّيوَانِيَّةُ لِلْعُلَمَاءِ وَالفُقَهَاءِ، وَالإِخْوَانِيَّةُ لِقَادَةِ الجُيُوشِ",
+      "الدِّيوَانِيَّةُ سَطْرٌ أَسْفَلَ الطَّلَبِ، وَالإِخْوَانِيَّةُ قَصِيدَةٌ فِي دِيوَانٍ"
+    ],
+    "answer": 1,
+    "explanation": "الدِّيوَانِيَّةُ: تُرْسَلُ مِنْ دَوَاوِينِ الدَّوْلَةِ إِلَى الوُلَاةِ وَأُمَرَاءِ الأَقَالِيمِ، وَالإِخْوَانِيَّةُ: يُرْسِلُهَا بَعْضُ الكُتَّابِ إِلَى بَعْضٍ فِي التَّهْنِئَةِ أَوِ التَّعْزِيَةِ أَوِ العِتَابِ أَوِ التَّوْجِيهِ."
+  }
+];
+
+/* =========================================================================
+   SMALL HELPERS
+   ========================================================================= */
+const $ = id => document.getElementById(id);
+const ar = n => String(n).replace(/\d/g, d => "٠١٢٣٤٥٦٧٨٩"[d]);
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const plain = s => String(s).replace(/[\u064B-\u0652\u0670]/g, "");
+const QMAP = Object.fromEntries(QUESTIONS.map(q => [q.id, q]));
+
+function shuffled(n) {
+  const a = [...Array(n).keys()];
+  for (let i = n - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; }
+  return a;
+}
+function shuffledNotIdentity(n) {
+  let a;
+  do { a = shuffled(n); } while (n > 1 && a.every((v, i) => v === i));
+  return a;
+}
+
+const store = {
+  get(key, fallback, area = "local") {
+    try { const raw = (area === "session" ? sessionStorage : localStorage).getItem(key); return raw === null ? fallback : JSON.parse(raw); }
+    catch (e) { return fallback; }
+  },
+  set(key, value, area = "local") {
+    try { (area === "session" ? sessionStorage : localStorage).setItem(key, JSON.stringify(value)); } catch (e) {}
+  },
+  remove(key, area = "local") {
+    try { (area === "session" ? sessionStorage : localStorage).removeItem(key); } catch (e) {}
+  }
+};
+
+/* SHA-256 (pure JS so it also works where crypto.subtle is unavailable, e.g. file:// on some browsers) */
+const SHA_K = [0x428a2f98,0x71374491,0xb5c0fbcf,0xe9b5dba5,0x3956c25b,0x59f111f1,0x923f82a4,0xab1c5ed5,0xd807aa98,0x12835b01,0x243185be,0x550c7dc3,0x72be5d74,0x80deb1fe,0x9bdc06a7,0xc19bf174,0xe49b69c1,0xefbe4786,0x0fc19dc6,0x240ca1cc,0x2de92c6f,0x4a7484aa,0x5cb0a9dc,0x76f988da,0x983e5152,0xa831c66d,0xb00327c8,0xbf597fc7,0xc6e00bf3,0xd5a79147,0x06ca6351,0x14292967,0x27b70a85,0x2e1b2138,0x4d2c6dfc,0x53380d13,0x650a7354,0x766a0abb,0x81c2c92e,0x92722c85,0xa2bfe8a1,0xa81a664b,0xc24b8b70,0xc76c51a3,0xd192e819,0xd6990624,0xf40e3585,0x106aa070,0x19a4c116,0x1e376c08,0x2748774c,0x34b0bcb5,0x391c0cb3,0x4ed8aa4a,0x5b9cca4f,0x682e6ff3,0x748f82ee,0x78a5636f,0x84c87814,0x8cc70208,0x90befffa,0xa4506ceb,0xbef9a3f7,0xc67178f2];
+function sha256Hex(str) {
+  const msg = new TextEncoder().encode(str);
+  const len = msg.length, total = ((len + 9 + 63) >> 6) << 6;
+  const buf = new Uint8Array(total); buf.set(msg); buf[len] = 0x80;
+  const dv = new DataView(buf.buffer);
+  dv.setUint32(total - 4, (len * 8) >>> 0); dv.setUint32(total - 8, Math.floor(len / 0x20000000));
+  const h = [0x6a09e667,0xbb67ae85,0x3c6ef372,0xa54ff53a,0x510e527f,0x9b05688c,0x1f83d9ab,0x5be0cd19];
+  const w = new Uint32Array(64), rotr = (x, n) => (x >>> n) | (x << (32 - n));
+  for (let off = 0; off < total; off += 64) {
+    for (let i = 0; i < 16; i++) w[i] = dv.getUint32(off + i * 4);
+    for (let i = 16; i < 64; i++) {
+      const s0 = rotr(w[i-15], 7) ^ rotr(w[i-15], 18) ^ (w[i-15] >>> 3);
+      const s1 = rotr(w[i-2], 17) ^ rotr(w[i-2], 19) ^ (w[i-2] >>> 10);
+      w[i] = (w[i-16] + s0 + w[i-7] + s1) >>> 0;
+    }
+    let [a, b, c, d, e, f, g, k] = h;
+    for (let i = 0; i < 64; i++) {
+      const t1 = (k + (rotr(e, 6) ^ rotr(e, 11) ^ rotr(e, 25)) + ((e & f) ^ (~e & g)) + SHA_K[i] + w[i]) >>> 0;
+      const t2 = ((rotr(a, 2) ^ rotr(a, 13) ^ rotr(a, 22)) + ((a & b) ^ (a & c) ^ (b & c))) >>> 0;
+      k = g; g = f; f = e; e = (d + t1) >>> 0; d = c; c = b; b = a; a = (t1 + t2) >>> 0;
+    }
+    [a, b, c, d, e, f, g, k].forEach((v, i) => { h[i] = (h[i] + v) >>> 0; });
+  }
+  return h.map(x => x.toString(16).padStart(8, "0")).join("");
+}
+window.hashTeacherPassword = pass => { const hsh = sha256Hex(PASS_SALT + pass); console.log(hsh); return hsh; };
+
+const b64urlEncode = str => btoa(String.fromCharCode(...new TextEncoder().encode(str))).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
+const b64urlDecode = str => new TextDecoder().decode(Uint8Array.from(atob(str.replace(/-/g, "+").replace(/_/g, "/")), c => c.charCodeAt(0)));
+
+/* =========================================================================
+   STATE
+   ========================================================================= */
+const state = {
+  student: { name: "", id: "", cls: "" },
+  activeFilter: "all",
+  reviewFilter: "all",
+  answers: {},     // mcq: original option index · order: array of indices into correctOrder
+  touched: {},     // order questions the student confirmed or moved
+  optPerm: {},     // mcq: display position -> original option index
+  lastRecord: null
+};
+
+function newAttempt() {
+  state.answers = {}; state.touched = {}; state.optPerm = {};
+  QUESTIONS.forEach(q => {
+    if (q.type === "mcq") state.optPerm[q.id] = shuffled(q.options.length);
+    else { state.answers[q.id] = shuffledNotIdentity(q.correctOrder.length); state.touched[q.id] = false; }
+  });
+}
+
+const saveDraft = () => store.set(STORAGE_KEY_DRAFT, { student: state.student, answers: state.answers, touched: state.touched, optPerm: state.optPerm });
+const clearDraft = () => store.remove(STORAGE_KEY_DRAFT);
+
+function loadDraft() {
+  const d = store.get(STORAGE_KEY_DRAFT, null);
+  if (!d || !d.student || !d.optPerm) return null;
+  // ignore drafts that no longer match the question bank
+  const ok = QUESTIONS.every(q => q.type === "mcq" ? Array.isArray(d.optPerm[q.id]) : Array.isArray(d.answers[q.id]) && d.answers[q.id].length === q.correctOrder.length);
+  return ok ? d : null;
+}
+
+const isAnswered = q => q.type === "mcq" ? typeof state.answers[q.id] === "number" : Boolean(state.touched[q.id]);
+const answeredCount = () => QUESTIONS.filter(isAnswered).length;
+
+function isCorrect(q, answers = state.answers) {
+  const a = answers[q.id];
+  if (q.type === "mcq") return a === q.answer;
+  return Array.isArray(a) && a.length === q.correctOrder.length && a.every((v, i) => v === i);
+}
+
+function scoreOf(answers) {
+  const cats = Object.fromEntries(Object.keys(CATEGORIES).map(k => [k, { label: CATEGORIES[k].label, correct: 0, total: 0 }]));
+  let correct = 0;
+  QUESTIONS.forEach(q => {
+    const ok = isCorrect(q, answers);
+    if (ok) correct++;
+    cats[q.category].total++; if (ok) cats[q.category].correct++;
+  });
+  return { correct, total: QUESTIONS.length, percent: Math.round(correct / QUESTIONS.length * 100), cats };
+}
+
+const medalFor = pct => MEDALS.find(m => pct >= m.min);
+
+/* =========================================================================
+   VERIFICATION CODE  (v2: answers + signature; teacher recomputes the score)
+   ========================================================================= */
+function packAnswers(answers) {
+  return QUESTIONS.map(q => {
+    const a = answers[q.id];
+    if (q.type === "mcq") return typeof a === "number" ? String(a) : "x";
+    return Array.isArray(a) ? a.join("") : "x";
+  }).join(",");
+}
+function unpackAnswers(packed) {
+  const parts = packed.split(",");
+  if (parts.length !== QUESTIONS.length) return null;
+  const answers = {};
+  QUESTIONS.forEach((q, i) => {
+    const p = parts[i];
+    if (p === "x") return;
+    answers[q.id] = q.type === "mcq" ? Number(p) : p.split("").map(Number);
+  });
+  return answers;
+}
+
+function makeCode(rec) {
+  const payload = JSON.stringify({ v: 2, n: rec.name, i: rec.studentId, c: rec.studentClass, t: rec.dateShort, a: packAnswers(state.answers) });
+  const body = b64urlEncode(payload);
+  return `ADB3.${body}.${sha256Hex(SIGN_SALT + body).slice(0, 12)}`;
+}
+
+function readCode(raw) {
+  const code = (raw || "").replace(/\s+/g, "");
+  if (code.startsWith("ADB3.")) {
+    const [, body, sig] = code.split(".");
+    if (!body || !sig) return { error: "الرَّمْزُ نَاقِصٌ. انْسَخْهُ كَامِلاً مِنْ رِسَالَةِ الطَّالِبِ." };
+    let data;
+    try { data = JSON.parse(b64urlDecode(body)); } catch (e) { return { error: "تَعَذَّرَتْ قِرَاءَةُ الرَّمْزِ. تَأَكَّدْ أَنَّهُ مَنْسُوخٌ كَامِلاً." }; }
+    const answers = unpackAnswers(String(data.a || ""));
+    if (!answers) return { error: "الرَّمْزُ لَا يُطَابِقُ أَسْئِلَةَ هَذِهِ النُّسْخَةِ." };
+    const signed = sha256Hex(SIGN_SALT + body).slice(0, 12) === sig;
+    const s = scoreOf(answers);
+    return { signed, legacy: false, name: data.n, studentId: data.i, studentClass: data.c, dateShort: data.t, score: s.correct, total: s.total, percent: s.percent, code };
+  }
+  if (code.startsWith("ADB3-")) {
+    // old format: plain base64 of name|id|score — readable but not verifiable
+    try {
+      const [name, studentId, frac, pct, dateShort] = decodeURIComponent(escape(atob(code.split("-").slice(2).join("-")))).split("|");
+      const [score, total] = (frac || "").split("/").map(Number);
+      if (!name) throw 0;
+      return { signed: false, legacy: true, name, studentId, studentClass: "—", dateShort, score, total, percent: parseInt(pct, 10) || 0, code };
+    } catch (e) { return { error: "الرَّمْزُ غَيْرُ صَحِيحٍ." }; }
+  }
+  return { error: "الرَّمْزُ يَجِبُ أَنْ يَبْدَأَ بِـ ADB3" };
+}
+
+/* =========================================================================
+   LOCAL LOG (this browser only)
+   ========================================================================= */
+const loadLog = () => store.get(STORAGE_KEY_LOG, []);
+function addToLog(rec) {
+  const list = loadLog();
+  if (rec.verifyCode && list.some(r => r.verifyCode === rec.verifyCode)) return false;
+  list.unshift(rec); store.set(STORAGE_KEY_LOG, list); return true;
+}
+
+/* =========================================================================
+   RENDER: STATIC OVERVIEW
+   ========================================================================= */
+function renderOverview() {
+  document.querySelectorAll("[data-total]").forEach(el => { el.textContent = ar(QUESTIONS.length); });
+  const counts = {};
+  QUESTIONS.forEach(q => { counts[q.category] = (counts[q.category] || 0) + 1; });
+
+  $("categoryOverview").innerHTML = plain(Object.entries(CATEGORIES).map(([k, c], i) => `
+    <div class="${k === "tartib" ? "bg-amber-50/70 border-amber-200" : "bg-stone-50 border-stone-200"} border p-3.5 rounded-xl">
+      <div class="text-xs font-bold ${k === "tartib" ? "text-amber-800" : "text-[#1b5e47]"} mb-1">القِسْمُ ${["الأَوَّلُ","الثَّانِي","الثَّالِثُ","الرَّابِعُ","الخَامِسُ"][i]} (${ar(counts[k] || 0)})</div>
+      <div class="font-bold text-sm text-stone-800">${c.label}</div>
+      <p class="text-xs text-stone-600 mt-1">${c.hint}</p>
+    </div>`).join(""));
+
+  $("medalOverview").innerHTML = plain(MEDALS.map(m => `
+    <div class="bg-white p-2.5 rounded-lg border ${m.border} flex items-center gap-2.5">
+      <span class="text-2xl" aria-hidden="true">${m.icon}</span>
+      <div><div class="font-bold ${m.text}">${m.title}</div><div class="text-stone-500">${m.range}</div></div>
+    </div>`).join(""));
+
+  $("categoryFilterBar").innerHTML = [["all", "جَمِيعُ الأَسْئِلَةِ", QUESTIONS.length], ...Object.entries(CATEGORIES).map(([k, c], i) => [k, `${ar(i + 1)}. ${c.label}`, counts[k] || 0])]
+    .map(([k, label, n]) => `<button type="button" data-filter="${k}" class="cat-tab text-xs font-bold px-3 py-1.5 rounded-lg transition">${label} (${ar(n)})</button>`).join("");
+
+  $("questionGridNav").innerHTML = QUESTIONS.map(q => `<button type="button" data-jump="${q.id}" class="nav-btn py-1.5 rounded-lg text-xs font-bold border transition">${ar(q.id)}</button>`).join("");
+}
+
+/* =========================================================================
+   RENDER: QUIZ
+   ========================================================================= */
+function cardHTML(q) {
+  const answered = isAnswered(q);
+  let body = "";
+  if (q.type === "mcq") {
+    body = `<div class="grid grid-cols-1 gap-2.5">` + state.optPerm[q.id].map((orig, pos) => {
+      const sel = state.answers[q.id] === orig;
+      return `<button type="button" data-q="${q.id}" data-opt="${orig}" aria-pressed="${sel}"
+        class="option-card w-full text-right p-3.5 rounded-xl border-2 flex items-start gap-3 ${sel ? "bg-emerald-50/90 border-[#0f3d2e] text-[#0f3d2e] font-bold shadow-sm" : "bg-stone-50/60 hover:bg-stone-100 border-stone-200 text-stone-800"}">
+        <span class="w-7 h-7 shrink-0 rounded-lg flex items-center justify-center text-sm font-extrabold ${sel ? "bg-[#0f3d2e] text-white" : "bg-white border border-stone-300 text-stone-700"}">${LETTERS[pos]}</span>
+        <span class="font-adab text-base md:text-lg leading-relaxed">${q.options[orig]}</span></button>`;
+    }).join("") + `</div>`;
+  } else {
+    const arr = state.answers[q.id];
+    body = `<div class="space-y-2.5">
+      <p class="text-xs text-amber-900 bg-amber-50 border border-amber-200 px-3 py-2 rounded-lg">رَتِّبِ العَنَاصِرَ بِزِرَّيْ «أَعْلَى» وَ«أَسْفَلَ»، ثُمَّ اضْغَطْ «تَأْكِيدُ التَّرْتِيبِ».</p>` +
+      arr.map((itemIdx, pos) => `
+      <div class="order-item bg-stone-50 border border-stone-300 rounded-xl p-3 flex items-center justify-between gap-3">
+        <div class="flex items-center gap-2.5 min-w-0">
+          <span class="w-7 h-7 shrink-0 rounded-full bg-[#0f3d2e] text-white text-xs font-extrabold flex items-center justify-center">${ar(pos + 1)}</span>
+          <span class="font-adab text-base md:text-lg font-bold text-stone-800">${q.correctOrder[itemIdx]}</span>
+        </div>
+        <div class="flex items-center gap-1.5 shrink-0">
+          <button type="button" data-q="${q.id}" data-move="${pos}" data-dir="-1" ${pos === 0 ? "disabled" : ""} class="move-btn px-2.5 py-1.5 rounded-lg border text-xs font-bold" aria-label="أعلى">▲ أَعْلَى</button>
+          <button type="button" data-q="${q.id}" data-move="${pos}" data-dir="1" ${pos === arr.length - 1 ? "disabled" : ""} class="move-btn px-2.5 py-1.5 rounded-lg border text-xs font-bold" aria-label="أسفل">▼ أَسْفَلَ</button>
+        </div>
+      </div>`).join("") +
+      `<button type="button" data-q="${q.id}" data-confirm-order class="mt-2 text-xs font-bold px-4 py-2 rounded-lg transition ${state.touched[q.id] ? "bg-emerald-700 text-white" : "bg-[#c89d54] hover:bg-[#b58940] text-[#0f3d2e]"}">${state.touched[q.id] ? "✓ اعْتُمِدَ هَذَا التَّرْتِيبُ (يُمْكِنُكَ تَعْدِيلُهُ)" : "تَأْكِيدُ هَذَا التَّرْتِيبِ"}</button>
+    </div>`;
+  }
+  return `
+    <article id="q-card-${q.id}" class="bg-white rounded-2xl shadow-md border-2 transition p-5 md:p-6 ${answered ? "border-[#1b5e47]/50" : "border-stone-200"}">
+      <div class="flex flex-wrap items-center justify-between gap-2 pb-3 mb-4 border-b border-stone-100">
+        <div class="flex items-center gap-2 min-w-0">
+          <span class="w-8 h-8 shrink-0 rounded-lg bg-[#0f3d2e] text-[#f3d292] font-extrabold text-sm flex items-center justify-center">${ar(q.id)}</span>
+          <span class="text-xs font-bold bg-emerald-50 text-[#0f3d2e] px-2.5 py-1 rounded-md border border-emerald-200">${q.wahdah}</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <span class="text-xs font-bold bg-amber-50 text-amber-900 px-2.5 py-1 rounded-md border border-amber-200">${q.categoryLabel}</span>
+          <span class="text-xs font-bold px-2 py-0.5 rounded ${answered ? "bg-emerald-100 text-emerald-800" : "bg-stone-100 text-stone-500"}">${answered ? "✓ تَمَّتِ الإِجَابَةُ" : "لَمْ يُجَبْ بَعْدُ"}</span>
+        </div>
+      </div>
+      <div class="font-adab text-lg md:text-xl font-bold text-stone-900 mb-4 whitespace-pre-line bg-[#faf7f0] p-4 rounded-xl border border-[#e8dec8]">${q.prompt}</div>
+      ${body}
+    </article>`;
+}
+
+function renderQuestions() {
+  const list = QUESTIONS.filter(q => state.activeFilter === "all" || q.category === state.activeFilter);
+  let lastUnit = "";
+  $("questionsContainer").innerHTML = list.map(q => {
+    const unit = q.wahdah.split("—")[0].trim();
+    const head = unit !== lastUnit
+      ? `<h2 class="unit-head flex items-center gap-3 pt-3 text-[#0f3d2e] font-extrabold text-base md:text-lg"><span class="h-px flex-1 bg-[#c89d54]/60"></span><span class="font-adab">${unit}</span><span class="h-px flex-1 bg-[#c89d54]/60"></span></h2>`
+      : "";
+    lastUnit = unit;
+    return head + cardHTML(q);
+  }).join("");
+  document.querySelectorAll(".cat-tab").forEach(b => {
+    const on = b.dataset.filter === state.activeFilter;
+    b.className = `cat-tab text-xs font-bold px-3 py-1.5 rounded-lg transition ${on ? "bg-[#0f3d2e] text-white shadow" : b.dataset.filter === "tartib" ? "bg-amber-100 hover:bg-amber-200 text-amber-900" : "bg-stone-100 hover:bg-stone-200 text-stone-700"}`;
+  });
+}
+
+function rerenderCard(q) {
+  const old = $(`q-card-${q.id}`);
+  if (!old) return;
+  const tpl = document.createElement("template");
+  tpl.innerHTML = cardHTML(q).trim();
+  old.replaceWith(tpl.content.firstChild);
+}
+
+function updateProgress() {
+  const n = answeredCount();
+  $("answeredCountText").textContent = ar(n);
+  $("quizProgressBar").style.width = `${Math.round(n / QUESTIONS.length * 100)}%`;
+  document.querySelectorAll(".nav-btn").forEach(b => {
+    const done = isAnswered(QMAP[b.dataset.jump]);
+    b.className = `nav-btn py-1.5 rounded-lg text-xs font-bold border transition ${done ? "bg-[#1b5e47] text-white border-[#0f3d2e]" : "bg-stone-50 hover:bg-stone-200 text-stone-700 border-stone-300"}`;
+  });
+}
+
+function jumpTo(id) {
+  const q = QMAP[id];
+  if (state.activeFilter !== "all" && state.activeFilter !== q.category) { state.activeFilter = "all"; renderQuestions(); }
+  const card = $(`q-card-${id}`);
+  if (card) card.scrollIntoView({ behavior: "smooth", block: "center" });
+}
+
+function showView(name) {
+  ["viewWelcome", "viewQuiz", "viewResults"].forEach(v => $(v).classList.toggle("hidden", v !== name));
+  $("liveCounterBadge").classList.toggle("hidden", name !== "viewQuiz");
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function startQuiz() {
+  $("quizBannerStudentName").textContent = state.student.name;
+  $("quizBannerStudentId").textContent = `(${state.student.id})`;
+  state.activeFilter = "all";
+  renderQuestions(); updateProgress(); saveDraft();
+  showView("viewQuiz");
+}
+
+/* =========================================================================
+   RESULTS
+   ========================================================================= */
+function finalize() {
+  const s = scoreOf(state.answers);
+  const medal = medalFor(s.percent);
+  const now = new Date();
+  const p2 = n => String(n).padStart(2, "0");
+  const rec = {
+    name: state.student.name, studentId: state.student.id, studentClass: state.student.cls,
+    score: s.correct, total: s.total, percent: s.percent,
+    wisamTitle: medal.title, grade: medal.grade,
+    dateFormatted: now.toLocaleDateString("ar-SA", { year: "numeric", month: "short", day: "numeric", hour: "2-digit", minute: "2-digit" }),
+    dateShort: `${now.getFullYear()}-${p2(now.getMonth() + 1)}-${p2(now.getDate())} ${p2(now.getHours())}:${p2(now.getMinutes())}`,
+    cats: s.cats, source: "device"
+  };
+  rec.verifyCode = makeCode(rec);
+  state.lastRecord = rec;
+  addToLog(rec);
+  clearDraft();
+
+  $("wisamIconBox").textContent = medal.icon;
+  $("wisamTitleText").textContent = medal.title;
+  $("wisamSubtitleText").textContent = medal.subtitle;
+  $("resStudentName").textContent = rec.name;
+  $("resStudentMeta").textContent = `الرَّقْمُ الجَامِعِيُّ: ${rec.studentId} | الفَصْلُ: ${rec.studentClass}`;
+  $("resScoreFraction").textContent = `${ar(rec.score)} / ${ar(rec.total)}`;
+  $("resScorePercent").textContent = `النِّسْبَةُ المِئَوِيَّةُ: ${ar(rec.percent)}٪`;
+  $("resGradeWord").textContent = rec.grade;
+  $("resTimestamp").textContent = rec.dateFormatted;
+  $("resVerificationCode").textContent = rec.verifyCode;
+  $("resCategoryBreakdown").innerHTML = Object.values(s.cats).map(c => `
+    <div class="bg-stone-50 border border-stone-200 p-3 rounded-xl text-center">
+      <div class="text-xs font-bold text-stone-700 mb-1">${c.label}</div>
+      <div class="text-lg font-extrabold text-[#0f3d2e] tabular-nums">${ar(c.correct)} / ${ar(c.total)}</div>
+    </div>`).join("");
+
+  state.reviewFilter = "all";
+  renderAnswerKey();
+  showView("viewResults");
+}
+
+function renderAnswerKey() {
+  document.querySelectorAll(".rev-tab").forEach(b => {
+    const on = b.dataset.revfilter === state.reviewFilter;
+    const base = { all: "bg-stone-100 text-stone-800", wrong: "bg-red-100 text-red-800", correct: "bg-emerald-100 text-emerald-800" }[b.dataset.revfilter];
+    b.className = `rev-tab text-xs font-bold px-3 py-1.5 rounded-lg ${on ? "bg-[#0f3d2e] text-white" : base}`;
+  });
+  const list = QUESTIONS.filter(q => state.reviewFilter === "all" || (state.reviewFilter === "wrong") !== isCorrect(q));
+  if (!list.length) {
+    $("answerKeyContainer").innerHTML = `<div class="p-6 text-center text-sm text-stone-500 bg-stone-50 rounded-xl border border-stone-200">لَا تُوجَدُ أَسْئِلَةٌ فِي هَذَا التَّصْنِيفِ.</div>`;
+    return;
+  }
+  $("answerKeyContainer").innerHTML = list.map(q => {
+    const ok = isCorrect(q);
+    let cmp;
+    if (q.type === "mcq") {
+      const perm = state.optPerm[q.id], u = state.answers[q.id];
+      const label = orig => `${LETTERS[perm.indexOf(orig)]} — ${q.options[orig]}`;
+      cmp = `<div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
+        <div class="p-3 rounded-lg border ${ok ? "bg-emerald-100/70 border-emerald-300 text-emerald-950" : "bg-red-100/70 border-red-300 text-red-950"}"><div class="text-xs font-bold mb-1">إِجَابَتُكَ:</div><div class="font-adab text-base font-bold">${typeof u === "number" ? label(u) : "لَمْ تُجِبْ عَنْ هَذَا السُّؤَالِ"}</div></div>
+        <div class="p-3 rounded-lg border bg-emerald-100/70 border-emerald-300 text-emerald-950"><div class="text-xs font-bold mb-1">الإِجَابَةُ الصَّحِيحَةُ:</div><div class="font-adab text-base font-bold">${label(q.answer)}</div></div></div>`;
+    } else {
+      const li = arr => arr.map(i => `<li>${q.correctOrder[i]}</li>`).join("");
+      cmp = `<div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
+        <div class="p-3 rounded-lg border ${ok ? "bg-emerald-100/70 border-emerald-300 text-emerald-950" : "bg-red-100/70 border-red-300 text-red-950"}"><div class="text-xs font-bold mb-1">تَرْتِيبُكَ${state.touched[q.id] ? "" : " (لَمْ تُؤَكِّدْهُ)"}:</div><ol class="list-decimal list-inside font-adab text-base space-y-1">${li(state.answers[q.id])}</ol></div>
+        <div class="p-3 rounded-lg border bg-emerald-100/70 border-emerald-300 text-emerald-950"><div class="text-xs font-bold mb-1">التَّرْتِيبُ الصَّحِيحُ:</div><ol class="list-decimal list-inside font-adab text-base space-y-1">${li(q.correctOrder.map((_, i) => i))}</ol></div></div>`;
+    }
+    return `<div class="p-5 rounded-xl border-2 space-y-3 ${ok ? "bg-emerald-50/40 border-emerald-200" : "bg-red-50/40 border-red-200"}">
+      <div class="flex flex-wrap items-center justify-between gap-2">
+        <div class="flex flex-wrap items-center gap-2">
+          <span class="px-2.5 py-1 rounded-md text-xs font-extrabold text-white ${ok ? "bg-emerald-700" : "bg-red-700"}">السُّؤَالُ (${ar(q.id)}) — ${ok ? "✓ صَحِيحَةٌ" : "✗ خَاطِئَةٌ"}</span>
+          <span class="text-xs font-bold text-stone-600">${q.wahdah}</span>
+        </div>
+        <span class="text-xs font-bold text-amber-900 bg-amber-100 px-2.5 py-0.5 rounded">${q.categoryLabel}</span>
+      </div>
+      <div class="font-adab text-lg font-bold text-stone-900 whitespace-pre-line">${q.prompt}</div>
+      ${cmp}
+      <div class="bg-white/90 border border-stone-200 p-3 rounded-lg text-xs md:text-sm text-stone-700 leading-relaxed"><strong class="text-[#0f3d2e]">الشَّرْحُ:</strong> ${q.explanation}</div>
+    </div>`;
+  }).join("");
+}
+
+function resultSummaryText(r) {
+  return [
+    "بِطَاقَةُ نَتِيجَةِ المُرَاجَعَةِ — الأَدَبُ (المُسْتَوَى الثَّالِثُ)",
+    `الاسم: ${r.name}`,
+    `الرقم الجامعي: ${r.studentId}`,
+    `الفصل: ${r.studentClass}`,
+    `الدرجة: ${r.score} / ${r.total} (${r.percent}%)`,
+    `الوسام: ${r.wisamTitle}`,
+    `التاريخ: ${r.dateShort}`,
+    "رمز التحقق للأستاذ:",
+    r.verifyCode
+  ].join("\n");
+}
+
+function copyText(text, onDone) {
+  const fallback = () => {
+    const ta = document.createElement("textarea");
+    ta.value = text; ta.setAttribute("readonly", ""); ta.style.position = "fixed"; ta.style.opacity = "0";
+    document.body.appendChild(ta); ta.select();
+    let ok = false; try { ok = document.execCommand("copy"); } catch (e) {}
+    ta.remove(); onDone(ok);
+  };
+  if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(() => onDone(true), fallback);
+  else fallback();
+}
+
+function toast(msg, ok = true) {
+  const t = $("copyToastMsg");
+  t.textContent = msg;
+  t.className = `${ok ? "bg-emerald-100 border-emerald-400 text-emerald-900" : "bg-amber-100 border-amber-400 text-amber-900"} border text-xs font-bold px-4 py-2.5 rounded-lg text-center`;
+  clearTimeout(toast.timer); toast.timer = setTimeout(() => t.classList.add("hidden"), 6000);
+}
+
+function downloadFile(name, content, type) {
+  const url = URL.createObjectURL(new Blob([content], { type }));
+  const a = Object.assign(document.createElement("a"), { href: url, download: name });
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+
+/* =========================================================================
+   MODALS
+   ========================================================================= */
+function openModal(id) { const m = $(id); m.classList.remove("hidden"); m.classList.add("flex"); }
+function closeModal(id) { const m = $(id); m.classList.add("hidden"); m.classList.remove("flex"); }
+
+/* =========================================================================
+   TEACHER PORTAL
+   ========================================================================= */
+const login = { fails: 0, lockedUntil: 0 };
+const teacherUnlocked = () => store.get(SESSION_KEY_TEACHER, false, "session") === true || teacherUnlocked.mem === true;
+
+function openTeacher() {
+  if (teacherUnlocked()) { renderTeacherLog(); openModal("modalTeacherPortal"); return; }
+  $("inputTeacherPass").value = "";
+  $("loginError").classList.add("hidden");
+  openModal("modalTeacherLogin");
+  setTimeout(() => $("inputTeacherPass").focus(), 50);
+}
+
+function tryLogin() {
+  const err = $("loginError");
+  const wait = Math.ceil((login.lockedUntil - Date.now()) / 1000);
+  if (wait > 0) { err.textContent = `مُحَاوَلَاتٌ كَثِيرَةٌ. انْتَظِرْ ${ar(wait)} ثَانِيَةً ثُمَّ أَعِدِ المُحَاوَلَةَ.`; err.classList.remove("hidden"); return; }
+  if (sha256Hex(PASS_SALT + $("inputTeacherPass").value) === TEACHER_PASS_HASH) {
+    login.fails = 0;
+    teacherUnlocked.mem = true;
+    store.set(SESSION_KEY_TEACHER, true, "session");
+    closeModal("modalTeacherLogin");
+    renderTeacherLog(); openModal("modalTeacherPortal");
+    return;
+  }
+  login.fails++;
+  if (login.fails >= 5) { login.lockedUntil = Date.now() + 30000; login.fails = 0; }
+  err.textContent = "كَلِمَةُ المُرُورِ غَيْرُ صَحِيحَةٍ.";
+  err.classList.remove("hidden");
+  $("inputTeacherPass").select();
+}
+
+function lockTeacher() {
+  teacherUnlocked.mem = false;
+  store.remove(SESSION_KEY_TEACHER, "session");
+  closeModal("modalTeacherPortal");
+}
+
+function renderTeacherLog() {
+  const logs = loadLog();
+  const tb = $("teacherLogTableBody");
+  if (!logs.length) {
+    tb.innerHTML = `<tr><td colspan="8" class="p-4 text-center text-stone-500">لَا تُوجَدُ دَرَجَاتٌ مَحْفُوظَةٌ فِي هَذَا المُتَصَفِّحِ بَعْدُ. افْحَصْ رُمُوزَ الطُّلَّابِ أَعْلَاهُ ثُمَّ أَضِفْهَا إِلَى السِّجِلِّ.</td></tr>`;
+    return;
+  }
+  tb.innerHTML = logs.map((r, i) => `
+    <tr class="hover:bg-stone-50">
+      <td class="p-2.5 font-bold">${ar(i + 1)}</td>
+      <td class="p-2.5 font-bold text-[#0f3d2e]">${esc(r.name)}</td>
+      <td class="p-2.5 font-mono">${esc(r.studentId)}</td>
+      <td class="p-2.5">${esc(r.studentClass)}</td>
+      <td class="p-2.5 font-extrabold text-emerald-800 tabular-nums whitespace-nowrap">${ar(r.score)} / ${ar(r.total)} (${ar(r.percent)}٪)</td>
+      <td class="p-2.5 text-amber-900 font-bold">${esc(r.wisamTitle)}</td>
+      <td class="p-2.5 text-stone-500 whitespace-nowrap">${esc(r.dateShort)}</td>
+      <td class="p-2.5 text-stone-500">${r.source === "code" ? "رَمْزٌ مَفْحُوصٌ" : "هَذَا الجِهَازُ"}</td>
+    </tr>`).join("");
+}
+
+function checkCode() {
+  const box = $("verifyCodeResultBox");
+  const r = readCode($("inputVerifyCode").value);
+  box.classList.remove("hidden");
+  if (r.error) {
+    box.className = "p-3 rounded-lg text-xs bg-red-100 border border-red-300 text-red-900 font-bold";
+    box.textContent = r.error;
+    return;
+  }
+  const status = r.signed
+    ? `<div class="font-extrabold text-sm text-emerald-900">✓ رَمْزٌ سَلِيمٌ، وَالدَّرَجَةُ مَحْسُوبَةٌ مِنْ إِجَابَاتِ الطَّالِبِ</div>`
+    : r.legacy
+      ? `<div class="font-extrabold text-sm text-amber-900">رَمْزٌ مِنَ النُّسْخَةِ القَدِيمَةِ: البَيَانَاتُ مَقْرُوءَةٌ، وَلَا يُمْكِنُ التَّحَقُّقُ مِنْهَا</div>`
+      : `<div class="font-extrabold text-sm text-red-800">✗ عُدِّلَ هَذَا الرَّمْزُ يَدَوِيّاً، فَلَا يُعْتَمَدُ</div>`;
+  box.className = `p-3 rounded-lg text-xs space-y-1 border ${r.signed ? "bg-emerald-100 border-emerald-300 text-emerald-950" : r.legacy ? "bg-amber-100 border-amber-300 text-amber-950" : "bg-red-100 border-red-300 text-red-950"}`;
+  box.innerHTML = `${status}
+    <div><strong>اسْمُ الطَّالِبِ:</strong> ${esc(r.name)}</div>
+    <div><strong>الرَّقْمُ الجَامِعِيُّ:</strong> ${esc(r.studentId)} · <strong>الفَصْلُ:</strong> ${esc(r.studentClass)}</div>
+    <div><strong>الدَّرَجَةُ:</strong> ${ar(r.score)} / ${ar(r.total)} (${ar(r.percent)}٪)</div>
+    <div><strong>التَّارِيخُ:</strong> ${esc(r.dateShort)}</div>
+    ${r.signed ? `<button type="button" id="btnAddCodeToLog" class="mt-2 bg-[#0f3d2e] hover:bg-[#1b5e47] text-white text-xs font-bold px-3 py-1.5 rounded-lg">إِضَافَةٌ إِلَى السِّجِلِّ</button>` : ""}`;
+  if (r.signed) {
+    $("btnAddCodeToLog").addEventListener("click", e => {
+      const m = medalFor(r.percent);
+      const added = addToLog({ name: r.name, studentId: r.studentId, studentClass: r.studentClass, score: r.score, total: r.total, percent: r.percent, wisamTitle: m.title, grade: m.grade, dateShort: r.dateShort, verifyCode: r.code, source: "code" });
+      e.target.textContent = added ? "✓ أُضِيفَ إِلَى السِّجِلِّ" : "هَذَا الرَّمْزُ مَوْجُودٌ فِي السِّجِلِّ";
+      e.target.disabled = true;
+      renderTeacherLog();
+    });
+  }
+}
+
+function csvOfLog() {
+  const q = v => `"${String(v ?? "").replace(/"/g, '""')}"`;
+  const rows = loadLog().map(r => [q(r.name), q(r.studentId), q(r.studentClass), q(`${r.score}/${r.total}`), q(`${r.percent}%`), q(r.wisamTitle), q(r.dateShort), q(r.source === "code" ? "رمز" : "الجهاز"), q(r.verifyCode)].join(","));
+  return "﻿" + [["الاسم", "الرقم الجامعي", "الفصل", "الدرجة", "النسبة", "الوسام", "التاريخ", "المصدر", "رمز التحقق"].join(","), ...rows].join("\n");
+}
+
+function logStatus(msg) {
+  const el = $("logStatus");
+  el.textContent = msg; el.classList.remove("hidden");
+  clearTimeout(logStatus.t); logStatus.t = setTimeout(() => el.classList.add("hidden"), 5000);
+}
+
+/* =========================================================================
+   WIRING
+   ========================================================================= */
+function init() {
+  if (IS_ARTIFACT) document.querySelectorAll("[data-file-only]").forEach(el => el.remove());
+  $("btnExportCsvLog").textContent = IS_ARTIFACT ? "نَسْخُ السِّجِلِّ (CSV)" : "تَصْدِيرُ السِّجِلِّ (CSV)";
+
+  renderOverview();
+  newAttempt();
+
+  const draft = loadDraft();
+  if (draft) {
+    const done = QUESTIONS.filter(q => q.type === "mcq" ? typeof draft.answers[q.id] === "number" : draft.touched[q.id]).length;
+    $("resumeText").textContent = plain(`لَدَيْكَ مُحَاوَلَةٌ لَمْ تَكْتَمِلْ بِاسْمِ «${draft.student.name}»: أَجَبْتَ عَنْ ${ar(done)} مِنْ ${ar(QUESTIONS.length)}.`);
+    $("resumeBanner").classList.remove("hidden");
+    $("btnResume").addEventListener("click", () => {
+      Object.assign(state, { student: draft.student, answers: draft.answers, touched: draft.touched, optPerm: draft.optPerm });
+      $("resumeBanner").classList.add("hidden");
+      startQuiz();
+    });
+    $("btnDiscardDraft").addEventListener("click", () => { clearDraft(); $("resumeBanner").classList.add("hidden"); });
+  }
+
+  $("studentForm").addEventListener("submit", e => {
+    e.preventDefault();
+    const name = $("inputStudentName").value.trim(), id = $("inputStudentId").value.trim(), cls = $("inputStudentClass").value.trim();
+    if (!name || !id) { $("welcomeErrorMsg").classList.remove("hidden"); return; }
+    $("welcomeErrorMsg").classList.add("hidden");
+    state.student = { name, id, cls: cls || "المستوى الثالث" };
+    newAttempt();
+    $("resumeBanner").classList.add("hidden");
+    startQuiz();
+  });
+
+  // Quiz interactions (one delegated listener for all cards)
+  $("questionsContainer").addEventListener("click", e => {
+    const btn = e.target.closest("button[data-q]");
+    if (!btn || btn.disabled) return;
+    const q = QMAP[btn.dataset.q];
+    if (btn.dataset.opt !== undefined) {
+      state.answers[q.id] = Number(btn.dataset.opt);
+    } else if (btn.dataset.move !== undefined) {
+      const pos = Number(btn.dataset.move), to = pos + Number(btn.dataset.dir), arr = [...state.answers[q.id]];
+      if (to < 0 || to >= arr.length) return;
+      [arr[pos], arr[to]] = [arr[to], arr[pos]];
+      state.answers[q.id] = arr; state.touched[q.id] = true;
+    } else if (btn.hasAttribute("data-confirm-order")) {
+      state.touched[q.id] = true;
+    }
+    rerenderCard(q); updateProgress(); saveDraft();
+  });
+
+  $("categoryFilterBar").addEventListener("click", e => {
+    const b = e.target.closest("[data-filter]"); if (!b) return;
+    state.activeFilter = b.dataset.filter; renderQuestions();
+  });
+  $("questionGridNav").addEventListener("click", e => { const b = e.target.closest("[data-jump]"); if (b) jumpTo(Number(b.dataset.jump)); });
+  $("btnJumpUnanswered").addEventListener("click", () => {
+    const q = QUESTIONS.find(x => !isAnswered(x));
+    if (q) jumpTo(q.id); else $("btnFinishQuizBottom").scrollIntoView({ behavior: "smooth", block: "center" });
+  });
+
+  document.querySelectorAll('[data-action="finish"]').forEach(b => b.addEventListener("click", () => {
+    const n = answeredCount(), rest = QUESTIONS.length - n;
+    $("modalConfirmText").innerHTML = rest > 0
+      ? `أَجَبْتَ عَنْ <strong>${ar(n)}</strong> مِنْ <strong>${ar(QUESTIONS.length)}</strong> سُؤَالاً، وَبَقِيَ <strong>${ar(rest)}</strong> بِلَا إِجَابَةٍ.<br>هَلْ تَعْتَمِدُ النَّتِيجَةَ الآنَ؟`
+      : `أَجَبْتَ عَنْ جَمِيعِ الأَسْئِلَةِ (${ar(n)} / ${ar(QUESTIONS.length)}).<br>اعْتَمِدِ النَّتِيجَةَ لِعَرْضِ الوِسَامِ وَنَمُوذَجِ الإِجَابَةِ.`;
+    openModal("modalConfirmSubmit");
+  }));
+  $("btnProceedSubmitModal").addEventListener("click", () => { closeModal("modalConfirmSubmit"); finalize(); });
+
+  $("reviewTabs").addEventListener("click", e => { const b = e.target.closest("[data-revfilter]"); if (!b) return; state.reviewFilter = b.dataset.revfilter; renderAnswerKey(); });
+
+  $("btnCopyResultSummary").addEventListener("click", () => {
+    if (!state.lastRecord) return;
+    copyText(resultSummaryText(state.lastRecord), ok => toast(ok
+      ? "نُسِخَتْ بِطَاقَةُ النَّتِيجَةِ مَعَ رَمْزِ التَّحَقُّقِ. الصِقْهَا فِي رِسَالَةٍ إِلَى أُسْتَاذِكَ."
+      : "تَعَذَّرَ النَّسْخُ التِّلْقَائِيُّ. حَدِّدْ رَمْزَ التَّحَقُّقِ فِي الأَعْلَى وَانْسَخْهُ يَدَوِيّاً.", ok));
+  });
+  const dl = $("btnDownloadReport");
+  if (dl) dl.addEventListener("click", () => {
+    const r = state.lastRecord; if (!r) return;
+    const lines = [resultSummaryText(r), "", "تفصيل الدرجات:", ...Object.values(r.cats).map(c => `- ${c.label}: ${c.correct} / ${c.total}`)];
+    downloadFile(`Natijah_Adab3_${r.studentId}.txt`, lines.join("\n"), "text/plain;charset=utf-8");
+  });
+  const pr = $("btnPrintResult");
+  if (pr) pr.addEventListener("click", () => window.print());
+  $("btnRetakeQuiz").addEventListener("click", () => { newAttempt(); startQuiz(); });
+
+  // Teacher portal
+  $("btnOpenTeacherModal").addEventListener("click", openTeacher);
+  $("teacherLoginForm").addEventListener("submit", e => { e.preventDefault(); tryLogin(); });
+  $("btnLockPortal").addEventListener("click", lockTeacher);
+  $("btnCheckVerifyCode").addEventListener("click", checkCode);
+  $("btnExportCsvLog").addEventListener("click", () => {
+    if (!loadLog().length) { logStatus("السِّجِلُّ فَارِغٌ."); return; }
+    if (IS_ARTIFACT) copyText(csvOfLog(), ok => logStatus(ok ? "نُسِخَ السِّجِلُّ. الصِقْهُ فِي Excel أَوْ Google Sheets." : "تَعَذَّرَ النَّسْخُ."));
+    else downloadFile("Sijill_Darajat_Adab3.csv", csvOfLog(), "text/csv;charset=utf-8");
+  });
+  const clearBtn = $("btnClearLog");
+  clearBtn.addEventListener("click", () => {
+    if (clearBtn.dataset.armed !== "1") {
+      clearBtn.dataset.armed = "1"; clearBtn.textContent = "اضْغَطْ مَرَّةً أُخْرَى لِلتَّأْكِيدِ";
+      setTimeout(() => { clearBtn.dataset.armed = ""; clearBtn.textContent = "مَسْحُ السِّجِلِّ"; }, 4000);
+      return;
+    }
+    store.remove(STORAGE_KEY_LOG); clearBtn.dataset.armed = ""; clearBtn.textContent = "مَسْحُ السِّجِلِّ";
+    renderTeacherLog(); logStatus("مُسِحَ السِّجِلُّ.");
+  });
+
+  // Close buttons, backdrop clicks and Escape for every modal
+  document.querySelectorAll(".modal").forEach(m => {
+    m.addEventListener("click", e => { if (e.target === m || e.target.closest("[data-close-modal]")) closeModal(m.id); });
+  });
+  document.addEventListener("keydown", e => { if (e.key === "Escape") document.querySelectorAll(".modal.flex").forEach(m => closeModal(m.id)); });
+}
+
+if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init); else init();
+
+</script>
+</body>
+</html>
